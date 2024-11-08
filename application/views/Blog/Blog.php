@@ -1,0 +1,95 @@
+<?php include 'Components/Header.php'; ?>
+<main class="content">
+    <div class="tablecontainer">
+        <h2>Blogs List</h2>
+        <table class="user-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Author Name</th>
+                    <th>Title</th>
+                    <th>Created Date</th>
+                    <th>Updated Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $id = 1; // Initialize ID counter
+                if (!empty($users)): ?>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><?php echo $id++; ?></td>
+                            <td><?php echo htmlspecialchars($user->User_id); ?></td>
+                            <td><?php echo htmlspecialchars($user->Author_name); ?></td>
+                            <td><?php echo htmlspecialchars($user->Title); ?></td>
+                            <td><?php echo htmlspecialchars($user->Created_date); ?></td>
+                            <td><?php echo htmlspecialchars($user->Updated_date); ?></td>
+                            <td><a href="<?= base_url('EditBlog/' . $user->id) ?>">Edit</a></td>
+                            <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="8">No blogs found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</main>
+<?php include 'Components/Footer.php'; ?>
+
+<style>
+    .tablecontainer {
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1000px;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    .user-table th, .user-table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    .user-table {
+        border-radius: 5px;
+    }
+
+    .thead-dark th {
+        background-color: #333;
+        color: #fff;
+    }
+
+    .user-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .user-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .user-table td {
+        color: #555;
+    }
+
+    .user-table th {
+        font-weight: bold;
+    }
+</style>

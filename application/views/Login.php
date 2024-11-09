@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?= base_url('public/css/Login.css') ?>">
 </head>
 <body>
-    <form class="form" action="<?= base_url('Dashboard') ?>" method="post">
+    <form class="form" action="<?= base_url('Login') ?>" method="post">
         <h1>Login</h1>
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>

@@ -19,8 +19,8 @@
                     <span class="dropdown-icon" aria-hidden="true"></span>
                 </button>
                 <div class="dropdown-container">
-                    <a href="<?php echo base_url('Myprofile')?>">My Profile</a>
-                    <a href="<?php echo base_url('Updateprofile')?>">Update Profile</a>
+                    <a href="<?php echo base_url('UserDetails/' . htmlspecialchars($this->session->userdata('id')))?>">My Profile</a>
+                    <a href="<?php echo base_url('UserDetailsEdit/' . htmlspecialchars($this->session->userdata('id')))?>">Update Profile</a>
                     <a href="<?php echo base_url('Users')?>">Users</a>
                 </div>
                 <a href="<?php echo base_url('Blog')?>">Blog</a>

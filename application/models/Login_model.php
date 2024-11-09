@@ -8,11 +8,11 @@ class Login_model extends CI_Model {
         $this->db->where('email', $data['email']);
         $query = $this->db->get('user-data');
 
-        if ($query->num_rows() > 0) {
+        if ($query->num_rows() > 0) { 
             
             $user = $query->row_array();
             if ($data['password'] == $user['password']) {
-                return true;  
+                return $user;  
             }
         }
 

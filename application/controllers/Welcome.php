@@ -18,6 +18,7 @@ class Welcome extends CI_Controller {
 		$this->load->view('Registration');
 	}
 	public function dashboard(){
+		
 		$this->load->view('Blog/Dashboard');
 	}
 	public function about(){

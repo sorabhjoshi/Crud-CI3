@@ -10,15 +10,18 @@
   </script>
 <main class="content">
     <h2>Edit Blog</h2>
-    <form action="<?= base_url('UpdateBlog/' . htmlspecialchars($blog['id'])) ?>" method="post">
+    <form action="<?=  base_url('UpdateBlog/' . htmlspecialchars($blog['id'])) ?>" method="post">
         <label for="author_name">Author Name:</label>
-        <input type="text" id="author_name" name="author_name" value="<?php echo htmlspecialchars($blog['Author_name']) ?>" required>
+        <input type="text" id="author_name" name="author_name" value="<?= htmlspecialchars($blog['Author_name']) ?>" required>
+        <div class="error-message"><?= form_error('author_name') ?></div>
 
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($blog['Title']) ?>" required>
+        <input type="text" id="title" name="title" value="<?= htmlspecialchars($blog['Title']) ?>" required>
+        <div class="error-message"><?= form_error('title') ?></div>
 
         <label for="content">Content:</label>
-        <textarea id="description" name="content" required><?php echo htmlspecialchars($blog['Description']) ?></textarea>
+        <textarea id="description" name="content" required><?= htmlspecialchars($blog['Description']) ?></textarea>
+        <div class="error-message"><?= form_error('description') ?></div>
 
         <button type="submit">Update Blog</button>
     </form>
@@ -39,6 +42,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.error-message {
+    color: red;   /* Red color for error messages */
+    font-size: 14px;  /* Optional: Adjust the font size */
+    margin-top: 5px;  /* Optional: Add some spacing above the error message */
 }
 
 /* Heading for the form */

@@ -57,9 +57,25 @@ $route['About'] = 'Welcome/about';
 $route['Contact'] = 'Welcome/contact';
 $route['News'] = 'Welcome/news';
 $route['Blog'] = 'Welcome/Blog';
+$route['Login'] = 'Login/login_user';
 $route['Logout'] = 'Welcome/logout';
 $route['Myprofile'] = 'Welcome/myprofile';
 $route['Updateprofile'] = 'Welcome/updateprofile';
 $route['Users'] = 'Welcome/users';
 $route['EditBlog/(:num)'] = 'Edit/EditBlog/$1';
 $route['UpdateBlog/(:num)'] = 'Edit/UpdateBlog/$1';
+$route['DeleteBlog/(:num)'] = 'Edit/DeleteBlog/$1';
+$route['EditNews/(:num)'] = 'EditNews/LoadNewsdata/$1';
+$route['UpdateNews/(:num)'] = 'EditNews/UpdateNewsdata/$1';
+$route['DeleteNews/(:num)'] = 'EditNews/DeleteNews/$1';
+$route['EditUser/(:num)'] = 'EditUsers/LoadUserdata/$1';
+$route['UpdateUser/(:num)'] = 'EditUsers/UpdateUser/$1';
+$route['DeleteUser/(:num)'] = 'EditUsers/DeleteUser/$1';
+$route['UserDetails/(:num)'] = 'ShowUser/ShowUserData/$1';
+$route['UserDetailsEdit/(:num)'] = 'ShowUser/ShowUserDataToEdit/$1';
+$route['UpdateUserDetails/(:num)'] = 'ShowUser/UpdateUserData/$1';
+$route['AddNews'] = 'EditNews/AddNewsInterface';
+$route['AddingNews'] = 'EditNews/AddingNews';
+
+
+

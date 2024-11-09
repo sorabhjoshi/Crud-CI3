@@ -1,4 +1,5 @@
 <?php include 'Components/Header.php'; ?>
+
 <main class="content">
     <div class="tablecontainer">
         <h2>Users List</h2>
@@ -22,22 +23,23 @@
                             <td><?php echo $id=$id+1; ?></td>
                             <td><?php echo htmlspecialchars($user->name); ?></td>
                             <td><?php echo htmlspecialchars($user->email); ?></td>
-                            <td><?php echo ($user->UserType==0? 'User':"Admin");?></td>
+                            <td><?php echo ($user->UserType==0? 'User':"Admin"); ?></td>
                             <td><?php echo htmlspecialchars($user->City); ?></td>
                             <td><?php echo htmlspecialchars($user->Phone_no); ?></td>
-                            <td>Edit</td>
-                            <td>Delete</td>
+                            <td class="button-cell"><a href="<?= base_url('EditUser/' . $user->id) ?>" class="edit-btn">Edit</a></td>
+                            <td class="button-cell"><a href="<?= base_url('DeleteUser/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7">No users found.</td>
+                        <td colspan="8">No users found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
     </div>
 </main>
+
 <?php include 'Components/Footer.php'; ?>
 
 <style>
@@ -58,17 +60,15 @@
         width: 100%;
         border-collapse: collapse;
         font-family: Arial, sans-serif;
-        
     }
 
     .user-table th, .user-table td {
         padding: 12px;
         text-align: left;
         border: 1px solid #ddd;
-        
     }
 
-    .user-table{
+    .user-table {
         border-radius: 5px;
     }
 
@@ -91,5 +91,63 @@
 
     .user-table th {
         font-weight: bold;
+    }
+
+    /* Center the buttons */
+    .button-cell {
+        text-align: center;
+    }
+
+    /* Edit and Delete button styles */
+    .edit-btn, .delete-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    /* Edit button */
+    .edit-btn {
+        background-color: #66bb6a;  /* Softer green */
+        color: white;
+        border: 1px solid #66bb6a;
+    }
+
+    /* Edit button hover effect */
+    .edit-btn:hover {
+        background-color: #5caa5b;  /* Slightly darker green */
+        border: 1px solid #5caa5b;
+    }
+
+    /* Delete button */
+    .delete-btn {
+        background-color: #ef5350;  /* Softer red */
+        color: white;
+        border: 1px solid #ef5350;
+    }
+
+    /* Delete button hover effect */
+    .delete-btn:hover {
+        background-color: #e53935;  /* Slightly darker red */
+        border: 1px solid #e53935;
+    }
+
+    /* Delete button active effect */
+    .delete-btn:active {
+        background-color: #d32f2f;  /* Even darker red */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .user-table th, .user-table td {
+            padding: 8px;
+        }
+
+        .edit-btn, .delete-btn {
+            font-size: 12px;
+        }
     }
 </style>

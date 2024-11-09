@@ -23,9 +23,10 @@ class Login extends CI_Controller {
                 'password' => $this->input->post('password')
             ];
 
-            
-            if ($this->Login_model->login($data)) {
-                $this->load->view('Blog/Dashboard', $data);
+            $userdata=$this->Login_model->login($data);
+            if($userdata) {
+                $this->session->set_userdata($userdata);
+                $this->load->view('Blog/Dashboard');
             } else {
                 $this->load->view('Registration');
             }

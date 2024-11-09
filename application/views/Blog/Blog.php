@@ -27,8 +27,8 @@
                             <td><?php echo htmlspecialchars($user->Title); ?></td>
                             <td><?php echo htmlspecialchars($user->Created_date); ?></td>
                             <td><?php echo htmlspecialchars($user->Updated_date); ?></td>
-                            <td><a href="<?= base_url('EditBlog/' . $user->id) ?>">Edit</a></td>
-                            <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
+                            <td><a href="<?= base_url('EditBlog/' . $user->id) ?>" class="edit-btn">Edit</a></td>
+                            <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -42,54 +42,118 @@
 </main>
 <?php include 'Components/Footer.php'; ?>
 
+
 <style>
-    .tablecontainer {
-        margin: 20px auto;
-        width: 90%;
-        max-width: 1000px;
-    }
+    /* Table container */
+.tablecontainer {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1000px;
+}
 
-    h2 {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333;
-    }
+/* Table heading */
+h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
 
-    .user-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-    }
+/* Table styling */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
 
+.user-table th, .user-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Table border rounding */
+.user-table {
+    border-radius: 5px;
+}
+
+/* Header row styling */
+.thead-dark th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Row striping */
+.user-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Row hover effect */
+.user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Table text color */
+.user-table td {
+    color: #555;
+}
+
+.user-table th {
+    font-weight: bold;
+}
+
+/* Edit and Delete button styles */
+.edit-btn, .delete-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Edit button */
+.edit-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+/* Edit button hover effect */
+.edit-btn:hover {
+    background-color: #45a049;
+    border: 1px solid #45a049;
+}
+
+/* Delete button */
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: 1px solid #f44336;
+}
+
+/* Delete button hover effect */
+.delete-btn:hover {
+    background-color: #e53935;
+    border: 1px solid #e53935;
+}
+
+/* Delete button active effect */
+.delete-btn:active {
+    background-color: #d32f2f;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
     .user-table th, .user-table td {
-        padding: 12px;
-        text-align: left;
-        border: 1px solid #ddd;
+        padding: 8px;
     }
 
-    .user-table {
-        border-radius: 5px;
+    .edit-btn, .delete-btn {
+        font-size: 12px;
     }
+}
 
-    .thead-dark th {
-        background-color: #333;
-        color: #fff;
-    }
-
-    .user-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    .user-table tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    .user-table td {
-        color: #555;
-    }
-
-    .user-table th {
-        font-weight: bold;
-    }
 </style>

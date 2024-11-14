@@ -10,7 +10,7 @@
   </script>
 <main class="content">
     <h2>Edit News</h2>
-    <form action="<?=  base_url('UpdateNews/' . htmlspecialchars($blog['id'])) ?>" method="post">
+    <form action="<?=  base_url('UpdateNews/' . htmlspecialchars($blog['id'])) ?>" method="post" enctype="multipart/form-data">
         <label for="author_name">Author Name:</label>
         <input type="text" id="author_name" name="author_name" value="<?= htmlspecialchars($blog['Author_name']) ?>" >
         <div class="error-message"><?= form_error('author_name') ?></div>
@@ -20,7 +20,7 @@
         <div class="error-message"><?= form_error('title') ?></div>
 
         <label for="content">Content:</label>
-        <textarea id="description"  required><?= htmlspecialchars($blog['description']) ?></textarea>
+        <textarea id="description" name="content" required><?= htmlspecialchars($blog['description']) ?></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
         <button type="submit">Update Blog</button>

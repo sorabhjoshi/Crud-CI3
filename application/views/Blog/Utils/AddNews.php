@@ -10,7 +10,7 @@
   </script>
 <main class="content">
     <h2>Add News</h2>
-    <form action="<?php  echo  base_url('AddingNews') ?>" method="post" enctype="multipart/form-data">  
+    <form action="<?php  echo  base_url('AddingNews/').$this->session->userdata('id') ?>" method="post" enctype="multipart/form-data">  
         <label for="author_name">Author Name:</label>
         <input type="text" id="author_name" name="author_name"  >
         <div class="error-message"><?= form_error('author_name') ?></div>
@@ -20,7 +20,7 @@
         <div class="error-message"><?= form_error('title') ?></div>
 
         <label for="image">Image:</label>
-        <input type="file" id="image" name="image" required>  <!-- Corrected here -->
+        <input type="file" id="image" name="image" >  <!-- Corrected here -->
         <div class="error-message"><?= form_error('image') ?></div>
 
         <label for="content">Content:</label>

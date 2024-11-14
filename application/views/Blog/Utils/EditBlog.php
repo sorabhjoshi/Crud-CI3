@@ -20,7 +20,7 @@
         <div class="error-message"><?= form_error('title') ?></div>
 
         <label for="content">Content:</label>
-        <textarea id="description" name="content" required><?= htmlspecialchars($blog['Description']) ?></textarea>
+        <textarea id="description" name="content" required></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
         <button type="submit">Update Blog</button>

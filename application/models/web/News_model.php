@@ -31,6 +31,7 @@ class News_model extends CI_Model {
     public function addnews($data) {
         
         $news_data = array(
+            'user_id'=> $data['user_id'],
             'author_name' => $data['Author_name'],    
             'title' => $data['title'],
             'description' => $data['description'],

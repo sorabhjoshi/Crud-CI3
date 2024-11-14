@@ -76,12 +76,15 @@ $route['UserDetails/(:num)'] = 'ShowUser/ShowUserData/$1';
 $route['UserDetailsEdit/(:num)'] = 'ShowUser/ShowUserDataToEdit/$1';
 $route['UpdateUserDetails/(:num)'] = 'ShowUser/UpdateUserData/$1';
 $route['AddNews'] = 'EditNews/AddNewsInterface';
-$route['AddingNews'] = 'EditNews/AddingNews';
+$route['AddingNews/(:num)'] = 'EditNews/AddingNews/$1';
 $route['AddBlog'] = 'Edit/AddBlog';
-$route['AddBlogData'] = 'Edit/AddBlogData';
+$route['AddBlogData/(:num)'] = 'Edit/AddBlogData/$1';
 $route['Blog_website/AboutPage'] = 'Blog/AboutPage';
 
 $route['Blog_website/Home'] = 'Blog/Home';
 $route['Blog_website/NewsArticles'] = 'Blog/NewsArticles';
 $route['Blog_website/Blogs'] = 'Blog/Blogs';
 $route['Blog_website/ContactUS'] = 'Blog/ContactUS';
+
+$route['Blog_website/Blog/View/(:num)'] = 'Blog/blogview/$1';
+$route['Blog_website/News/View/(:num)'] = 'Blog/newsview/$1';

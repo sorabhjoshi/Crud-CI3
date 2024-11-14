@@ -43,6 +43,7 @@ class Blog_model extends CI_Model {
 
     public function addblog($data) {
         $data = array(
+            'User_id'=>$data['User_id'],
             'Author_name' => $data['author_name'],
             'Title' => $data['title'],
             'Description' => $data['content'],

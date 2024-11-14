@@ -13,12 +13,12 @@ class EditNews extends CI_Controller {
         $data['blog'] = $this->News_model->edit_news_data($id);
         $this->load->view('Blog/Utils/EditNews', $data);
     }
-    
+     
     public function UpdateNewsdata($id) {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('description', 'Content', '');
+        $this->form_validation->set_rules('content', 'Content', '');
 
         if ($this->form_validation->run() == FALSE) {
             
@@ -58,15 +58,16 @@ class EditNews extends CI_Controller {
         $this->load->view('Blog/Utils/AddNews');
     }
 
-    public function AddingNews() {
+    public function AddingNews($userid) {
         // Set validation rules for the form fields
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('content', 'Content', 'required');  // Ensure content is required
+        $this->form_validation->set_rules('content', 'Content', '');  // Ensure content is required
     
         
         $data = [
+            'user_id'=> $userid,
             'Author_name' => $this->input->post('author_name'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('content'),
@@ -78,7 +79,6 @@ class EditNews extends CI_Controller {
         if ($_FILES['image']['name']) {
             $config['upload_path'] = './uploads/news_images/';  
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['max_size'] = 2048; 
             $config['file_name'] = time() . '_' . $_FILES['image']['name'];  
             
             $this->load->library('upload', $config);

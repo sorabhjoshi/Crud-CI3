@@ -23,5 +23,17 @@ class Website_model extends CI_Model {
         $query = $this->db->get('blogdata');
         return $query->result_array();
     }
+    public function showoneblog($id){
+        $query = $this->db->where('id', $id)
+        ->get('blogdata');
+        return $query->row_array();
+    }
+
+    public function showonenews($id){
+        $query = $this->db->where('id', $id)
+        ->get('newsdata');
+        return $query->row_array();
+    }
+    
 }
 ?>

@@ -28,9 +28,15 @@ class Blog extends CI_Controller {
     }
 
     public function ContactUS() {  
-        // Combine blog data and news data into $data array
     $this->load->view('Blog_Website/Contact');
     }
-    
+    public function blogview($id){
+        $data['blog'] = $this->Website_model->showoneblog($id); 
+        $this->load->view('Blog_Website/Blogview',$data);
+    }
+    public function newsview($id){
+        $data['news'] = $this->Website_model->showonenews($id); 
+        $this->load->view('Blog_Website/Newsview',$data);
+    }
     
 }

@@ -10,7 +10,7 @@
 </script>
 <main class="content">
     <h2>Add Blog</h2>
-    <form action="<?= base_url('AddBlogData') ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= base_url('AddBlogData/').$this->session->userdata('id') ?>" method="post" enctype="multipart/form-data">
         <label for="author_name">Author Name:</label>
         <input type="text" id="author_name" name="author_name" required>
         <div class="error-message"><?= form_error('author_name') ?></div>

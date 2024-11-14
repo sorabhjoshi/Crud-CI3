@@ -59,35 +59,64 @@ class EditNews extends CI_Controller {
     }
 
     public function AddingNews() {
-        echo "dede";
-        die;
+        // Set validation rules for the form fields
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('description', 'Content', '');  // Changed to required
+        $this->form_validation->set_rules('content', 'Content', 'required');  // Ensure content is required
     
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('Blog/Utils/AddNews', [
-                'validation_errors' => validation_errors()
-            ]);
-            return;
-        }
-    
+        
         $data = [
             'Author_name' => $this->input->post('author_name'),
             'title' => $this->input->post('title'),
             'description' => $this->input->post('content'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s'),
+            'Create_Date' => date('Y-m-d H:i:s')
         ];
     
-        if ($this->News_model->addnews($data)) {
-            $this->session->set_flashdata('success', 'News added successfully!');
-            redirect(base_url('News'));
+        
+        if ($_FILES['image']['name']) {
+            $config['upload_path'] = './uploads/news_images/';  
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['max_size'] = 2048; 
+            $config['file_name'] = time() . '_' . $_FILES['image']['name'];  
+            
+            $this->load->library('upload', $config);
+    
+            
+            if (!$this->upload->do_upload('image')) {
+                
+                $data['upload_error'] = $this->upload->display_errors();
+                $this->load->view('Utils/AddNews', $data);
+                return;  
+            } else {
+                
+                $upload_data = $this->upload->data();
+                $data['image_path'] = $upload_data['file_name'];
+                
+            }
+        }
+    
+        
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Utils/AddNews', $data);
+            return;  
         } else {
-            $this->session->set_flashdata('error', 'Failed to add news. Please try again.');
-            redirect(base_url('AddNews'));
+            
+            
+            $this->load->model('News_model');
+            if ($this->News_model->addnews($data)) {
+                
+                $this->session->set_flashdata('success', 'News added successfully!');
+                redirect(base_url('News'));
+            } else {
+                
+                $this->session->set_flashdata('error', 'Failed to add news. Please try again.');
+                redirect(base_url('AddNews'));
+            }
         }
     }
+    
     
     
     

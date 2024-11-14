@@ -2,7 +2,7 @@
 
 <main class="content">
     <div class="tablecontainer">
-        <h2>News List</h2> <a href="AddNews"><button>Add News</button></a>
+        <h2>News List</h2> <a class="addnews" href="AddNews"><button>Add News</button></a>
         
         <table class="user-table">
             <thead class="thead-dark">
@@ -44,6 +44,24 @@
 <?php include 'Components/Footer.php'; ?>
 
 <style>
+
+    .addnews button{
+        background-color: #5ca1e3;
+        padding: 10px;
+        color: white;
+        border: none;
+       cursor: pointer;
+        border-radius: 5px;
+        margin: 7px 0 7px 0;
+        transition: all 0.3s ease;
+    }
+
+    .addnews button:hover{
+        background-color: #3681ca;
+
+    }
+
+
     .tablecontainer {
         margin: 20px auto;
         width: 90%;

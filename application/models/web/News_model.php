@@ -29,14 +29,20 @@ class News_model extends CI_Model {
     }
 
     public function addnews($data) {
-        $data = array(
-            'Author_name' => $data['Author_name'],
+        
+        $news_data = array(
+            'author_name' => $data['Author_name'],    
             'title' => $data['title'],
-            'description' => $data['description'], 
-            'updated_at' => $data['updated_at']
+            'description' => $data['description'],
+            'created_at' => $data['Create_Date'],
+            'updated_at' => $data['updated_at'],
+            'image' => $data['image_path'] 
         );
-        return $this->db->insert('newsdata', $data);
+    
+        
+        return $this->db->insert('newsdata', $news_data);
     }
+    
 
 
     public function delete_news_data($id) {

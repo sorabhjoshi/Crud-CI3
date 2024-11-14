@@ -1,22 +1,22 @@
 <?php include_once 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Header.php'; ?>
 <script src="https://cdn.tiny.cloud/1/2annmeyewpcnpqtixx04jzx2ho7hf6audb1x85cav7o9i85g/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-  <script>
+<script>
     tinymce.init({
       selector: '#description',
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
       toolbar_mode: 'floating',
       height: 300
     });
-  </script>
+</script>
 <main class="content">
-    <h2>Add News</h2>
-    <form action="<?php  echo  base_url('AddingNews') ?>" method="post" enctype="multipart/form-data">  
+    <h2>Add Blog</h2>
+    <form action="<?= base_url('AddBlogData') ?>" method="post" enctype="multipart/form-data">
         <label for="author_name">Author Name:</label>
-        <input type="text" id="author_name" name="author_name"  >
+        <input type="text" id="author_name" name="author_name" required>
         <div class="error-message"><?= form_error('author_name') ?></div>
 
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title"  >
+        <input type="text" id="title" name="title" required>
         <div class="error-message"><?= form_error('title') ?></div>
 
         <label for="image">Image:</label>
@@ -24,21 +24,19 @@
         <div class="error-message"><?= form_error('image') ?></div>
 
         <label for="content">Content:</label>
-        <textarea id="description" name="content" ></textarea>
-        <div class="error-message"><?= form_error('description') ?></div>
+        <textarea id="description" name="content"></textarea>
+        <div class="error-message"><?= form_error('content') ?></div>
 
-        <button type="submit">Add News</button>
+        <button type="submit">Update Blog</button>
     </form>
 </main>
 <?php include 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Footer.php'; ?>
 
+
 <style>
 
 
-button {
-    position: relative;  /* Ensure it's positioned correctly */
-    z-index: 10; /* Ensure the button is on top of other elements */
-}
+
 .content {
     
     padding: 10px;

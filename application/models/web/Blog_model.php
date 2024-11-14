@@ -40,5 +40,26 @@ class Blog_model extends CI_Model {
         }
           
     }
+
+    public function addblog($data) {
+        $data = array(
+            'Author_name' => $data['author_name'],
+            'Title' => $data['title'],
+            'Description' => $data['content'],
+            'Created_Date' => $data['Create_Date'],
+            'Updated_date' => $data['Updated_date'],
+            'Image' => $data['image_path']
+        );
+        
+        $result = $this->db->insert('blogdata', $data);
+        if ($result) {
+         return TRUE;
+        } else {
+            return FALSE;
+        }
+          
+    }
+
+    
 }
 ?>

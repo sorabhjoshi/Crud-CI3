@@ -10,18 +10,19 @@ class Edit extends CI_Controller {
     }
 
     public function EditBlog($id) {
-        $data['blog'] = $this->Blog_model->get_blog_data($id);
+        $data = [
+            'blog' => $this->Blog_model->get_blog_data($id),
+            'validation_errors' => ''
+        ];
         $this->load->view('Blog/Utils/EditBlog', $data);
     }
 
     public function DeleteBlog($id) {
-        $query = $this->Blog_model->delete_blog_data($id);
-        if ($query) {
+        if ($this->Blog_model->delete_blog_data($id)) {
             redirect(base_url('Blog'));
-        }else{
-            'Deletion error';
+        } else {
+            echo 'Error: Could not delete the blog post.';
         }
-        
     }
 
     public function UpdateBlog($id) {
@@ -31,7 +32,6 @@ class Edit extends CI_Controller {
         $this->form_validation->set_rules('description', 'Content', '');
 
         if ($this->form_validation->run() == FALSE) {
-            
             $this->load->view('Blog/Utils/EditBlog', [
                 'blog' => $this->Blog_model->get_blog_data($id),
                 'validation_errors' => validation_errors()
@@ -52,4 +52,64 @@ class Edit extends CI_Controller {
             redirect(base_url("Edit/EditBlog/$id"));
         }
     }
+
+    public function AddBlog(){
+        $this->load->view('Blog/Utils/AddBlog');
+    }
+
+    public function AddBlogData() {
+        
+        $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('author_name', 'Author Name', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('content', 'Content', '');
+        
+  
+        $data['author_name'] = $this->input->post('author_name');
+        $data['title'] = $this->input->post('title');
+        $data['content'] = $this->input->post('content');
+        $data['Create_Date'] = date('Y-m-d H:i:s');  
+        $data['Updated_date'] = date('Y-m-d H:i:s');  
+        
+     
+        if ($_FILES['image']['name']) {
+            $config['upload_path'] = './uploads/blog_images/';  
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['max_size'] = 2048;  
+            $config['file_name'] = time() . '_' . $_FILES['image']['name'];  
+            
+            $this->load->library('upload', $config);
+    
+         
+            if (!$this->upload->do_upload('image')) {
+                
+                $data['upload_error'] = $this->upload->display_errors();
+                $this->load->view('Utils/AddBlog', $data);
+                return;
+            } else {
+              
+                $upload_data = $this->upload->data();
+                $data['image_path'] = $upload_data['file_name'];
+            }
+        }
+        
+   
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Utils/AddBlog', $data);
+        } else {
+           
+            $this->load->model('Blog_model');
+            if ($this->Blog_model->addblog($data)) {
+                
+                redirect('Blog', 'refresh');
+            } else {
+                
+                $this->load->view('Utils/AddBlog', ['error_message' => 'Failed to add the blog. Please try again.']);
+            }
+        }
+    }
+    
+    
+    
+    
 }

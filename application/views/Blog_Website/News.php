@@ -1,50 +1,84 @@
 <?php include 'Components/Header.php'; ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<div class="bread">
+  <h3 style="text-self:right;">News Design</h3> <p>Home >> News Design</p>
+  </div>
 <main>
   <div class="container my-3">
     <h2 class="text-center mb-4" id="news">Latest News</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4" id="news-container">
-      <?php foreach ($news as $index => $new): ?>
-        <div class="col featured" <?php if ($index >= 3) echo 'style="display: none;"'; ?>>
-          <div class="card h-100 card-custom">
-            <img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" alt="<?= $new['title']; ?>">
-            <div class="card-body">
+
+    <!-- Row Layout: Left side for news and right side for the sidebar -->
+    <div class="row">
+      <!-- News Section -->
+      <div class="col-md-9">
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="news-container">
+          <?php foreach ($news as $index => $new): ?>
+            <div class="col featured" <?php if ($index >= 3) echo 'style="display: none;"'; ?>>
+              <div class="card h-100 card-custom">
+                <img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" alt="<?= $new['title']; ?>">
+                <div class="card-body">
+                  <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
+                    <h5 class="card-title"><?= $new['title']; ?></h5>
+                    <p class="card-text">
+                      <?php
+                        $firstLine = explode('.', strip_tags($new['description']));
+                        $firstLine = trim($firstLine[0]);
+                        echo $firstLine;
+                      ?>
+                    </p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <div class="text-center mt-4">
+          <button id="load-more" class="btn btn-primary">Load More</button>
+        </div>
+      </div>
+
+      <!-- Sidebar (Right Column) -->
+      <div class="col-md-3">
+        <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif" alt="">
+        <div class="socialtags">
+          <h4>Follow Us</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" ><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" ><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" ><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" ><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#" ><i class="fab fa-youtube"></i></a></li>
+          </ul>
+          <ul class="list">
+            <?php foreach ($news as $new):?>
+              <li class="li-container"><img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" ?>
               <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
                 <h5 class="card-title"><?= $new['title']; ?></h5>
-                <p class="card-text">
-                  <?php
-                    $firstLine = explode('.', strip_tags($new['description']));
-                    $firstLine = trim($firstLine[0]);
-                    echo $firstLine;
-                  ?>
-                </p>
-              </a>
-            </div>
-          </div>
+                </a>
+              </li>
+              <?php endforeach; ?>
+          </ul>
         </div>
-      <?php endforeach; ?>
-    </div>
-    <div class="text-center mt-4">
-      <button id="load-more" class="btn btn-primary">Load More</button>
+      </div>
     </div>
   </div>
 </main>
 
 <script>
   $(document).ready(function() {
-      let itemsToShow = 3;
-      let totalItems = $(".featured").length;
+    let itemsToShow = 3;
+    let totalItems = $(".featured").length;
 
-      $("#load-more").on("click", function(e) {
-          e.preventDefault();
+    $("#load-more").on("click", function(e) {
+        e.preventDefault();
 
-          $(".featured:hidden").slice(0, itemsToShow).slideDown();
+        $(".featured:hidden").slice(0, itemsToShow).slideDown();
 
-          if ($(".featured:hidden").length === 0) {
-              $("#load-more").text("No More News").prop("disabled", true);
-          }
-      });
+        if ($(".featured:hidden").length === 0) {
+            $("#load-more").hide();
+        }
+    });
   });
 </script>
 
@@ -158,6 +192,7 @@ main {
 a {
   text-decoration: none;
   color: inherit;
+  display: ;
 }
 
 a:hover {
@@ -188,5 +223,197 @@ a:hover {
     font-size: 0.85rem;
   }
 }
+
+/* List Styling */
+.list {
+  width: 100%;
+  margin: 0; /* Remove left margin */
+  padding: 0; /* Remove left padding */
+  align-items: start;
+}
+
+.li-container {
+  display: flex;
+  align-items: start;  
+  text-align: left;
+  width: 100%;
+  border-top: .5px solid #e9e5e5;
+  padding-top: 10px;
+  margin-left: 0; /* Remove any left margin */
+}
+
+.li-container img {
+  height: 50px;  
+  width: 50px;   
+  object-fit: cover;  
+  border-radius: 5px; 
+  margin-right: 10px;  
+}
+
+.li-container h5 {
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+}
+
+ul li {
+  margin: 10px 0;
+}
+
+.socialtags {
+  padding: 20px 0 20px;
+}
+
+.list-unstyled {
+  display: flex;
+  flex-direction: row;
+}
+
+ul li a {
+  font-size: 1.25rem;
+  color: #333;
+  text-decoration: none;
+  align-items: center;
+}
+
+ul li a:hover {
+  color: #52adbf;
+}
+
+ul li a i {
+  margin-right: 10px;
+}
+
+/* Main image container styling */
+.img-container {
+  position: relative;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+    url("https://images.unsplash.com/photo-1503694978374-8a2fa686963a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  padding: 70px 20px;
+  margin: 0 !important;
+  max-width: 100%;
+  color: #f9f9f9;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bread {
+  background-color: #e1e1e1;
+}
+
+.img {
+  height: 280px;
+  width: 100%;
+  margin: 0 auto 0 auto;
+}
+
+/* Styling for the welcome heading */
+.img-container h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Buttons in the welcome section */
+.img-container .btn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid #f9f9f9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.img-container .btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Enhanced Card styling */
+.card-custom {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  overflow: hidden;
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Blog and News images */
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.card-img-top:hover {
+  transform: scale(1.1);
+}
+
+/* Card body text */
+.card-body h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-body p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Section Headings */
+.text-left {
+  text-align: left;
+}
+
+.lead {
+  font-size: 1.3rem;
+}
+
+/* Additional Styles */
+.bread {
+  background-color: #e1e1e1;
+}
+
+.container {
+  margin-top: 40px;
+}
+.bread {
+  width: 100%;
+  background-color: #eeeeee;
+  padding: 15px 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.bread h3 {
+  margin: 0;
+  text-align: left;
+}
+
+.bread p {
+  margin: 0;
+  text-align: right;
+}
+
 
 </style>

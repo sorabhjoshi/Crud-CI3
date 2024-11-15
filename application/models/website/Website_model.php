@@ -5,12 +5,12 @@ class Website_model extends CI_Model {
 
     
     public function showblogs() {
-        $query = $this->db->limit(3)->get('blogdata');
+        $query = $this->db->get('blogdata');
         return $query->result_array();
     }
 
     public function shownews() {
-        $query = $this->db->limit(3)->get('newsdata');
+        $query = $this->db->get('newsdata');
         return $query->result_array();
     }
     

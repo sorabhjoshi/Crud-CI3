@@ -1,7 +1,7 @@
-  <!-- Footer Section -->
+ 
   <footer class="footer mt-5 py-3 bg-dark text-white">
     <div class="container text-center">
-      <!-- Footer Content -->
+     
       <div class="row">
         <div class="col-md-4 mb-3">
           <h5>About Us</h5>
@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-4 mb-3">
           <h5>Quick Links</h5>
-          <ul class="list-unstyled">
+          <ul class="list-styled">
             <li><a href="<?php echo base_url('Blog_website/Home')?>" class="text-white">Home</a></li>
             <li><a href="<?php echo base_url('Blog_website/Blogs')?>" class="text-white">Blogs</a></li>
             <li><a href="<?php echo base_url('Blog_website/AboutPage')?>" class="text-white">About</a></li>
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <!-- Social Media Icons -->
+    
       <div class="social-icons">
         <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f"></i></a>
         <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
@@ -31,14 +31,14 @@
         <a href="#" class="text-white mx-2"><i class="fab fa-linkedin-in"></i></a>
       </div>
 
-      <!-- Footer Bottom -->
+     
       <div class="mt-4">
-        <p>&copy; <?= date("Y"); ?> Your Website Name. All Rights Reserved.</p>
+        <p>&copy; <?= date("Y"); ?> Joshi Blogs. All Rights Reserved.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts (if needed) -->
+ 
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>

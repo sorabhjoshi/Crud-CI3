@@ -9,7 +9,7 @@ class Blog extends CI_Controller {
     }
 
     public function Home() {  
-        $data['users'] = $this->Website_model->showblogs();
+    $data['users'] = $this->Website_model->showblogs();
     $data['news'] = $this->Website_model->shownews();  // Combine blog data and news data into $data array
     $this->load->view('Blog_Website/Home', $data);
     }
@@ -32,10 +32,12 @@ class Blog extends CI_Controller {
     }
     public function blogview($id){
         $data['blog'] = $this->Website_model->showoneblog($id); 
+        $data['blogdata'] = $this->Website_model->showblogs($id); 
         $this->load->view('Blog_Website/Blogview',$data);
     }
     public function newsview($id){
         $data['news'] = $this->Website_model->showonenews($id); 
+        $data['newsdata'] = $this->Website_model->showallnews(); 
         $this->load->view('Blog_Website/Newsview',$data);
     }
     

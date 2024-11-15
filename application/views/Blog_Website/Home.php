@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bootstrap Single Page</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -20,62 +21,171 @@
     </div>
   </div>
 
-  <div class="container my-5">
-    <h2 class="text-center mb-4" id="blogs">Our Blogs</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <?php foreach ($users as $user): ?>
-        <div class="col">
-          <div class="card h-100 card-custom">
-            <img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" alt="<?= $user['Title']; ?>">
-            <div class="card-body">
-              <!-- Wrap only title and content in the anchor tag -->
-              <a href="<?= base_url('Blog_website/Blog/View/' . $user['id']); ?>" class="text-decoration-none text-dark">
-                <h5 class="card-title"><?= $user['Title']; ?></h5>
-                <p class="card-text">
-                  <?php
-                    $firstLine = explode('.', strip_tags($user['Description']));
-                    $firstLine = trim($firstLine[0]);
-                    echo $firstLine;
-                  ?>
-                </p>
-              </a>
-            </div>
+  <div class="bread  bg-gray">
+    <h2 class="text-left">Blog</h2>
+  </div>
+
+  <div class="container my-3">
+    <div class="row g-4">
+
+      
+      <div class="col-md-9">
+        <div>
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php
+              $limitedBlogs = array_slice($users, 0, 3);
+              foreach ($limitedBlogs as $user):
+            ?>
+              <div class="col">
+                <div class="card h-100 card-custom">
+                  <img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" alt="<?= $user['Title']; ?>">
+                  <div class="card-body">
+                    <a href="<?= base_url('Blog_website/Blog/View/' . $user['id']); ?>" class="text-decoration-none text-dark">
+                      <h5 class="card-title"><?= $user['Title']; ?></h5>
+                      <p class="card-text">
+                        <?php
+                          $firstLine = explode('.', strip_tags($user['Description']));
+                          $firstLine = trim($firstLine[0]);
+                          echo $firstLine;
+                        ?>
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            <?php endforeach; ?>
           </div>
         </div>
-      <?php endforeach; ?>
+
+      
+        <div>
+          <h2 class="text-center m-4 p-2" style="border-bottom: 2px solid purple;" id="news">Latest News</h2>
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <?php
+             
+              $limitedNews = array_slice($news, 0, 3);
+              foreach ($limitedNews as $new):
+            ?>
+              <div class="col">
+                <div class="card h-100 card-custom">
+                  <img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" alt="<?= $new['title']; ?>">
+                  <div class="card-body">
+                    <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
+                      <h5 class="card-title"><?= $new['title']; ?></h5>
+                      <p class="card-text">
+                        <?php
+                          $firstLine = explode('.', strip_tags($new['description']));
+                          $firstLine = trim($firstLine[0]);
+                          echo $firstLine;
+                        ?>
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Details Bar Column (25%) -->
+      <div class="col-md-3">
+        <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif" alt="">
+        <div class="socialtags">
+          <h4>Follow Us</h4>
+          <ul class="list-unstyled">
+            <li><a href="#" ><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" ><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" ><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" ><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#" ><i class="fab fa-youtube"></i></a></li>
+          </ul>
+          <ul class="list">
+            <?php $limitedNews = array_slice($news, 0, 4);
+              foreach ($limitedNews as $new):?>
+              <li class="li-container"><img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" ?>
+              <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
+                <h5 class="card-title"><?= $new['title']; ?></h5>
+                </a>
+              </li>
+              <?php endforeach; ?>
+              <?php  $limitedBlogs = array_slice($users, 0, 4);
+              foreach ($limitedBlogs as $user):?>
+              <li class="li-container"><img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" ?>
+              <a href="<?= base_url('Blog_website/Blog/View/' . $user['id']); ?>">
+                <h5 class="card-title"><?= $user['Title']; ?></h5>
+                </a>
+              </li>
+              <?php endforeach; ?>
+          </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="container my-5">
-    <h2 class="text-center mb-4" id="news">Latest News</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <?php foreach ($news as $new): ?>
-        <div class="col">
-          <div class="card h-100 card-custom">
-            <img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" alt="<?= $new['title']; ?>">
-            <div class="card-body">
-              <!-- Wrap only title and content in the anchor tag -->
-              <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
-                <h5 class="card-title"><?= $new['title']; ?></h5>
-                <p class="card-text">
-                  <?php
-                    $firstLine = explode('.', strip_tags($new['description']));
-                    $firstLine = trim($firstLine[0]);
-                    echo $firstLine;
-                  ?>
-                </p>
-              </a>
-            </div>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
 </main>
 
 <?php include 'Components/Footer.php'; ?>
 
 <style>
+ .list{
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
+  align-items: start;
+ }
+.li-container {
+  display: flex;
+  
+  align-items: start;  
+  text-align: left;
+  width: 100%;
+  border-top: .5px solid #e9e5e5;
+  padding-top: 10px;
+}
+
+.li-container img {
+  height: 50px;  
+  width: 50px;   
+  object-fit: cover;  
+  border-radius: 5px; 
+  margin-right: 10px;  
+}
+
+
+.li-container h5 {
+  font-size: 1rem;
+  margin: 0;
+  color: #333;
+}
+.card-title:hover{
+  color: #52adbf;
+}
+  
+  ul li {
+    margin: 10px 0;
+  }
+  .socialtags {
+    padding: 20px 0 20px;
+  }
+  .list-unstyled {
+    display: flex;
+    flex-direction: row;
+  }
+  ul li a {
+    font-size: 1.25rem;
+    color: #333;
+    text-decoration: none;
+    align-items: center;
+  }
+  ul li a:hover {
+    color: #52adbf;
+  }
+  ul li a i {
+    margin-right: 10px;
+  }
+
   /* Main image container styling */
   .img-container {
     position: relative;
@@ -88,13 +198,20 @@
     max-width: 100%;
     color: #f9f9f9;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
-
+  
+  .bread {
+    background-color: #e1e1e1;
+  }
+  .img {
+    height: 280px;
+    width: 100%;
+    margin: 0 auto 0 auto;
+  }
   /* Styling for the welcome heading */
   .img-container h1 {
     font-size: 2.5rem;
@@ -162,50 +279,34 @@
     line-height: 1.5;
   }
 
-  /* Section headings */
-  h2 {
-    font-weight: 700;
-    color: #333;
+  /* Section Headings */
+  .text-left {
+    text-align: left;
   }
 
-  /* Remove default underline for links */
-  a {
-    text-decoration: none;
+  .lead {
+    font-size: 1.3rem;
   }
+
+  /* Additional Styles */
+  .bread {
+    background-color: #e1e1e1;
+    padding: 20px 20px 20px 70px ;
+  }
+  .card-body h5:hover {
+        color: #52adbf;
+        transition: all 0.3s ease;
+    }
+
+    .card-body p:hover {
+        color: #52adbf;
+        transition: all 0.3s ease;
+    }
 
   
-  .card-body h5:hover{
-    color: #52adbf;
-    transition: all 0.3s ease;
-  }
-
-  .card-body p:hover{
-    color: #52adbf;
-    transition: all 0.3s ease;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .img-container h1 {
-      font-size: 2rem;
-    }
-    .img-container .btn {
-      font-size: 0.9rem;
-    }
-    .card-body h5 {
-      font-size: 1.1rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .img-container {
-      padding: 50px 10px;
-    }
-    .img-container h1 {
-      font-size: 1.75rem;
-    }
-  }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

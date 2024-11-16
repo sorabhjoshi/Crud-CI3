@@ -1,7 +1,14 @@
 <?php include 'Components/Header.php'; ?>
 <main class="content">
     <div class="tablecontainer">
-        <h2>Blogs List</h2> <a class="addnews" href="AddBlog"><button>Add Blog</button></a>
+        <div class="addnews">
+        <h2>Blogs List</h2> 
+        <div>
+        <a href="Blog_website/Home"><button>View Site</button></a>
+        <a href="AddBlog"><button>Add Blog</button></a>
+        </div>
+        </div>
+        
         <table class="user-table">
             <thead class="thead-dark">
                 <tr>
@@ -9,6 +16,7 @@
                     <th>User ID</th>
                     <th>Author Name</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
                     <th>Edit</th>
@@ -22,11 +30,12 @@
                     <?php foreach ($users as $user): ?>
                         <tr>
                             <td><?php echo $id++; ?></td>
-                            <td><?php echo htmlspecialchars($user->User_id); ?></td>
-                            <td><?php echo htmlspecialchars($user->Author_name); ?></td>
-                            <td><?php echo htmlspecialchars($user->Title); ?></td>
-                            <td><?php echo htmlspecialchars($user->Created_date); ?></td>
-                            <td><?php echo htmlspecialchars($user->Updated_date); ?></td>
+                            <td><?php echo $user->User_id; ?></td>
+                            <td><?php echo $user->Author_name; ?></td>
+                            <td><?php echo $user->Title; ?></td>
+                            <td><?php echo $user->category; ?></td>
+                            <td><?php echo $user->Created_date; ?></td>
+                            <td><?php echo $user->Updated_date; ?></td>
                             <td><a href="<?= base_url('EditBlog/' . $user->id) ?>" class="edit-btn">Edit</a></td>
                             <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
                         </tr>
@@ -44,22 +53,36 @@
 
 
 <style>
+.addnews {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    background-color: #dddddd;
+}
 
-.addnews button{
-        background-color: #5ca1e3;
-        padding: 10px;
-        color: white;
-        border: none;
-       cursor: pointer;
-        border-radius: 5px;
-        margin: 7px 0 7px 0;
-        transition: all 0.3s ease;
-    }
+.addnews h2 {
+    margin: 0;
+    font-size: 24px;
+}
 
-    .addnews button:hover{
-        background-color: #3681ca;
+.addnews button {
+    background-color: #5ca1e3;
+    padding: 10px ;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 7px 20px 7px 0;
+    transition: all 0.3s ease;
+}
 
-    }
+.addnews button:hover {
+    background-color: #3681ca;
+}
+
     /* Table container */
 .tablecontainer {
     margin: 20px auto;
@@ -69,9 +92,10 @@
 
 /* Table heading */
 h2 {
-    text-align: center;
+    float: left;
     font-size: 24px;
-    margin-bottom: 20px;
+    padding: 20px;
+    margin: 0 !important;
     color: #333;
 }
 
@@ -95,7 +119,7 @@ h2 {
 
 /* Header row styling */
 .thead-dark th {
-    background-color: #333;
+    background-color: #2d3e50;
     color: #fff;
 }
 

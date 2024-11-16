@@ -8,6 +8,7 @@ class Welcome extends CI_Controller {
 		$this->load->model('web/Users_model');
 		$this->load->model('web/Blog_model');
 		$this->load->model('web/News_model');
+		$this->load->model('web/Dashboard_model');
     }
 	public function checklogin(){
 		if (!$this->session->userdata('id')) {
@@ -19,12 +20,16 @@ class Welcome extends CI_Controller {
 		$this->load->view('Login');
 	}
 	public function Register()
-	{
+	{ 
 		$this->load->view('Registration');
 	}
 	public function dashboard(){
 		$this->checklogin() ;
-		$this->load->view('Blog/Dashboard');
+        $data['categories'] = $this->Dashboard_model->get_blog_categories();
+		$data['users'] = $this->Dashboard_model->get_users_count();
+        $data['news'] = $this->Dashboard_model->get_news_count();
+        $data['blogs'] = $this->Dashboard_model->get_blogs_count();
+		$this->load->view('Blog/Dashboard',$data);
 	}
 	public function about(){
 		$this->checklogin() ;

@@ -29,6 +29,7 @@ class Edit extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('Category', 'Blog Category', 'required');
         $this->form_validation->set_rules('content', 'Content', '');
 
         if ($this->form_validation->run() == FALSE) {
@@ -42,6 +43,7 @@ class Edit extends CI_Controller {
         $data = [
             'author_name' => $this->input->post('author_name'),
             'title' => $this->input->post('title'),
+            'category' => $this->input->post('Category'),
             'content' => $this->input->post('content'),
             'Updated_date' => date('Y-m-d H:i:s')
         ];
@@ -62,11 +64,13 @@ class Edit extends CI_Controller {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('Category', 'Blog Category', 'required');
         $this->form_validation->set_rules('content', 'Content', '');
         
         $data['User_id'] = $userid;
         $data['author_name'] = $this->input->post('author_name');
         $data['title'] = $this->input->post('title');
+        $data['category'] = $this->input->post('Category');
         $data['content'] = $this->input->post('content');
         $data['Create_Date'] = date('Y-m-d H:i:s');  
         $data['Updated_date'] = date('Y-m-d H:i:s');  

@@ -28,6 +28,7 @@ class Blog_model extends CI_Model {
         $data = array(
             'Author_name' => $data['author_name'],
             'Title' => $data['title'],
+            'cateogry' => $data['category'],
             'Description' => $data['content'],
             'Updated_date' => $data['Updated_date']
         );
@@ -46,6 +47,7 @@ class Blog_model extends CI_Model {
             'User_id'=>$data['User_id'],
             'Author_name' => $data['author_name'],
             'Title' => $data['title'],
+            'category' => $data['category'],
             'Description' => $data['content'],
             'Created_Date' => $data['Create_Date'],
             'Updated_date' => $data['Updated_date'],

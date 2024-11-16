@@ -50,11 +50,13 @@
     }
 
     h2 {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333;
-    }
+    text-align: left;
+    font-size: 24px;
+    padding: 20px;
+    background-color: #eaeaea;
+    color: #333;
+    margin-bottom: 20px;
+}
 
     .user-table {
         width: 100%;
@@ -73,7 +75,7 @@
     }
 
     .thead-dark th {
-        background-color: #333;
+        background-color: #2d3e50;
         color: #fff;
     }
 

@@ -2,8 +2,13 @@
 
 <main class="content">
     <div class="tablecontainer">
-        <h2>News List</h2> <a class="addnews" href="AddNews"><button>Add News</button></a>
-        
+        <div class="addnews">
+        <h2>News List</h2> 
+        <div>
+        <a href="Blog_website/Home"><button>View Site</button></a>
+        <a  href="AddNews"><button>Add News</button></a>
+        </div>
+        </div>
         <table class="user-table">
             <thead class="thead-dark">
                 <tr>
@@ -44,22 +49,37 @@
 <?php include 'Components/Footer.php'; ?>
 
 <style>
+.addnews {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    background-color: #dddddd;
+    padding: 15px 0;
+}
 
-    .addnews button{
-        background-color: #5ca1e3;
-        padding: 10px;
-        color: white;
-        border: none;
-       cursor: pointer;
-        border-radius: 5px;
-        margin: 7px 0 7px 0;
-        transition: all 0.3s ease;
-    }
+.addnews h2 {
+    margin: 0;
+    font-size: 24px;
+    padding: 0 10px;
+}
 
-    .addnews button:hover{
-        background-color: #3681ca;
+.addnews button {
+    background-color: #5ca1e3;
+    padding: 10px ;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 7px 10px 7px 0;
+    transition: all 0.3s ease;
+}
 
-    }
+.addnews button:hover {
+    background-color: #3681ca;
+}
 
 
     .tablecontainer {
@@ -68,12 +88,7 @@
         max-width: 1000px;
     }
 
-    h2 {
-        text-align: center;
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #333;
-    }
+  
 
     .user-table {
         width: 100%;
@@ -92,7 +107,7 @@
     }
 
     .thead-dark th {
-        background-color: #333;
+        background-color: #2d3e50;
         color: #fff;
     }
 

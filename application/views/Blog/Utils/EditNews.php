@@ -29,104 +29,117 @@
 <?php include 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Footer.php'; ?>
 
 <style>
-
-textarea {
-    display: block; /* Make sure it's visible */
-}
-
-.content {
-    
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.error-message {
-    color: red;   /* Red color for error messages */
-    font-size: 14px;  /* Optional: Adjust the font size */
-    margin-top: 5px;  /* Optional: Add some spacing above the error message */
-}
-
-/* Heading for the form */
-h2 {
-    text-align: center;
-    color: #333;
-    font-size: 30px;
-    margin: 10px;
-}
-
-/* Form styling */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    border-radius: 8px;
-    width: 600px;
-    max-width: 600px;
-    padding: 20px;
-    background-color: #f5f5e1;
-}
-
-/* Label styling */
-label {
-    font-size: 18px;
-    font-weight: bold;
-    color: #444;
-    margin-bottom: 5px;
-}
-
-/* Input and textarea styling */
-input[type="text"], textarea {
-    padding: 14px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #f4f4f4;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-/* Input and textarea focus effect */
-input[type="text"]:focus, textarea:focus {
-    border-color: #4CAF50;
-    background-color: #fff;
-    outline: none;
-}
-
-/* Button styling */
-button {
-    padding: 14px 20px;
-    font-size: 18px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-/* Button hover effect */
-button:hover {
-    background-color: #45a049;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
+    /* Wrapper for the entire content */
     .content {
-        padding: 20px;
-        max-width: 100%;
+        padding: 40px 20px;
+        background-color: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
 
+    /* Heading styling */
     h2 {
-        font-size: 26px;
+        text-align: center;
+        color: #333;
+        font-size: 32px;
+        margin-bottom: 20px;
+        font-weight: 600;
     }
 
-    button {
+    /* Form styling */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 80%;
+        padding: 30px;
+        background-color: #f7f7f7;
+        border-radius: 8px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Label styling */
+    label {
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    /* Input and textarea styling */
+    input[type="text"],
+    input[type="file"],
+    textarea,
+    select {
+        padding: 14px;
         font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #f9f9f9;
+        transition: all 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
     }
-}
 
+    /* Focus effect for inputs */
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #4CAF50;
+        background-color: #fff;
+        outline: none;
+    }
+
+    /* Content area for the description (TinyMCE) */
+    textarea {
+        min-height: 150px;
+    }
+
+    /* Error message styling */
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    /* Button styling */
+    button {
+        padding: 14px 24px;
+        font-size: 18px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Button hover effect */
+    button:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+    }
+
+    button:active {
+        transform: translateY(1px);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .content {
+            padding: 20px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        h2 {
+            font-size: 28px;
+        }
+
+        button {
+            font-size: 16px;
+        }
+    }
 </style>

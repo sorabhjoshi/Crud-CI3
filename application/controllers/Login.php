@@ -26,7 +26,8 @@ class Login extends CI_Controller {
             $userdata=$this->Login_model->login($data);
             if($userdata) {
                 $this->session->set_userdata($userdata);
-                $this->load->view('Blog/Dashboard');
+                 redirect(base_url('Dashboard'));
+                // $this->load->view('Dashboard');
             } else {
                 $this->load->view('Registration');
             }

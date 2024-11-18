@@ -1,6 +1,4 @@
 <?php include 'Components/Header.php'; ?>
-<img src="https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Main Banner" class="banner">
-
 <main class="content">
     <section class="overview-section">
         <div class="chart-container">
@@ -64,6 +62,13 @@ new Chart(ctx, {
 </script>
 
 <style>
+    .sidebar img{
+     width:100%;
+    display: block;
+    height: 60px;
+    padding: 10px 45px 10px;
+    border-bottom: 1px solid #4b5c70;
+    } 
     * {
         margin: 0;
         padding: 0;

@@ -23,7 +23,23 @@ class Blog_model extends CI_Model {
                 ->delete('blogdata');
         return ($q) ? TRUE : FALSE;
     }
-
+    
+    public function updatetags($data,$id) {
+        $data = array(
+            'seotags' => $data['seotags'],
+            'metatags' => $data['metatags'],
+            'metadesc' => $data['metadesc'],
+            'Updated_date' => $data['Updated_date']
+        );
+        $this->db->where('id', $id);
+        $result = $this->db->update('blogdata', $data);
+        if ($result) {
+         return TRUE;
+        } else {
+            return FALSE;
+        }
+          
+    }
     public function updateblog($data,$id) {
         $data = array(
             'Author_name' => $data['author_name'],

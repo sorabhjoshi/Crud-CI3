@@ -8,7 +8,14 @@ class Edit extends CI_Controller {
         $this->load->model('Web/Blog_model');
         $this->load->library('form_validation');
     }
-
+    
+    public function Edittags($id) {
+        $data = [
+            'blog' => $this->Blog_model->get_blog_data($id),
+            'validation_errors' => ''
+        ];
+        $this->load->view('Blog/Utils/Edittags', $data);
+    }
     public function EditBlog($id) {
         $data = [
             'blog' => $this->Blog_model->get_blog_data($id),
@@ -17,6 +24,14 @@ class Edit extends CI_Controller {
         $this->load->view('Blog/Utils/EditBlog', $data);
     }
 
+    
+    public function Deletetags($id) {
+        if ($this->Blog_model->delete_blog_data($id)) {
+            redirect(base_url('Blog/Categories'));
+        } else {
+            echo 'Error: Could not delete the blog post.';
+        }
+    }
     public function DeleteBlog($id) {
         if ($this->Blog_model->delete_blog_data($id)) {
             redirect(base_url('Blog'));
@@ -24,7 +39,35 @@ class Edit extends CI_Controller {
             echo 'Error: Could not delete the blog post.';
         }
     }
+    
 
+    public function UpdateSEO($id) {
+        $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('seo_tags', 'SEO Tags', 'required');
+        $this->form_validation->set_rules('meta_tags', 'Meta Tags', 'required');
+        $this->form_validation->set_rules('content', 'Meta Description', '');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Blog/Utils/Edittags', [
+                'blog' => $this->Blog_model->get_blog_data($id),
+                'validation_errors' => validation_errors()
+            ]);
+            return;
+        }
+
+        $data = [
+            'seotags' => $this->input->post('seo_tags'),
+            'metatags' => $this->input->post('meta_tags'),
+            'metadesc' => $this->input->post('content'),
+            'Updated_date' => date('Y-m-d H:i:s')
+        ];
+        
+        if ($this->Blog_model->updatetags($data, $id)) {
+            redirect(base_url('Categories'));
+        } else {
+            redirect(base_url("Edit/Edittags/$id"));
+        }
+    }
     public function UpdateBlog($id) {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');

@@ -23,6 +23,14 @@ class Welcome extends CI_Controller {
 	{ 
 		$this->load->view('Registration');
 	}
+
+	public function Categories()
+	{ 
+		$data['users'] = $this->Blog_model->getAllData();
+		$this->load->view('Blog/Categories',$data);
+	}
+
+	
 	public function dashboard(){
 		$this->checklogin() ;
         $data['categories'] = $this->Dashboard_model->get_blog_categories();

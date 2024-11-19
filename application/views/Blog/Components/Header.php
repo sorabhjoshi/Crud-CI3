@@ -31,7 +31,7 @@
                 </button>
                 <div class="dropdown-container">
                     <a href="<?php echo base_url('Blog')?>">Blog</a>
-                    <a href="<?php echo base_url('Users')?>">Categories</a>
+                    <a href="<?php echo base_url('Categories')?>">Categories</a>
                 </div>
                 <a href="<?php echo base_url('News')?>">News</a>
                 <a class="logout" href="<?php echo base_url('Logout')?>">Logout</a>

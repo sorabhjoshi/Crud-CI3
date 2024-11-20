@@ -34,6 +34,7 @@
         <textarea id="description" name="content" required><?= htmlspecialchars($blog['Description']) ?></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
+        
         <button type="submit">Update Blog</button>
     </form>
 </main>

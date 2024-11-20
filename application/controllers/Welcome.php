@@ -26,9 +26,15 @@ class Welcome extends CI_Controller {
 
 	public function Categories()
 	{ 
-		$data['users'] = $this->Blog_model->getAllData();
+		$data['users'] = $this->Blog_model->getAlltags();
 		$this->load->view('Blog/Categories',$data);
 	}
+	public function NewsCategories()
+	{ 
+		$data['users'] = $this->News_model->getAlltags();
+		$this->load->view('Blog/NewsCategories',$data);
+	}
+	
 
 	
 	public function dashboard(){

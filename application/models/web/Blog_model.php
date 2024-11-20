@@ -7,7 +7,19 @@ class Blog_model extends CI_Model {
         $query = $this->db->get('blogdata'); 
         return $query->result();  
     }
+    public function getAlltags() {
+        $query = $this->db->get('blogcategories'); 
+        return $query->result();  
+    }
+    
+    public function get_tags_data($id) {
+        $q = $this->db
+            ->select('*')
+            ->where('blog_id', $id)
+            ->get('blogcategories');
 
+        return $q->row_array();  
+    }
     public function get_blog_data($id) {
         $q = $this->db
             ->select('*')
@@ -24,15 +36,15 @@ class Blog_model extends CI_Model {
         return ($q) ? TRUE : FALSE;
     }
     
-    public function updatetags($data,$id) {
+    public function inserttags($data) {
         $data = array(
-            'seotags' => $data['seotags'],
-            'metatags' => $data['metatags'],
-            'metadesc' => $data['metadesc'],
-            'Updated_date' => $data['Updated_date']
+            'blog_id' => $data['blog_id'],
+            'blog_title' =>$data['blog_title'],
+            'seotitle' => $data['seotags'],
+            'metakeywords' => $data['metatags'],
+            'metadesc' => $data['metadesc']
         );
-        $this->db->where('id', $id);
-        $result = $this->db->update('blogdata', $data);
+        $result = $this->db->insert('blogcategories', $data);
         if ($result) {
          return TRUE;
         } else {
@@ -63,7 +75,6 @@ class Blog_model extends CI_Model {
             'User_id'=>$data['User_id'],
             'Author_name' => $data['author_name'],
             'Title' => $data['title'],
-            'category' => $data['category'],
             'Description' => $data['content'],
             'Created_Date' => $data['Create_Date'],
             'Updated_date' => $data['Updated_date'],
@@ -72,7 +83,7 @@ class Blog_model extends CI_Model {
         
         $result = $this->db->insert('blogdata', $data);
         if ($result) {
-         return TRUE;
+            return $this->db->insert_id();
         } else {
             return FALSE;
         }

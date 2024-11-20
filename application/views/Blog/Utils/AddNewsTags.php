@@ -1,58 +1,35 @@
 <?php include_once 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Header.php'; ?>
-<script src="https://cdn.tiny.cloud/1/2annmeyewpcnpqtixx04jzx2ho7hf6audb1x85cav7o9i85g/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
-<script>
+<script src="https://cdn.tiny.cloud/1/2annmeyewpcnpqtixx04jzx2ho7hf6audb1x85cav7o9i85g/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
     tinymce.init({
-        selector: '#description',
-        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-        toolbar_mode: 'floating',
-        height: 300
+      selector: '#description',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+      toolbar_mode: 'floating',
+      height: 300
     });
-</script>
-
+  </script>
 <main class="content">
-    <h2>Add Blog</h2>
-    <form action="<?= base_url('AddBlogData/') . $this->session->userdata('id') ?>" method="post" enctype="multipart/form-data">
-        <label for="author_name">Author Name:</label>
-        <input type="text" id="author_name" name="author_name" required>
+    <h2>Add News Categories</h2>
+    <div class="blog-info">
+        <p><strong>News Title:</strong> <?= htmlspecialchars($blog['title']) ?></p>
+        <p><strong>News ID:</strong> <?= htmlspecialchars($blog['id']) ?></p>
+    </div>
+    <form action="<?=  base_url('AddNewsSeo/' . htmlspecialchars($blog['id'])) ?>" method="post" enctype="multipart/form-data">
+        <label for="seotitle">SEO Title:</label>
+        <input type="text" id="author_name" name="seotitle"  >
         <div class="error-message"><?= form_error('author_name') ?></div>
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+        <label for="metakeywords">Meta Keywords:</label>
+        <input type="text" id="title" name="metakeywords"  >
         <div class="error-message"><?= form_error('title') ?></div>
 
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" required>
-        <div class="error-message"><?= form_error('image') ?></div>
-
-        <label for="content">Content:</label>
-        <textarea id="description" name="content"></textarea>
-        <div class="error-message"><?= form_error('content') ?></div>
-        
-
-        <label for="seo_tags">SEO Tags:</label>
-        <select id="Category" name="seo_tags" required>
-            <option value="" disabled selected>Select Category</option>
-            <option value="Technology">Technology</option>
-            <option value="Health">Health</option>
-            <option value="Lifestyle">Lifestyle</option>
-            <option value="Travel">Travel</option>
-            <option value="Education">Education</option>
-        </select>
-        <div class="error-message"><?= form_error('seo_tags') ?></div>
-
-        <label for="meta_tags">Meta Tags:</label>
-        <input type="text" id="metatags" name="meta_tags">
-        <div class="error-message"><?= form_error('metatags') ?></div>
-
         <label for="metadesc">Meta Description:</label>
-        <textarea id="descriptions" name="metadesc"></textarea>
-        <div class="error-message"><?= form_error('metadesc') ?></div>
-        
+        <textarea id="description" name="metadesc" ></textarea>
+        <div class="error-message"><?= form_error('description') ?></div>
+
         <button type="submit">Update Blog</button>
     </form>
 </main>
-
 <?php include 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Footer.php'; ?>
 
 <style>
@@ -64,9 +41,6 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-    }
-    #descriptions{
-        resize: none;
     }
 
     /* Heading styling */

@@ -16,9 +16,10 @@
                     <th>User ID</th>
                     <th>Author Name</th>
                     <th>Title</th>
-                    <th>Category</th>
+                    <th>Niche</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
+                    <th>Category</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -36,6 +37,7 @@
                             <td><?php echo $user->category; ?></td>
                             <td><?php echo $user->Created_date; ?></td>
                             <td><?php echo $user->Updated_date; ?></td>
+                            <td><a href="<?= base_url('Addcategory/' . $user->id) ?>" class="edit-btn">Add Category</a></td>
                             <td><a href="<?= base_url('EditBlog/' . $user->id) ?>" class="edit-btn">Edit</a></td>
                             <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
                         </tr>

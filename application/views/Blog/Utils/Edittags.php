@@ -10,20 +10,18 @@
 </script>
 <main class="content">
     <h2>Edit Blog SEO</h2>
-
-    <!-- Blog title and ID display -->
     <div class="blog-info">
-        <p><strong>Blog Title:</strong> <?= htmlspecialchars($blog['Title']) ?></p>
-        <p><strong>Blog ID:</strong> <?= htmlspecialchars($blog['id']) ?></p>
+        <p><strong>Blog Title:</strong> <?= htmlspecialchars($blog['blog_title']) ?></p>
+        <p><strong>Blog ID:</strong> <?= htmlspecialchars($blog['blog_id']) ?></p>
     </div>
 
     <form action="<?= base_url('UpdateSEO/' . htmlspecialchars($blog['id'])) ?>" method="post">
-        <label for="seo_tags">SEO Tags:</label>
-        <input type="text" id="seo_tags" name="seo_tags" value="<?= htmlspecialchars($blog['seo_tags'] ) ?>" required>
+        <label for="seo_tags">SEO Title:</label>
+        <input type="text" id="seo_tags" name="seo_tags" value="<?= htmlspecialchars($blog['seotitle'] ) ?>" required>
         <div class="error-message"><?= form_error('seo_tags') ?></div>
 
-        <label for="meta_tags">Meta Tags:</label>
-        <input type="text" id="metatags" name="meta_tags" value="<?= htmlspecialchars($blog['metatags']) ?>" required>
+        <label for="meta_tags">Meta Keywords:</label>
+        <input type="text" id="metatags" name="meta_tags" value="<?= htmlspecialchars($blog['metakeywords']) ?>" required>
         <div class="error-message"><?= form_error('metatags') ?></div>
 
         <label for="content">Meta Description:</label>

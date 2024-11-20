@@ -31,9 +31,17 @@
                 </button>
                 <div class="dropdown-container">
                     <a href="<?php echo base_url('Blog')?>">Blog</a>
-                    <a href="<?php echo base_url('Categories')?>">Categories</a>
+                    <a href="<?php echo base_url('Categories')?>">Blog-Categories</a>
                 </div>
-                <a href="<?php echo base_url('News')?>">News</a>
+                <button class="dropdown-btn">
+                News
+                    <span class="dropdown-icon" aria-hidden="true"></span>
+                </button>
+                <div class="dropdown-container">
+                    <a href="<?php echo base_url('News')?>">News</a>
+                    <a href="<?php echo base_url('NewsCategories')?>">News-Categories</a>
+                </div>
+                
                 <a class="logout" href="<?php echo base_url('Logout')?>">Logout</a>
             </div>
         </aside>

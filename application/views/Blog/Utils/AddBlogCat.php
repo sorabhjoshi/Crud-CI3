@@ -1,58 +1,36 @@
 <?php include_once 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Header.php'; ?>
-<script src="https://cdn.tiny.cloud/1/2annmeyewpcnpqtixx04jzx2ho7hf6audb1x85cav7o9i85g/tinymce/6/tinymce.min.js"
-    referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/2annmeyewpcnpqtixx04jzx2ho7hf6audb1x85cav7o9i85g/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
-        selector: '#description',
+        selector: '#meta_description',
         plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
         toolbar_mode: 'floating',
-        height: 300
+        height: 150
     });
 </script>
-
 <main class="content">
-    <h2>Add Blog</h2>
-    <form action="<?= base_url('AddBlogData/') . $this->session->userdata('id') ?>" method="post" enctype="multipart/form-data">
-        <label for="author_name">Author Name:</label>
-        <input type="text" id="author_name" name="author_name" required>
-        <div class="error-message"><?= form_error('author_name') ?></div>
+    <h2>Add Blog SEO</h2>
+    <div class="blog-info">
+        <p><strong>Blog Title:</strong> <?= htmlspecialchars($blog['Title']) ?></p>
+        <p><strong>Blog ID:</strong> <?= htmlspecialchars($blog['id']) ?></p>
+    </div>
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <div class="error-message"><?= form_error('title') ?></div>
-
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" required>
-        <div class="error-message"><?= form_error('image') ?></div>
-
-        <label for="content">Content:</label>
-        <textarea id="description" name="content"></textarea>
-        <div class="error-message"><?= form_error('content') ?></div>
-        
-
-        <label for="seo_tags">SEO Tags:</label>
-        <select id="Category" name="seo_tags" required>
-            <option value="" disabled selected>Select Category</option>
-            <option value="Technology">Technology</option>
-            <option value="Health">Health</option>
-            <option value="Lifestyle">Lifestyle</option>
-            <option value="Travel">Travel</option>
-            <option value="Education">Education</option>
-        </select>
+    <form action="<?= base_url('AddSEO/' . htmlspecialchars($blog['id'])) ?>" method="post">
+        <label for="seo_tags">SEO Title:</label>
+        <input type="text" id="seo_tags" name="seo_tags" value="">
         <div class="error-message"><?= form_error('seo_tags') ?></div>
 
-        <label for="meta_tags">Meta Tags:</label>
-        <input type="text" id="metatags" name="meta_tags">
+        <label for="meta_tags">Meta Keywords:</label>
+        <input type="text" id="metatags" name="meta_tags" value="" >
         <div class="error-message"><?= form_error('metatags') ?></div>
 
-        <label for="metadesc">Meta Description:</label>
-        <textarea id="descriptions" name="metadesc"></textarea>
+        <label for="content">Meta Description:</label>
+        <textarea id="description" name="content" required></textarea>
         <div class="error-message"><?= form_error('metadesc') ?></div>
-        
-        <button type="submit">Update Blog</button>
+    
+        <button type="submit">Update SEO</button>
     </form>
 </main>
-
 <?php include 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Footer.php'; ?>
 
 <style>
@@ -65,9 +43,6 @@
         align-items: center;
         width: 100%;
     }
-    #descriptions{
-        resize: none;
-    }
 
     /* Heading styling */
     h2 {
@@ -76,6 +51,18 @@
         font-size: 32px;
         margin-bottom: 20px;
         font-weight: 600;
+    }
+
+    /* Blog information styling */
+    .blog-info {
+        margin-bottom: 20px;
+        font-size: 18px;
+        color: #555;
+        text-align: center;
+    }
+
+    .blog-info p {
+        margin: 5px 0;
     }
 
     /* Form styling */
@@ -100,9 +87,7 @@
 
     /* Input and textarea styling */
     input[type="text"],
-    input[type="file"],
-    textarea,
-    select {
+    textarea {
         padding: 14px;
         font-size: 16px;
         border: 1px solid #ddd;
@@ -115,16 +100,15 @@
 
     /* Focus effect for inputs */
     input:focus,
-    select:focus,
     textarea:focus {
         border-color: #4CAF50;
         background-color: #fff;
         outline: none;
     }
 
-    /* Content area for the description (TinyMCE) */
+    /* Textarea for meta description */
     textarea {
-        min-height: 150px;
+        min-height: 100px;
     }
 
     /* Error message styling */

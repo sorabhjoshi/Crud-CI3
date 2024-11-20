@@ -7,7 +7,18 @@ class News_model extends CI_Model {
         $query = $this->db->get('newsdata'); 
         return $query->result(); 
     }
+    public function getAlltags() {
+        $query = $this->db->get('newscategories'); 
+        return $query->result();  
+    }
+    public function getsinglenewstags($id) {
+        $q = $this->db
+            ->select('*')
+            ->where('id', $id)
+            ->get('newscategories');
 
+        return $q->row_array();  
+    }
     public function edit_news_data($id) {
         $q = $this->db
             ->select('*')
@@ -16,7 +27,23 @@ class News_model extends CI_Model {
 
         return $q->row_array();  
     }
-
+    
+    public function addtags($data) {
+        $data = array(
+            'news_id' => $data['news_id'],
+            'news_title' =>$data['news_title'],
+            'seotitle' => $data['seotitle'],
+            'metakeywords' => $data['metakeywords'],
+            'metadesc' => $data['metadesc']
+        );
+        $result = $this->db->insert('newscategories', $data);
+        if ($result) {
+         return TRUE;
+        } else {
+            return FALSE;
+        }
+          
+    }
     public function updatenews($data,$id) {
         $this->db->where('id', $id);
         $result = $this->db->update('newsdata', $data);
@@ -39,9 +66,12 @@ class News_model extends CI_Model {
             'updated_at' => $data['updated_at'],
             'image' => $data['image_path'] 
         );
-    
-        
-        return $this->db->insert('newsdata', $news_data);
+        $result = $this->db->insert('newsdata', $data);
+        if ($result) {
+            return $this->db->insert_id();
+        } else {
+            return FALSE;
+        }
     }
     
 

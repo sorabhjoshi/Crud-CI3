@@ -2,19 +2,18 @@
 
 <main class="content">
     <div class="tablecontainer">
-        <div class="addnews">
-        <h2>Blogs Categories</h2> 
+    <div class="addnews">
+        <h2>News Categories</h2> 
         <div>
         <a href="Blog_website/Home"><button>View Site</button></a>
-        <!-- <a href="AddBlog"><button>Add Blog</button></a> -->
         </div>
         </div>
         <table class="user-table">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Blog ID</th>
-                    <th>Blog Title</th>
+                    <th>News ID</th>
+                    <th>News Title</th>
                     <th>Category Title</th>
                     <th>Meta Keywords</th>
                     <th>Meta Description</th>
@@ -27,13 +26,13 @@
                     <?php foreach ($users as $user): ?>
                         <tr>
                             <td><?php echo $id=$id+1; ?></td>
-                            <td><?php echo $user->blog_id; ?></td>
-                            <td><?php echo $user->blog_title; ?></td>
+                            <td><?php echo $user->news_id; ?></td>
+                            <td><?php echo $user->news_title; ?></td>
                             <td><?php echo $user->seotitle; ?></td>
                             <td><?php echo $user->metakeywords; ?></td>
                             <td><?php echo $user->metadesc; ?></td>
-                            <td class="button-cell"><a href="<?= base_url('Edittags/' . $user->blog_id) ?>" class="edit-btn">Edit</a></td>
-                            <td class="button-cell"><a href="<?= base_url('Deletetags/' . $user->blog_id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
+                            <td class="button-cell"><a href="<?= base_url('Editnewstags/' . $user->id) ?>" class="edit-btn">Edit</a></td>
+                            <td class="button-cell"><a href="<?= base_url('Deletenewstags/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

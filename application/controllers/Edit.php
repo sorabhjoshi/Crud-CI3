@@ -18,6 +18,7 @@ class Edit extends CI_Controller {
     }
     public function EditBlog($id) {
         $data = [
+            'tags' => $this->Blog_model->getAlltags(),
             'blog' => $this->Blog_model->get_blog_data($id),
             'validation_errors' => ''
         ];
@@ -26,7 +27,7 @@ class Edit extends CI_Controller {
 
     
     public function Deletetags($id) {
-        if ($this->Blog_model->delete_blog_data($id)) {
+        if ($this->Blog_model->delete_tags_data($id)) {
             redirect(base_url('Categories'));
         } else {
             echo 'Error: Could not delete the blog post.';
@@ -40,25 +41,50 @@ class Edit extends CI_Controller {
         }
     }
     
-
-    public function UpdateSEO($id) {
+    
+    public function Updatecategory($id) {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('Category', 'Category Title', 'required');
         $this->form_validation->set_rules('seo_tags', 'SEO Title', 'required');
         $this->form_validation->set_rules('meta_tags', 'Meta Keywords', 'required');
         $this->form_validation->set_rules('content', 'Meta Description', '');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('Blog/Utils/Edittags', [
-                'blog' => $this->Blog_model->get_blog_data($id),
+                'blog' => $this->Blog_model->get_tags_data($id),
                 'validation_errors' => validation_errors()
             ]);
             return;
         }
-        $blog_data = $this->Blog_model->get_blog_data($id);
 
         $data = [
-            'blog_id' => $id,
-            'blog_title' =>$blog_data['Title'],
+            'category' => $this->input->post('Category'),
+            'seotags' => $this->input->post('seo_tags'),
+            'metatags' => $this->input->post('meta_tags'),
+            'metadesc' => $this->input->post('content')
+        ];
+        
+        
+        if ($this->Blog_model->updatetags($data,$id)) {
+            redirect(base_url('Categories'));
+        } else {
+            redirect(base_url("Edit/Edittags/$id"));
+        }
+    }
+    public function Addcategorydata() {
+        $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('Category', 'Category Title', 'required');
+        $this->form_validation->set_rules('seo_tags', 'SEO Title', 'required');
+        $this->form_validation->set_rules('meta_tags', 'Meta Keywords', 'required');
+        $this->form_validation->set_rules('content', 'Meta Description', '');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Addcategory');
+            return;
+        }
+
+        $data = [
+            'category' => $this->input->post('Category'),
             'seotags' => $this->input->post('seo_tags'),
             'metatags' => $this->input->post('meta_tags'),
             'metadesc' => $this->input->post('content')
@@ -68,16 +94,22 @@ class Edit extends CI_Controller {
         if ($this->Blog_model->inserttags($data)) {
             redirect(base_url('Categories'));
         } else {
-            redirect(base_url("Edit/Edittags/$id"));
+            redirect(base_url('Addcategory'));
         }
     }
     public function UpdateBlog($id) {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('Category', 'Blog Category', 'required');
         $this->form_validation->set_rules('content', 'Content', '');
+        $this->form_validation->set_rules('category', 'Category', '');
+        
 
+        $data['author_name'] = $this->input->post('author_name');
+        $data['title'] = $this->input->post('title');
+        $data['content'] = $this->input->post('content');
+        $data['category'] = $this->input->post('category');
+        $data['Updated_date'] = date('Y-m-d H:i:s');
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('Blog/Utils/EditBlog', [
                 'blog' => $this->Blog_model->get_blog_data($id),
@@ -85,16 +117,9 @@ class Edit extends CI_Controller {
             ]);
             return;
         }
-
-        $data = [
-            'author_name' => $this->input->post('author_name'),
-            'title' => $this->input->post('title'),
-            'category' => $this->input->post('Category'),
-            'content' => $this->input->post('content'),
-            'Updated_date' => date('Y-m-d H:i:s')
-        ];
         
         if ($this->Blog_model->updateblog($data, $id)) {
+
             redirect(base_url('Blog'));
         } else {
             redirect(base_url("Edit/EditBlog/$id"));
@@ -102,15 +127,16 @@ class Edit extends CI_Controller {
     }
 
     public function AddBlog(){
-        $this->load->view('Blog/Utils/AddBlog');
-    }
-    public function Addcategory($id){
         $data = [
-            'blog' => $this->Blog_model->get_blog_data($id),
+            'tags' => $this->Blog_model->getAlltags(),
             'validation_errors' => ''
         ];
-        $this->load->view('Blog/Utils/AddBlogCat',$data);
+        $this->load->view('Blog/Utils/AddBlog',$data);
     }
+    public function Addcategory(){
+        $this->load->view('Blog/Utils/AddCat');
+    }
+    
     
 
     public function AddBlogData($userid) {
@@ -118,15 +144,14 @@ class Edit extends CI_Controller {
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('content', 'Content', '');
-        $this->form_validation->set_rules('seo_tags', 'SEO Title', '');
-        $this->form_validation->set_rules('meta_tags', 'Meta Keywords', '');
-        $this->form_validation->set_rules('metadesc', 'Meta Description', '');
+        $this->form_validation->set_rules('category', 'Category', '');
     
         
         $data['User_id'] = $userid;
         $data['author_name'] = $this->input->post('author_name');
         $data['title'] = $this->input->post('title');
         $data['content'] = $this->input->post('content');
+        $data['category'] = $this->input->post('category');
         $data['Create_Date'] = date('Y-m-d H:i:s');
         $data['Updated_date'] = date('Y-m-d H:i:s');
     
@@ -155,23 +180,9 @@ class Edit extends CI_Controller {
         }
     
         $this->load->model('Blog_model');
-        
-        
-        $blog_id = $this->Blog_model->addblog($data);
-        if ($blog_id) {
-            
-            $tags['blog_id'] = $blog_id; 
-            $tags['blog_title'] = $this->input->post('title');
-            $tags['seotags'] = $this->input->post('seo_tags');
-            $tags['metatags'] = $this->input->post('meta_tags');
-            $tags['metadesc'] = $this->input->post('metadesc');
-    
-            
-            if ($this->Blog_model->inserttags($tags)) {
-                redirect(base_url('Categories'));
-            } else {
-                $this->load->view('Utils/AddBlog', ['error_message' => 'Failed to add tags. Please try again.']);
-            }
+        if ($this->Blog_model->addblog($data)) {
+            $data['users'] = $this->Blog_model->getAllData();
+            $this->load->view('Blog/Blog',$data);
         } else {
             $this->load->view('Utils/AddBlog', ['error_message' => 'Failed to add the blog. Please try again.']);
         }

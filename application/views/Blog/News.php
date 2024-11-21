@@ -18,7 +18,6 @@
                     <th>Title</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
-                    <th>Category</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -33,7 +32,6 @@
                             <td><?php echo htmlspecialchars($user->title); ?></td>
                             <td><?php echo htmlspecialchars($user->created_at); ?></td>
                             <td><?php echo htmlspecialchars($user->updated_at); ?></td>
-                            <td><a href="<?= base_url('AddNewsCategory/'. $user->id) ?>" class="edit-btn">Add Category</a></td>
                             <td><a href="<?= base_url('EditNews/' . $user->id) ?>" class="edit-btn">Edit</a></td>
                             <td><a href="<?= base_url('DeleteNews/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this news item?')">Delete</a></td>
                         </tr>

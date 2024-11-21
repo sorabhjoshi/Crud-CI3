@@ -15,7 +15,12 @@
         <p><strong>Blog ID:</strong> <?= htmlspecialchars($blog['blog_id']) ?></p>
     </div>
 
-    <form action="<?= base_url('UpdateSEO/' . htmlspecialchars($blog['id'])) ?>" method="post">
+    <form action="<?= base_url('Updatecategory/' . htmlspecialchars($blog['id'])) ?>" method="post">
+        
+        <label for="Category">Category Title:</label>
+        <input type="text" id="seo_tags" name="Category" value="<?= htmlspecialchars($blog['categorytitle'] ) ?>">
+        <div class="error-message"><?= form_error('Category') ?></div>
+    
         <label for="seo_tags">SEO Title:</label>
         <input type="text" id="seo_tags" name="seo_tags" value="<?= htmlspecialchars($blog['seotitle'] ) ?>" required>
         <div class="error-message"><?= form_error('seo_tags') ?></div>

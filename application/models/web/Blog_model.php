@@ -9,13 +9,13 @@ class Blog_model extends CI_Model {
     }
     public function getAlltags() {
         $query = $this->db->get('blogcategories'); 
-        return $query->result();  
+        return $query->result_array();  
     }
     
     public function get_tags_data($id) {
         $q = $this->db
             ->select('*')
-            ->where('blog_id', $id)
+            ->where('id', $id)
             ->get('blogcategories');
 
         return $q->row_array();  
@@ -28,7 +28,13 @@ class Blog_model extends CI_Model {
 
         return $q->row_array();  
     }
-
+    
+    public function delete_tags_data($id) {
+        $q = $this->db
+                ->where('id', $id)
+                ->delete('blogcategories');
+        return ($q) ? TRUE : FALSE;
+    }
     public function delete_blog_data($id) {
         $q = $this->db
                 ->where('id', $id)
@@ -36,10 +42,24 @@ class Blog_model extends CI_Model {
         return ($q) ? TRUE : FALSE;
     }
     
+    
+    public function updatetags($data,$id) {
+        $data = array(
+            'categorytitle' => $data['category'],
+            'seotitle' => $data['seotags'],
+            'metakeywords' => $data['metatags'],
+            'metadesc' => $data['metadesc']
+        );
+    
+        $this->db->where('id', $id);
+        $result = $this->db->update('blogcategories', $data);
+        return $result ? TRUE : FALSE;
+        
+    }
+    
     public function inserttags($data) {
         $data = array(
-            'blog_id' => $data['blog_id'],
-            'blog_title' =>$data['blog_title'],
+            'categorytitle' => $data['category'],
             'seotitle' => $data['seotags'],
             'metakeywords' => $data['metatags'],
             'metadesc' => $data['metadesc']
@@ -56,9 +76,9 @@ class Blog_model extends CI_Model {
         $data = array(
             'Author_name' => $data['author_name'],
             'Title' => $data['title'],
-            'cateogry' => $data['category'],
             'Description' => $data['content'],
-            'Updated_date' => $data['Updated_date']
+            'Updated_date' => $data['Updated_date'],
+            'category' => $data['category']
         );
         $this->db->where('id', $id);
         $result = $this->db->update('blogdata', $data);
@@ -72,7 +92,7 @@ class Blog_model extends CI_Model {
 
     public function addblog($data) {
         $data = array(
-            'User_id'=>$data['User_id'],
+            'User_id' => $data['User_id'],
             'Author_name' => $data['author_name'],
             'Title' => $data['title'],
             'Description' => $data['content'],
@@ -82,13 +102,15 @@ class Blog_model extends CI_Model {
         );
         
         $result = $this->db->insert('blogdata', $data);
+        
         if ($result) {
+            // Get the last inserted ID
             return $this->db->insert_id();
         } else {
             return FALSE;
         }
-          
     }
+    
 
     
 }

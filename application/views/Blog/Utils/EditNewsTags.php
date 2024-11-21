@@ -6,11 +6,16 @@
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
       toolbar_mode: 'floating',
       height: 300
-    });
+    }); 
   </script>
 <main class="content">
     <h2>Edit News Categories</h2>
     <form action="<?=  base_url('UpdateNewsSeo/' . htmlspecialchars($blog['id'])) ?>" method="post" enctype="multipart/form-data">
+        
+        <label for="Category">Category Title:</label>
+        <input type="text" id="seo_tags" name="Category" value="<?= htmlspecialchars($blog['categorytitle']) ?>">
+        <div class="error-message"><?= form_error('Category') ?></div>
+    
         <label for="seotitle">SEO Title:</label>
         <input type="text" id="author_name" name="seotitle" value="<?= htmlspecialchars($blog['seotitle']) ?>" >
         <div class="error-message"><?= form_error('author_name') ?></div>

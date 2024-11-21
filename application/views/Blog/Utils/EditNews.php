@@ -1,4 +1,5 @@
-<?php include_once 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Header.php'; ?>
+<?php include_once 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Header.php'; 
+ ?>
 <script src="https://cdn.tiny.cloud/1/2annmeyewpcnpqtixx04jzx2ho7hf6audb1x85cav7o9i85g/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
@@ -12,7 +13,7 @@
     <h2>Edit News</h2>
     <form action="<?=  base_url('UpdateNews/' . htmlspecialchars($blog['id'])) ?>" method="post" enctype="multipart/form-data">
         <label for="author_name">Author Name:</label>
-        <input type="text" id="author_name" name="author_name" value="<?= htmlspecialchars($blog['Author_name']) ?>" >
+        <input type="text" id="author_name" name="author_name" value="<?=  htmlspecialchars($blog['Author_name']) ?>" >
         <div class="error-message"><?= form_error('author_name') ?></div>
 
         <label for="title">Title:</label>
@@ -23,6 +24,14 @@
         <textarea id="description" name="content" required><?= htmlspecialchars($blog['description']) ?></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
+        <label for="Category">Category:</label>
+<select id="Category" name="Category" required>
+    <option value="" disabled selected>Select Category</option>
+    <?php foreach ($tags as $tag): ?>
+        <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
+    <?php endforeach; ?>
+</select>
+<div class="error-message"><?= form_error('Category') ?></div>
         <button type="submit">Update Blog</button>
     </form>
 </main>

@@ -1,4 +1,26 @@
 
+    
+    .headerimg {
+        
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        cursor: pointer;
+        text-align: center;
+        transition: none;
+        border: none ; 
+        
+}
+.headerimg:hover{
+    background-color: none !important; 
+    transform: none !important;
+box-shadow: none !important;
+}
+.headerimg img{
+    width: 150px;
+    height: 30px;
+    margin: auto;
+}
     body, html {
         margin: 0;
         padding: 0;
@@ -34,13 +56,7 @@
         padding:  0 20px;
     }
 
-    .sidebar img {
-        width: 60%;
-        display: block;
-        height: 40px;
-        padding: 10px 42px 10px;
-        border-bottom:1px solid #4b5c70;
-    }
+    
 /* Add smooth transitions for dropdown */
 .dropdown-container {
     display: none;

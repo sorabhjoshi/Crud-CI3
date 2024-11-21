@@ -62,13 +62,7 @@ new Chart(ctx, {
 </script>
 
 <style>
-    .sidebar img{
-     width:100%;
-    display: block;
-    height: 60px;
-    padding: 10px 45px 10px;
-    border-bottom: 1px solid #4b5c70;
-    } 
+    
     * {
         margin: 0;
         padding: 0;

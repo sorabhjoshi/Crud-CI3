@@ -18,23 +18,20 @@
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" value="<?= htmlspecialchars($blog['Title']) ?>" >
         <div class="error-message"><?= form_error('title') ?></div>
-        
-        <label for="Category">Blog Category:</label>
-        <select id="Category" name="Category" >
-            <option value="<?= htmlspecialchars($blog['category'])?>" disabled selected><?= htmlspecialchars($blog['category'])?></option>
-            <option value="Technology">Technology</option>
-            <option value="Health">Health</option>
-            <option value="Lifestyle">Lifestyle</option>
-            <option value="Travel">Travel</option>
-            <option value="Education">Education</option>
-        </select>
-        <div class="error-message"><?= form_error('Category') ?></div>
 
         <label for="content">Content:</label>
         <textarea id="description" name="content" required><?= htmlspecialchars($blog['Description']) ?></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
-        
+        <label for="category">Category:</label>
+<select id="Category" name="category" required>
+    <option value="" disabled selected>Select Category</option>
+    <?php foreach ($tags as $tag): ?>
+        <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
+    <?php endforeach; ?>
+</select>
+<div class="error-message"><?= form_error('category') ?></div>
+
         <button type="submit">Update Blog</button>
     </form>
 </main>

@@ -39,7 +39,7 @@ class Welcome extends CI_Controller {
 	
 	public function dashboard(){
 		$this->checklogin() ;
-        $data['categories'] = $this->Dashboard_model->get_blog_categories();
+        // $data['categories'] = $this->Dashboard_model->get_blog_categories();
 		$data['users'] = $this->Dashboard_model->get_users_count();
         $data['news'] = $this->Dashboard_model->get_news_count();
         $data['blogs'] = $this->Dashboard_model->get_blogs_count();

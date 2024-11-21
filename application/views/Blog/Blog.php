@@ -16,32 +16,30 @@
                     <th>User ID</th>
                     <th>Author Name</th>
                     <th>Title</th>
-                    <th>Niche</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
-                    <th>Category</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
-                $id = 1; // Initialize ID counter
+                $id = 1; 
                 if (!empty($users)): ?>
+               
                     <?php foreach ($users as $user): ?>
                         <tr>
                             <td><?php echo $id++; ?></td>
                             <td><?php echo $user->User_id; ?></td>
                             <td><?php echo $user->Author_name; ?></td>
                             <td><?php echo $user->Title; ?></td>
-                            <td><?php echo $user->category; ?></td>
                             <td><?php echo $user->Created_date; ?></td>
                             <td><?php echo $user->Updated_date; ?></td>
-                            <td><a href="<?= base_url('Addcategory/' . $user->id) ?>" class="edit-btn">Add Category</a></td>
                             <td><a href="<?= base_url('EditBlog/' . $user->id) ?>" class="edit-btn">Edit</a></td>
                             <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>
+                    
                 <?php else: ?>
                     <tr>
                         <td colspan="8">No blogs found.</td>

@@ -9,13 +9,13 @@
     });
 </script>
 <main class="content">
-    <h2>Add Blog SEO</h2>
-    <div class="blog-info">
-        <p><strong>Blog Title:</strong> <?= htmlspecialchars($blog['Title']) ?></p>
-        <p><strong>Blog ID:</strong> <?= htmlspecialchars($blog['id']) ?></p>
-    </div>
+    <h2>Add Category</h2>
 
-    <form action="<?= base_url('AddSEO/' . htmlspecialchars($blog['id'])) ?>" method="post">
+    <form action="<?= base_url('Addcategorydata') ?>" method="post">
+        <label for="Category">Category Title:</label>
+        <input type="text" id="seo_tags" name="Category" value="">
+        <div class="error-message"><?= form_error('Category') ?></div>
+
         <label for="seo_tags">SEO Title:</label>
         <input type="text" id="seo_tags" name="seo_tags" value="">
         <div class="error-message"><?= form_error('seo_tags') ?></div>
@@ -28,7 +28,7 @@
         <textarea id="description" name="content" required></textarea>
         <div class="error-message"><?= form_error('metadesc') ?></div>
     
-        <button type="submit">Update SEO</button>
+        <button type="submit">Add</button>
     </form>
 </main>
 <?php include 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Footer.php'; ?>

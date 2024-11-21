@@ -6,15 +6,15 @@
         <h2>News Categories</h2> 
         <div>
         <a href="Blog_website/Home"><button>View Site</button></a>
+        <a href="Blog_website/AddNewsCategory"><button>Add News Category</button></a>
         </div>
         </div>
         <table class="user-table">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>News ID</th>
-                    <th>News Title</th>
                     <th>Category Title</th>
+                    <th>Seo Title</th>
                     <th>Meta Keywords</th>
                     <th>Meta Description</th>
                     <th>Edit</th>
@@ -26,13 +26,12 @@
                     <?php foreach ($users as $user): ?>
                         <tr>
                             <td><?php echo $id=$id+1; ?></td>
-                            <td><?php echo $user->news_id; ?></td>
-                            <td><?php echo $user->news_title; ?></td>
-                            <td><?php echo $user->seotitle; ?></td>
-                            <td><?php echo $user->metakeywords; ?></td>
-                            <td><?php echo $user->metadesc; ?></td>
-                            <td class="button-cell"><a href="<?= base_url('Editnewstags/' . $user->id) ?>" class="edit-btn">Edit</a></td>
-                            <td class="button-cell"><a href="<?= base_url('Deletenewstags/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
+                            <td><?php echo $user['categorytitle']; ?></td>
+                            <td><?php echo $user['seotitle']; ?></td>
+                            <td><?php echo $user['metakeywords']; ?></td>
+                            <td><?php echo $user['metadesc']; ?></td>
+                            <td class="button-cell"><a href="<?= base_url('Editnewstags/' . $user['id']) ?>" class="edit-btn">Edit</a></td>
+                            <td class="button-cell"><a href="<?= base_url('Deletenewstags/' .$user['id']) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>

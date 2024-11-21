@@ -30,24 +30,15 @@
         <div class="error-message"><?= form_error('content') ?></div>
         
 
-        <label for="seo_tags">SEO Tags:</label>
-        <select id="Category" name="seo_tags" required>
-            <option value="" disabled selected>Select Category</option>
-            <option value="Technology">Technology</option>
-            <option value="Health">Health</option>
-            <option value="Lifestyle">Lifestyle</option>
-            <option value="Travel">Travel</option>
-            <option value="Education">Education</option>
-        </select>
-        <div class="error-message"><?= form_error('seo_tags') ?></div>
+        <label for="category">Category:</label>
+<select id="Category" name="category" required>
+    <option value="" disabled selected>Select Category</option>
+    <?php foreach ($tags as $tag): ?>
+        <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
+    <?php endforeach; ?>
+</select>
+<div class="error-message"><?= form_error('category') ?></div>
 
-        <label for="meta_tags">Meta Tags:</label>
-        <input type="text" id="metatags" name="meta_tags">
-        <div class="error-message"><?= form_error('metatags') ?></div>
-
-        <label for="metadesc">Meta Description:</label>
-        <textarea id="descriptions" name="metadesc"></textarea>
-        <div class="error-message"><?= form_error('metadesc') ?></div>
         
         <button type="submit">Update Blog</button>
     </form>

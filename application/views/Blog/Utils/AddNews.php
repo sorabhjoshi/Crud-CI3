@@ -27,24 +27,15 @@
         <textarea id="description" name="content"></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
-        <label for="seo_tags">Category:</label>
-        <select id="seo_tags" name="seo_tags">
-            <option value="" disabled selected>Select Category</option>
-            <option value="Technology">Technology</option>
-            <option value="Health">Health</option>
-            <option value="Lifestyle">Lifestyle</option>
-            <option value="Travel">Travel</option>
-            <option value="Education">Education</option>
-        </select>
-        <div class="error-message"><?= form_error('seo_tags') ?></div>
+        <label for="Category">Category:</label>
+<select id="Category" name="Category" required>
+    <option value="" disabled selected>Select Category</option>
+    <?php foreach ($tags as $tag): ?>
+        <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
+    <?php endforeach; ?>
+</select>
+<div class="error-message"><?= form_error('Category') ?></div>
 
-        <label for="meta_tags">Meta Tags:</label>
-        <input type="text" id="meta_tags" name="meta_tags">
-        <div class="error-message"><?= form_error('meta_tags') ?></div>
-
-        <label for="meta_desc">Meta Description:</label>
-        <textarea id="meta_desc" name="meta_desc"></textarea>
-        <div class="error-message"><?= form_error('meta_desc') ?></div>
 
         <button type="submit">Add News</button>
     </form>

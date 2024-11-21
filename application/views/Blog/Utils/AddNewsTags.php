@@ -10,11 +10,12 @@
   </script>
 <main class="content">
     <h2>Add News Categories</h2>
-    <div class="blog-info">
-        <p><strong>News Title:</strong> <?= htmlspecialchars($blog['title']) ?></p>
-        <p><strong>News ID:</strong> <?= htmlspecialchars($blog['id']) ?></p>
-    </div>
-    <form action="<?=  base_url('AddNewsSeo/' . htmlspecialchars($blog['id'])) ?>" method="post" enctype="multipart/form-data">
+    <form action="<?=  base_url('AddNewsSeo') ?>" method="post" enctype="multipart/form-data">
+        
+        <label for="Category">Category Title:</label>
+        <input type="text" id="seo_tags" name="Category" value="">
+        <div class="error-message"><?= form_error('Category') ?></div>
+    
         <label for="seotitle">SEO Title:</label>
         <input type="text" id="author_name" name="seotitle"  >
         <div class="error-message"><?= form_error('author_name') ?></div>
@@ -27,7 +28,7 @@
         <textarea id="description" name="metadesc" ></textarea>
         <div class="error-message"><?= form_error('description') ?></div>
 
-        <button type="submit">Update Blog</button>
+        <button type="submit">Add</button>
     </form>
 </main>
 <?php include 'C:\xampp\htdocs\CI3\application\views\Blog\Components\Footer.php'; ?>

@@ -75,6 +75,7 @@ class News_model extends CI_Model {
             'user_id'=> $data['user_id'],
             'author_name' => $data['Author_name'],    
             'title' => $data['title'],
+            'slug' => $data['slug'],
             'category' => $data['Category'],
             'description' => $data['description'],
             'created_at' => $data['Create_Date'],

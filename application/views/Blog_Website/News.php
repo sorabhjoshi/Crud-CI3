@@ -8,9 +8,8 @@
   <div class="container my-3">
     <h2 class="text-center mb-4" id="news">Latest News</h2>
 
-    <!-- Row Layout: Left side for news and right side for the sidebar -->
+   
     <div class="row">
-      <!-- News Section -->
       <div class="col-md-9">
         <div class="row row-cols-1 row-cols-md-3 g-4" id="news-container">
           <?php foreach ($news as $index => $new): ?>
@@ -18,13 +17,12 @@
               <div class="card h-100 card-custom">
                 <img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" alt="<?= $new['title']; ?>">
                 <div class="card-body">
-                  <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
+                  <a href="<?= base_url('Blog_website/News/'.$new['slug'].'/'. $new['id']); ?>" class="text-decoration-none text-dark">
                     <h5 class="card-title"><?= $new['title']; ?></h5>
                     <p class="card-text">
                       <?php
-                        $firstLine = explode('.', strip_tags($new['description']));
-                        $firstLine = trim($firstLine[0]);
-                        echo $firstLine;
+                        $firstLine =  strip_tags(substr($new['description'],0,100));
+                        echo $firstLine .'...';
                       ?>
                     </p>
                   </a>
@@ -37,9 +35,13 @@
           <button id="load-more" class="btn btn-primary">Load More</button>
         </div>
       </div>
-
-      <!-- Sidebar (Right Column) -->
       <div class="col-md-3">
+      <ul class="cats">
+        <h4>Categories</h4>
+        <?php foreach ($tags as $tag): ?>
+            <li><a href="<?= base_url('Blog_website/News/' . $tag['categorytitle']); ?>" ><?= htmlspecialchars($tag['categorytitle']) ?></a></li>
+        <?php endforeach; ?>
+          </ul>
         <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif" alt="">
         <div class="socialtags">
           <h4>Follow Us</h4>
@@ -53,7 +55,7 @@
           <ul class="list">
             <?php foreach ($news as $new):?>
               <li class="li-container"><img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" class="card-img-top" ?>
-              <a href="<?= base_url('Blog_website/News/View/' . $new['id']); ?>" class="text-decoration-none text-dark">
+              <a href="<?= base_url('Blog_website/News/'.$new['slug'].'/' . $new['id']); ?>" class="text-decoration-none text-dark">
                 <h5 class="card-title"><?= $new['title']; ?></h5>
                 </a>
               </li>
@@ -85,7 +87,20 @@
 <?php include 'Components/Footer.php'; ?>
 
 <style>
-  /* Global Styles */
+  .cats{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    list-style: none;
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+.cats li{
+margin: 0;
+}
+.cats li a{
+font-size: 20px;
+}
 * {
   margin: 0;
   padding: 0;

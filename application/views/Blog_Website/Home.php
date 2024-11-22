@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap Single Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
-<body>
 
+  
 <?php include 'Components/Header.php'; ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 <main>
   <div class="container text-center my-5 img-container">
@@ -44,9 +37,8 @@
                       <h5 class="card-title"><?= $user['Title']; ?></h5>
                       <p class="card-text">
                         <?php
-                          $firstLine = explode('.', strip_tags($user['Description']));
-                          $firstLine = trim($firstLine[0]);
-                          echo $firstLine;
+                          $firstLine =  strip_tags(substr($user['Description'],0,100));
+                          echo $firstLine .'...';
                         ?>
                       </p>
                     </a>
@@ -74,9 +66,8 @@
                       <h5 class="card-title"><?= $new['title']; ?></h5>
                       <p class="card-text">
                         <?php
-                          $firstLine = explode('.', strip_tags($new['description']));
-                          $firstLine = trim($firstLine[0]);
-                          echo $firstLine;
+                          $firstLine =  strip_tags(substr($new['description'],0,100));
+                          echo $firstLine .'...';
                         ?>
                       </p>
                     </a>
@@ -189,8 +180,7 @@
   /* Main image container styling */
   .img-container {
     position: relative;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-      url("https://images.unsplash.com/photo-1503694978374-8a2fa686963a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("<?= base_url('uploads/imgs/photo-1503694978374-8a2fa686963a.avif'); ?>");
     background-size: cover;
     background-position: center;
     padding: 70px 20px;

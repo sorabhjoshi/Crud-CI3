@@ -1,25 +1,30 @@
 <?php include 'Components/Header.php'; ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <div class="bread">
-  <h3 style="text-self:right;">Blog Design</h3> <p>Home >> Blog Design </p>
+<h3 style="text-self:right;">Blog Design</h3> 
+<p>Home >> Blog Design >> Category >><?= htmlspecialchars($users[0]['category']); ?></p>
   </div>
 
 <main>
     <div class="container my-5">
         <div class="row">
+            
             <div class="col-md-9">
                 <div class="row row-cols-1 row-cols-md-3 g-4" id="blogs-container">
+                <?php if (empty($users)): ?>
+                    <h2>No Blog Posts Found for this Category</h2>
+                <?php endif; ?>
                     <?php foreach ($users as $index => $user): ?>
                         <div class="col featured" <?php if ($index >= 3) echo 'style="display: none;"'; ?>>
                             <div class="card h-100 card-custom">
                                 <img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" alt="<?= $user['Title']; ?>">
                                 <div class="card-body">
-                                    <a href="<?= base_url('Blog_website/Blog/'. $user['slug'].'/' . $user['id']); ?>" class="text-decoration-none text-dark">
+                                    <a href="<?= base_url('Blog_website/Blog/'.$user['category'].'/'.$user['slug'].'/' . $user['id']); ?>" class="text-decoration-none text-dark">
                                         <h5 class="card-title"><?= $user['Title']; ?></h5>
                                         <p class="card-text">
                                             <?php
                                                 $firstLine =  strip_tags(substr($user['Description'],0,100));
-                                                echo $firstLine .'...';
+                                                echo $firstLine.'...';
                                             ?>
                                         </p>
                                     </a>
@@ -29,7 +34,7 @@
                     <?php endforeach; ?>
                 </div>
                 <div class="text-center mt-4">
-                    <button id="load-more" class="btn btn-primary">Load More</button>
+                    <button id="load-more" class="btn btn-primary" <?php if ($index < 3) echo 'style="display: none;"'; ?>>Load More</button>
                 </div>
             </div>
             <div class="col-md-3">
@@ -50,13 +55,17 @@
             <li><a href="#" ><i class="fab fa-youtube"></i></a></li>
           </ul>
           <ul class="list">
-            <?php foreach ($users as $user):?>
+            <?php $maxPosts = 4; $counter = 0; 
+            foreach ($users as $user):
+            if ($counter >= $maxPosts) {
+                break; 
+            }?>
               <li class="li-container"><img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" ?>
-              <a href="<?= base_url('Blog_website/Blog/'. $user['slug'].'/' . $user['id']); ?>">
+              <a href="<?= base_url('Blog_website/Blog/'.$user['category'].'/'.$user['slug'].'/' . $user['id']); ?>">
                 <h5 class="card-title"><?= $user['Title']; ?></h5>
                 </a>
               </li>
-              <?php endforeach; ?>
+              <?php $counter++;  endforeach;?>
           </ul>
         </div>
             </div>
@@ -98,7 +107,7 @@
     flex-direction: column;
     text-decoration: none;
     list-style: none;
-    padding-left: 10px;
+    padding-left: 0;
     margin-bottom: 30px;
 }
 .cats li{

@@ -8,7 +8,6 @@ class Edit extends CI_Controller {
         $this->load->model('Web/Blog_model');
         $this->load->library('form_validation');
     }
-    
     public function Edittags($id) {
         $data = [
             'blog' => $this->Blog_model->get_tags_data($id),
@@ -24,8 +23,6 @@ class Edit extends CI_Controller {
         ];
         $this->load->view('Blog/Utils/EditBlog', $data);
     }
-
-    
     public function Deletetags($id) {
         if ($this->Blog_model->delete_tags_data($id)) {
             redirect(base_url('Categories'));
@@ -40,8 +37,6 @@ class Edit extends CI_Controller {
             echo 'Error: Could not delete the blog post.';
         }
     }
-    
-    
     public function Updatecategory($id) {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('Category', 'Category Title', 'required');
@@ -107,6 +102,7 @@ class Edit extends CI_Controller {
 
         $data['author_name'] = $this->input->post('author_name');
         $data['title'] = $this->input->post('title');
+        $data['slug']=generate_slug( $this->input->post('title'));
         $data['content'] = $this->input->post('content');
         $data['category'] = $this->input->post('category');
         $data['Updated_date'] = date('Y-m-d H:i:s');
@@ -125,7 +121,6 @@ class Edit extends CI_Controller {
             redirect(base_url("Edit/EditBlog/$id"));
         }
     }
-
     public function AddBlog(){
         $data = [
             'tags' => $this->Blog_model->getAlltags(),
@@ -136,20 +131,17 @@ class Edit extends CI_Controller {
     public function Addcategory(){
         $this->load->view('Blog/Utils/AddCat');
     }
-    
-    
-
     public function AddBlogData($userid) {
         $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
         $this->form_validation->set_rules('author_name', 'Author Name', 'required');
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('content', 'Content', '');
         $this->form_validation->set_rules('category', 'Category', '');
-    
         
         $data['User_id'] = $userid;
         $data['author_name'] = $this->input->post('author_name');
         $data['title'] = $this->input->post('title');
+        $data['slug']=generate_slug( $this->input->post('title'));
         $data['content'] = $this->input->post('content');
         $data['category'] = $this->input->post('category');
         $data['Create_Date'] = date('Y-m-d H:i:s');

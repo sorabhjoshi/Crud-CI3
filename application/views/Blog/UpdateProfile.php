@@ -59,55 +59,56 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px;
-    background-color: #f4f4f4; /* Light background */
+    padding: 20px;
+    background-color: #f9f9f9;
     min-height: 100vh;
 }
 
 /* Inner form container */
 .form-container {
     width: 100%;
-    max-width: 1200px; /* Large form size */
-    background-color: transparent; /* Transparent background */
-    border-radius: 0; /* No border-radius */
-    box-shadow: none; /* Remove shadow */
-    padding: 20px 20px 60px 20px;
+    max-width: 600px; /* Smaller form size */
+    background-color: #fff;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
 }
 
 /* Heading styling */
 h2 {
     text-align: left;
-    font-size: 24px;
-    padding: 20px;
-    background-color: #eaeaea;
+    font-size: 20px;
+    padding: 10px;
+    background-color: #e0e0e0;
     color: #333;
-    margin: 0 0 20px 0 ;
+    margin: 0 0 20px 0;
 }
 
 /* Form group styling */
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 /* Label styling */
 label {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    color: #444;
-    margin-bottom: 10px;
+    color: #555;
+    margin-bottom: 8px;
 }
 
 /* Input styling */
 input[type="text"],
 input[type="email"],
 input[type="number"] {
-    padding: 15px;
-    font-size: 18px;
+    padding: 12px;
+    font-size: 16px;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+    border-radius: 6px;
+    background-color: #fafafa;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     width: 100%;
     box-sizing: border-box;
@@ -122,13 +123,12 @@ input:focus {
 
 /* Full-width button */
 .full-width {
-    grid-column: span 2;
     display: flex;
     justify-content: center;
 }
 
 button {
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-size: 16px;
     background-color: #4CAF50;
     color: white;
@@ -145,19 +145,32 @@ button:hover {
 
 /* Error message styling */
 .error-message {
-    color: red; /* Red color for error messages */
-    font-size: 14px;  /* Optional: Adjust the font size */
-    margin-top: 5px;  /* Optional: Add some spacing above the error message */
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    form {
-        grid-template-columns: 1fr;
+    .content {
+        padding: 10px;
+    }
+    
+    .form-container {
+        width: 100%;
+        max-width: 100%;
     }
 
     h2 {
-        font-size: 22px;
+        font-size: 18px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input, button {
+        font-size: 14px;
     }
 }
 </style>

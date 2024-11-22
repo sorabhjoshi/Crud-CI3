@@ -28,6 +28,17 @@ class Website_model extends CI_Model {
         ->get('blogdata');
         return $query->row_array();
     }
+    
+    public function shownewscategory($cat){
+        $query = $this->db->where('category', $cat)
+        ->get('newsdata');
+        return $query->result_array();
+    }
+    public function showcategory($cat){
+        $query = $this->db->where('category', $cat)
+        ->get('blogdata');
+        return $query->result_array();
+    }
 
     public function showonenews($id){
         $query = $this->db->where('id', $id)

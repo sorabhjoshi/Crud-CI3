@@ -1,64 +1,87 @@
 <?php include 'Components/Header.php'; ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 <div class="bread">
-  <h3 style="text-self:right;">Blog Design</h3> <p>Home >> Blog Design </p>
-  </div>
+    <h3 style="text-align: right;">News Design</h3>
+    <p>Home >> News Design >> Category >><?= htmlspecialchars($users[0]['category']); ?></p>
+</div>
 
 <main>
     <div class="container my-5">
         <div class="row">
             <div class="col-md-9">
                 <div class="row row-cols-1 row-cols-md-3 g-4" id="blogs-container">
-                    <?php foreach ($users as $index => $user): ?>
-                        <div class="col featured" <?php if ($index >= 3) echo 'style="display: none;"'; ?>>
-                            <div class="card h-100 card-custom">
-                                <img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" alt="<?= $user['Title']; ?>">
-                                <div class="card-body">
-                                    <a href="<?= base_url('Blog_website/Blog/'. $user['slug'].'/' . $user['id']); ?>" class="text-decoration-none text-dark">
-                                        <h5 class="card-title"><?= $user['Title']; ?></h5>
-                                        <p class="card-text">
-                                            <?php
-                                                $firstLine =  strip_tags(substr($user['Description'],0,100));
+                    <?php if (!empty($users)): ?>
+                        <?php foreach ($users as $index => $user): ?>
+                            <div class="col featured <?= $index >= 3 ? 'd-none' : ''; ?>">
+                                <div class="card h-100 card-custom">
+                                    <img src="<?= base_url('uploads/news_images/' . $user['image']); ?>" 
+                                         class="card-img-top" 
+                                         alt="Image for <?= htmlspecialchars($user['title']); ?>" 
+                                         onerror="this.src='path-to-placeholder.jpg';">
+                                    <div class="card-body">
+                                        <a href="<?= base_url('Blog_website/News/' . $user['category'] . '/' . $user['slug'] . '/' . $user['id']); ?>" 
+                                           class="text-decoration-none text-dark">
+                                            <h5 class="card-title"><?= htmlspecialchars($user['title']); ?></h5>
+                                            <p class="card-text">
+                                                <?php
+                                                $firstLine =  strip_tags(substr($user['description'],0,100));
                                                 echo $firstLine .'...';
-                                            ?>
-                                        </p>
-                                    </a>
+                                                ?>
+                                            </p>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <h2>No Blog Posts Found for this Category</h2>
+                    <?php endif; ?>
                 </div>
                 <div class="text-center mt-4">
-                    <button id="load-more" class="btn btn-primary">Load More</button>
+                    <button id="load-more" class="btn btn-primary" <?= count($users) <= 3 ? 'style="display: none;"' : ''; ?>>Load More</button>
                 </div>
             </div>
+
+            <!-- Sidebar -->
             <div class="col-md-3">
-        <ul class="cats">
-        <h4>Categories</h4>
-        <?php foreach ($tags as $tag): ?>
-            <li><a href="<?= base_url('Blog_website/Blog/' . $tag['categorytitle']); ?>" ><?= htmlspecialchars($tag['categorytitle']) ?></a></li>
-        <?php endforeach; ?>
-          </ul>
-        <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif" alt="">
-        <div class="socialtags">
-          <h4>Follow Us</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" ><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#" ><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#" ><i class="fab fa-instagram"></i></a></li>
-            <li><a href="#" ><i class="fab fa-linkedin-in"></i></a></li>
-            <li><a href="#" ><i class="fab fa-youtube"></i></a></li>
-          </ul>
-          <ul class="list">
-            <?php foreach ($users as $user):?>
-              <li class="li-container"><img src="<?= base_url('uploads/blog_images/' . $user['Image']); ?>" class="card-img-top" ?>
-              <a href="<?= base_url('Blog_website/Blog/'. $user['slug'].'/' . $user['id']); ?>">
-                <h5 class="card-title"><?= $user['Title']; ?></h5>
-                </a>
-              </li>
-              <?php endforeach; ?>
-          </ul>
-        </div>
+                <ul class="cats">
+                    <h4>Categories</h4>
+                    <?php foreach ($tags as $tag): ?>
+                        <li class="<?= $tag['categorytitle'] === $users['category'] ? 'active' : ''; ?>">
+                            <a href="<?= base_url('Blog_website/News/' . $tag['categorytitle']); ?>">
+                                <?= htmlspecialchars($tag['categorytitle']); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+                <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif" alt="">
+
+                <div class="socialtags">
+                    <h4>Follow Us</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                    </ul>
+
+                    <ul class="list">
+                        <?php foreach (array_slice($users, 0, 4) as $new): ?>
+                            <li class="li-container">
+                                <img src="<?= base_url('uploads/news_images/' . $new['image']); ?>" 
+                                     alt="Image for <?= htmlspecialchars($new['title']); ?>" 
+                                     onerror="this.src='path-to-placeholder.jpg';">
+                                <a href="<?= base_url('Blog_website/News/' . $new['category'] . '/' . $new['slug'] . '/' . $new['id']); ?>" 
+                                   class="text-decoration-none text-dark">
+                                    <h5 class="card-title"><?= htmlspecialchars($new['title']); ?></h5>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -66,16 +89,14 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         let itemsToShow = 3;
-        let totalItems = $(".featured").length;
 
-        $("#load-more").on("click", function(e) {
+        $("#load-more").on("click", function (e) {
             e.preventDefault();
+            $(".featured.d-none").slice(0, itemsToShow).removeClass("d-none");
 
-            $(".featured:hidden").slice(0, itemsToShow).slideDown();
-
-            if ($(".featured:hidden").length === 0) {
+            if ($(".featured.d-none").length === 0) {
                 $("#load-more").hide();
             }
         });
@@ -83,6 +104,7 @@
 </script>
 
 <?php include 'Components/Footer.php'; ?>
+
 
 <style>
     
@@ -98,7 +120,7 @@
     flex-direction: column;
     text-decoration: none;
     list-style: none;
-    padding-left: 10px;
+    padding-left: 0;
     margin-bottom: 30px;
 }
 .cats li{

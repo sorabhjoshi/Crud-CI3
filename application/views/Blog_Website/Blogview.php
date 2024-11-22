@@ -2,7 +2,7 @@
 include 'Components/Header.php';
 ?>
 <div class="bread">
-  <h3 style="text-self:right;">Blog Design</h3> <p>Home >> Blog Design >> <?= htmlspecialchars($blog['Title']); ?></p>
+  <h3 style="text-self:right;">Blog Design</h3> <p>Home >> Blog Design >> <?= htmlspecialchars($blog['category']); ?> >> <?= htmlspecialchars($blog['Title']); ?></p>
     
   </div>
 <main>

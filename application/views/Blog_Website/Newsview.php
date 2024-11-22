@@ -3,7 +3,7 @@ include 'Components/Header.php';
 
 ?>
 <div class="bread">
-  <h3 style="text-self:right;">News Design</h3> <p>Home >> News Design >> <?= htmlspecialchars($news['title']); ?></p>
+  <h3 style="text-self:right;">News Design</h3> <p>Home >> News Design >>  <?= htmlspecialchars($news['category']);?> >>  <?= htmlspecialchars($news['title']);?></p>
     
   </div>
 <main>

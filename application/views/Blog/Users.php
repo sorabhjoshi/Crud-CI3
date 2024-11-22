@@ -3,7 +3,7 @@
 <main class="content">
     <div class="tablecontainer">
         <h2>Users List</h2>
-        <table class="user-table">
+        <table id="userTable" class="user-table">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
@@ -20,10 +20,10 @@
                 <?php if (!empty($users)): ?>
                     <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?php echo $id=$id+1; ?></td>
+                            <td><?php echo $id = $id + 1; ?></td>
                             <td><?php echo htmlspecialchars($user->name); ?></td>
                             <td><?php echo htmlspecialchars($user->email); ?></td>
-                            <td><?php echo ($user->UserType==0? 'User':"Admin"); ?></td>
+                            <td><?php echo ($user->UserType == 0 ? 'User' : "Admin"); ?></td>
                             <td><?php echo htmlspecialchars($user->City); ?></td>
                             <td><?php echo htmlspecialchars($user->Phone_no); ?></td>
                             <td class="button-cell"><a href="<?= base_url('EditUser/' . $user->id) ?>" class="edit-btn">Edit</a></td>
@@ -41,6 +41,24 @@
 </main>
 
 <?php include 'Components/Footer.php'; ?>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#userTable').DataTable({
+            "paging": true,     
+            "searching": true,    
+            "ordering": true,     
+            "info": true,    
+            "pageLength": 6,        
+            "columnDefs": [
+                { "orderable": false, "targets": [6, 7] } 
+            ]
+        });
+    });
+</script>
 
 <style>
     .tablecontainer {

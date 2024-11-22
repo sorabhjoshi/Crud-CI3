@@ -3,18 +3,18 @@
 <main class="content">
     <div class="tablecontainer">
         <div class="addnews">
-        <h2>Blogs Categories</h2> 
-        <div>
-        <a href="Blog_website/Home"><button>View Site</button></a>
-        <a href="Addcategory"><button>Add Category</button></a>
+            <h2>Blog Categories</h2> 
+            <div>
+                <a href="Blog_website/Home"><button>View Site</button></a>
+                <a href="Addcategory"><button>Add Category</button></a>
+            </div>
         </div>
-        </div>
-        <table class="user-table">
+        <table id="blogTable" class="user-table">
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>Category Title</th>
-                    <th>Seo Title</th>
+                    <th>SEO Title</th>
                     <th>Meta Keywords</th>
                     <th>Meta Description</th>
                     <th>Edit</th>
@@ -22,21 +22,30 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($users)): ?>
+                <?php 
+                $id = 1; 
+                if (!empty($users)): ?>
                     <?php foreach ($users as $user): ?>
                         <tr>
-                            <td><?php echo $id=$id+1; ?></td>
-                            <td><?php echo $user['categorytitle']; ?></td>
-                            <td><?php echo $user['seotitle']; ?></td>
-                            <td><?php echo $user['metakeywords']; ?></td>
-                            <td><?php echo $user['metadesc']; ?></td>
-                            <td class="button-cell"><a href="<?= base_url('Edittags/' . $user['id']) ?>" class="edit-btn">Edit</a></td>
-                            <td class="button-cell"><a href="<?= base_url('Deletetags/' . $user['id']) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
+                            <td><?php echo $id++; ?></td>
+                            <td><?php echo htmlspecialchars($user['categorytitle']); ?></td>
+                            <td><?php echo htmlspecialchars($user['seotitle']); ?></td>
+                            <td><?php echo htmlspecialchars($user['metakeywords']); ?></td>
+                            <td><?php echo htmlspecialchars($user['metadesc']); ?></td>
+                            <td class="button-cell">
+                                <a href="<?= base_url('Edittags/' . $user['id']) ?>" class="edit-btn" title="Edit Category">Edit</a>
+                            </td>
+                            <td class="button-cell">
+                                <a href="<?= base_url('Deletetags/' . $user['id']) ?>" class="delete-btn" 
+                                   title="Delete Category" onclick="return confirm('Are you sure you want to delete this category?')">
+                                   Delete
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="8">No Blog Categories found.</td>
+                        <td colspan="7">No Blog Categories found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -46,51 +55,83 @@
 
 <?php include 'Components/Footer.php'; ?>
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#blogTable').DataTable({
+            "paging": true,        
+            "searching": true,     
+            "ordering": true,      
+            "info": true,          
+            "pageLength": 6,       
+            "lengthChange": false,
+            "columnDefs": [
+                { "orderable": false, "targets": [5, 6] } 
+            ]
+        });
+    });
+</script>
+
 <style>
+    /* CSS Variables */
+    :root {
+        --primary-color: #5ca1e3;
+        --hover-primary: #3681ca;
+        --delete-color: #ef5350;
+        --hover-delete: #e53935;
+        --edit-color: #66bb6a;
+        --hover-edit: #5caa5b;
+        --table-header-bg: #2d3e50;
+        --table-header-text: #fff;
+        --table-hover: #f1f1f1;
+        --table-striped: #f9f9f9;
+    }
+
     .addnews {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    width: 100%;
-    max-width: 100%;
-    background-color: #dddddd;
-}
+        display: flex;
+        margin-bottom: 20px;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        background-color: #dddddd;
+    }
 
-.addnews h2 {
-    margin: 0;
-    font-size: 24px;
-}
+    .addnews h2 {
+        margin: 0;
+        font-size: 24px;
+    }
 
-.addnews button {
-    background-color: #5ca1e3;
-    padding: 10px ;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin: 7px 20px 7px 0;
-    transition: all 0.3s ease;
-}
+    .addnews button {
+        background-color: var(--primary-color);
+        padding: 10px;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin: 7px 20px 7px 0;
+        transition: all 0.3s ease;
+    }
 
-.addnews button:hover {
-    background-color: #3681ca;
-}
+    .addnews button:hover {
+        background-color: var(--hover-primary);
+    }
 
-    /* Table container */
-.tablecontainer {
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1000px;
-}
+    .tablecontainer {
+        margin: 20px auto;
+        width: 90%;
+        max-width: 1000px;
+    }
 
     h2 {
-    text-align: left;
-    font-size: 24px;
-    padding: 20px;
-    color: #333;
-    margin-bottom: 20px;
-}
+        text-align: left;
+        font-size: 24px;
+        padding: 20px;
+        color: #333;
+    }
 
     .user-table {
         width: 100%;
@@ -104,37 +145,23 @@
         border: 1px solid #ddd;
     }
 
-    .user-table {
-        border-radius: 5px;
-    }
-
     .thead-dark th {
-        background-color: #2d3e50;
-        color: #fff;
+        background-color: var(--table-header-bg);
+        color: var(--table-header-text);
     }
 
     .user-table tr:nth-child(even) {
-        background-color: #f9f9f9;
+        background-color: var(--table-striped);
     }
 
     .user-table tr:hover {
-        background-color: #f1f1f1;
+        background-color: var(--table-hover);
     }
 
-    .user-table td {
-        color: #555;
-    }
-
-    .user-table th {
-        font-weight: bold;
-    }
-
-    /* Center the buttons */
     .button-cell {
         text-align: center;
     }
 
-    /* Edit and Delete button styles */
     .edit-btn, .delete-btn {
         padding: 8px 16px;
         font-size: 14px;
@@ -145,38 +172,28 @@
         transition: all 0.3s ease;
     }
 
-    /* Edit button */
     .edit-btn {
-        background-color: #66bb6a;  /* Softer green */
+        background-color: var(--edit-color);
         color: white;
-        border: 1px solid #66bb6a;
+        border: 1px solid var(--edit-color);
     }
 
-    /* Edit button hover effect */
     .edit-btn:hover {
-        background-color: #5caa5b;  /* Slightly darker green */
-        border: 1px solid #5caa5b;
+        background-color: var(--hover-edit);
+        border: 1px solid var(--hover-edit);
     }
 
-    /* Delete button */
     .delete-btn {
-        background-color: #ef5350;  /* Softer red */
+        background-color: var(--delete-color);
         color: white;
-        border: 1px solid #ef5350;
+        border: 1px solid var(--delete-color);
     }
 
-    /* Delete button hover effect */
     .delete-btn:hover {
-        background-color: #e53935;  /* Slightly darker red */
-        border: 1px solid #e53935;
+        background-color: var(--hover-delete);
+        border: 1px solid var(--hover-delete);
     }
 
-    /* Delete button active effect */
-    .delete-btn:active {
-        background-color: #d32f2f;  /* Even darker red */
-    }
-
-    /* Responsive adjustments */
     @media (max-width: 768px) {
         .user-table th, .user-table td {
             padding: 8px;

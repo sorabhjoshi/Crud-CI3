@@ -49,53 +49,53 @@ $usertype = ($user['UserType'] == 1) ? 'ADMIN' : 'USER';
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px;
-    background-color: #f4f4f4; /* Light background */
+    padding: 20px;
+    background-color: #f9f9f9; /* Lighter background */
     min-height: 100vh;
 }
 
 /* Form styling */
 form {
     width: 100%;
-    max-width: 1200px; /* Large form size */
-    background-color: transparent; /* Transparent background */
-    border-radius: 0; /* No border-radius */
-    box-shadow: none; /* Remove shadow */
-    padding: 20px 20px 60px 20px;
+    max-width: 500px; /* Further reduced form size */
+    background-color: transparent;
+    border-radius: 8px; /* Slightly rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 15px;
 }
 
 /* Heading styling */
 h2 {
     text-align: left;
-    font-size: 24px;
-    padding: 20px;
-    background-color: #eaeaea;
+    font-size: 18px; /* Reduced heading size */
+    padding: 10px;
+    background-color: #e0e0e0;
     color: #333;
-    margin: 0 0 20px 0 ;
+    margin: 0 0 15px 0;
 }
 
 /* Form group styling */
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 25px;
+    margin-bottom: 12px; /* Reduced spacing between groups */
 }
 
 /* Label styling */
 label {
-    font-size: 18px;
+    font-size: 15px; /* Slightly smaller font size */
     font-weight: bold;
-    color: #444;
-    margin-bottom: 10px;
+    color: #555;
+    margin-bottom: 6px; /* Reduced margin */
 }
 
 /* Input styling */
 input[type="text"],
 input[type="email"] {
-    padding: 15px;
-    font-size: 18px;
+    padding: 8px; /* Smaller padding */
+    font-size: 14px; /* Smaller font size */
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 4px; /* Reduced border-radius */
     background-color: #f9f9f9;
     transition: border-color 0.3s ease, background-color 0.3s ease;
     width: 100%;
@@ -112,15 +112,24 @@ input:focus {
 /* Responsive form layout */
 @media (max-width: 768px) {
     form {
-        padding: 30px;
+        padding: 20px;
+        max-width: 100%;
     }
 
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 10px; /* Reduced spacing for smaller screens */
     }
 
     h2 {
-        font-size: 28px;
+        font-size: 16px; /* Smaller heading size for mobile */
+    }
+
+    label {
+        font-size: 14px; /* Adjusted label font size */
+    }
+
+    input {
+        font-size: 13px; /* Adjusted input font size */
     }
 }
 </style>

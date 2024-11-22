@@ -100,11 +100,13 @@ $route['Blog_website/AddNewsCategory'] = 'EditNews/AddNewsCategory/$1';
 
 $route['AddBlogData/(:num)'] = 'Edit/AddBlogData/$1';
 $route['Blog_website/AboutPage'] = 'Blog/AboutPage';
-
 $route['Blog_website/Home'] = 'Blog/Home';
 $route['Blog_website/NewsArticles'] = 'Blog/NewsArticles';
 $route['Blog_website/Blogs'] = 'Blog/Blogs';
 $route['Blog_website/ContactUS'] = 'Blog/ContactUS';
-
-$route['Blog_website/Blog/View/(:num)'] = 'Blog/blogview/$1';
-$route['Blog_website/News/View/(:num)'] = 'Blog/newsview/$1';
+$route['Blog_website/Blog/(:any)/(:num)'] = 'Blog/blogview/$1/$2';
+$route['Blog_website/News/(:any)/(:num)'] = 'Blog/newsview/$1/$2';
+$route['Blog_website/Blog/(:any)/(:any)/(:num)'] = 'Blog/blogviewcat/$1/$2/$3';
+$route['Blog_website/News/(:any)/(:any)/(:num)'] = 'Blog/newsviewcat/$1/$2/$3';
+$route['Blog_website/Blog/(:any)'] = 'Blog/categoryview/$1';
+$route['Blog_website/News/(:any)'] = 'Blog/Newscategoryview/$1';

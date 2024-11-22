@@ -98,6 +98,7 @@ class EditNews extends CI_Controller {
         $data = [
             'Author_name' => $this->input->post('author_name'),
             'title' => $this->input->post('title'),
+            'slug' => generate_slug( $this->input->post('title')),
             'category' => $this->input->post('Category'),
             'description' => $this->input->post('content'),
             'Updated_at' => date('Y-m-d H:i:s')
@@ -148,6 +149,7 @@ class EditNews extends CI_Controller {
             'User_id' => $userid,
             'author_name' => $this->input->post('author_name'),
             'title' => $this->input->post('title'),
+            'slug' => generate_slug( $this->input->post('title')),
             'description' => $this->input->post('content'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),

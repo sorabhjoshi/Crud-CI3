@@ -6,7 +6,7 @@
         selector: '#description',
         plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
         toolbar_mode: 'floating',
-        height: 300
+        height: 200
     });
 </script>
 
@@ -29,16 +29,14 @@
         <textarea id="description" name="content"></textarea>
         <div class="error-message"><?= form_error('content') ?></div>
         
-
         <label for="category">Category:</label>
-<select id="Category" name="category" required>
-    <option value="" disabled selected>Select Category</option>
-    <?php foreach ($tags as $tag): ?>
-        <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
-    <?php endforeach; ?>
-</select>
-<div class="error-message"><?= form_error('category') ?></div>
-
+        <select id="Category" name="category" required>
+            <option value="" disabled selected>Select Category</option>
+            <?php foreach ($tags as $tag): ?>
+                <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <div class="error-message"><?= form_error('category') ?></div>
         
         <button type="submit">Update Blog</button>
     </form>
@@ -49,23 +47,20 @@
 <style>
     /* Wrapper for the entire content */
     .content {
-        padding: 40px 20px;
+        padding: 20px;
         background-color: #f4f4f4;
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
     }
-    #descriptions{
-        resize: none;
-    }
 
     /* Heading styling */
     h2 {
         text-align: center;
         color: #333;
-        font-size: 32px;
-        margin-bottom: 20px;
+        font-size: 24px;
+        margin-bottom: 15px;
         font-weight: 600;
     }
 
@@ -73,20 +68,21 @@
     form {
         display: flex;
         flex-direction: column;
-        gap: 25px;
-        width: 80%;
-        padding: 30px;
+        gap: 15px;
+        width: 90%;
+        max-width: 500px;
+        padding: 20px;
         background-color: #f7f7f7;
-        border-radius: 8px;
-        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        border-radius: 6px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     }
 
     /* Label styling */
     label {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 500;
         color: #333;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
     }
 
     /* Input and textarea styling */
@@ -94,10 +90,10 @@
     input[type="file"],
     textarea,
     select {
-        padding: 14px;
-        font-size: 16px;
+        padding: 10px;
+        font-size: 14px;
         border: 1px solid #ddd;
-        border-radius: 6px;
+        border-radius: 4px;
         background-color: #f9f9f9;
         transition: all 0.3s ease;
         width: 100%;
@@ -115,24 +111,24 @@
 
     /* Content area for the description (TinyMCE) */
     textarea {
-        min-height: 150px;
+        min-height: 120px;
     }
 
     /* Error message styling */
     .error-message {
         color: red;
-        font-size: 14px;
+        font-size: 12px;
         margin-top: 5px;
     }
 
     /* Button styling */
     button {
-        padding: 14px 24px;
-        font-size: 18px;
+        padding: 12px 22px;
+        font-size: 16px;
         background-color: #4CAF50;
         color: white;
         border: none;
-        border-radius: 6px;
+        border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease, transform 0.3s ease;
     }
@@ -152,15 +148,14 @@
         .content {
             padding: 20px;
             width: 100%;
-            max-width: 100%;
         }
 
         h2 {
-            font-size: 28px;
+            font-size: 22px;
         }
 
         button {
-            font-size: 16px;
+            font-size: 14px;
         }
     }
 </style>

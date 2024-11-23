@@ -30,7 +30,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     
-const categories = <?php echo json_encode($categories); ?>;
+const categories = <?php echo json_encode($category); ?>;
 const uniqueCategories = categories.filter((value, index, self) => 
     index === self.findIndex((t) => (
         t.category === value.category
@@ -78,7 +78,7 @@ new Chart(ctx, {
 
     .content {
         padding: 20px;
-        background-color: #f4f4f4;
+        background-color: #f1f1f1;
     }
 
     .overview-section {

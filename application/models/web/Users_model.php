@@ -39,5 +39,44 @@ class Users_model extends CI_Model {
                 ->delete('user-data');
         return ($q) ? TRUE : FALSE;
     }
+
+    public function getFilteredUsers($start, $length, $search = "")
+    {
+        if (!empty($search)) {
+            $this->db->like('name', $search);
+            $this->db->or_like('email', $search);
+            $this->db->or_like('City', $search);
+        }
+    
+        $this->db->limit($length, $start);
+        $query = $this->db->get('user-data');
+        $users = $query->result_array();
+    
+        // Add Edit and Delete buttons to the data
+        foreach ($users as &$user) {
+            $user['edit'] = "<a href='".base_url('EditUser/'.$user['id'])."' class='edit-btn'>Edit</a>";
+            $user['delete'] = "<a href='".base_url('DeleteUser/'.$user['id'])."' class='delete-btn' onclick='return confirm(\"Are you sure?\")'>Delete</a>";
+        }
+    
+        return $users;
+    }
+
+    
+public function countAllUsers()
+{
+    return $this->db->count_all('user-data');
+}
+
+public function countFilteredUsers($search = "")
+{
+    if (!empty($search)) {
+        $this->db->like('name', $search);
+        $this->db->or_like('email', $search);
+        $this->db->or_like('City', $search);
+    }
+    $query = $this->db->get('user-data');
+    return $query->num_rows();
+}
+
 }
 ?>

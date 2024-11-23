@@ -16,6 +16,7 @@
                     <th>User ID</th>
                     <th>Author Name</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
                     <th>Edit</th>
@@ -23,58 +24,48 @@
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                $id = 1; 
-                if (!empty($users)): ?>
-               
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo $id++; ?></td>
-                            <td><?php echo htmlspecialchars($user->User_id); ?></td>
-                            <td><?php echo htmlspecialchars($user->Author_name); ?></td>
-                            <td><?php echo htmlspecialchars($user->Title); ?></td>
-                            <td><?php echo htmlspecialchars($user->Created_date); ?></td>
-                            <td><?php echo htmlspecialchars($user->Updated_date); ?></td>
-                            <td><a href="<?= base_url('EditBlog/' . $user->id) ?>" class="edit-btn">Edit</a></td>
-                            <td><a href="<?= base_url('DeleteBlog/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this blog?')">Delete</a></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    
-                <?php else: ?>
-                    <tr>
-                        <td colspan="8">No blogs found.</td>
-                    </tr>
-                <?php endif; ?>
             </tbody>
         </table>
     </div>
 </main>
 <?php include 'Components/Footer.php'; ?>
-
-<!-- Include DataTable CSS and JS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-    // Initialize DataTable
     $(document).ready(function () {
-        $('#blogTable').DataTable({
-            "paging": true,        // Enable pagination
-            "searching": true,     // Enable search
-            "ordering": true,      // Enable sorting
-            "info": true,          // Display table info
-            "pageLength": 6,       // Set number of rows per page
-            "lengthChange": false, // Disable page length dropdown
-            "columnDefs": [
-                { "orderable": false, "targets": [6, 7] } // Disable sorting on Edit/Delete columns
-            ]
-        });
+    $('#blogTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?= base_url('Welcome/getBlogData') ?>",
+            "type": "POST"
+        },
+        "columns": [
+            { "data": 0 }, // ID
+            { "data": 1 }, // User ID
+            { "data": 2 }, // Author Name
+            { "data": 3 }, // Title
+            { "data": 4 }, // Category
+            { "data": 5, "orderable": false }, // Created Date
+            { "data": 6, "orderable": false }, // Updated Date
+            { "data": 7, "orderable": false }, // Edit
+            { "data": 8, "orderable": false }  // Delete
+        ],
+        "pageLength": 6,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "order": [[0, 'asc']], // Default ordering (ID column, ascending)
+        "info": true
     });
-</script>
+});
 
+
+
+</script>
 <style>
-/* Styling for the Add Blog and View Site section */
 .addnews {
     display: flex;
     margin-bottom: 20px;
@@ -105,7 +96,6 @@
     background-color: #3681ca;
 }
 
-/* Rest of the styles remain unchanged */
 .tablecontainer {
     margin: 20px auto;
     width: 90%;

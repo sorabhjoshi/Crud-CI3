@@ -61,7 +61,7 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color: #f3f3f3;
+    background-color: #f1f1f1;
     min-height: 100vh;
 }
 .error-message {

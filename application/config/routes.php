@@ -56,7 +56,10 @@ $route['Dashboard'] = 'Welcome/dashboard';
 $route['About'] = 'Welcome/about';
 $route['Contact'] = 'Welcome/contact';
 $route['News'] = 'Welcome/news';
-$route['Blog'] = 'Welcome/Blog';
+$route['Blog'] = 'Welcome/blog';
+$route['Blog/getBlogsAjax'] = 'Welcome/getBlogsAjax';
+
+
 $route['Categories'] = 'Welcome/Categories';
 $route['NewsCategories'] = 'Welcome/NewsCategories';
 
@@ -66,6 +69,7 @@ $route['Logout'] = 'Welcome/logout';
 $route['Myprofile'] = 'Welcome/myprofile';
 $route['Updateprofile'] = 'Welcome/updateprofile';
 $route['Users'] = 'Welcome/users';
+$route['Users/getUsersAjax'] = 'Welcome/getUsersAjax';
 $route['EditBlog/(:num)'] = 'Edit/EditBlog/$1';
 $route['Edittags/(:num)'] = 'Edit/Edittags/$1';
 $route['Editnewstags/(:num)'] = 'EditNews/Editnewstags/$1';

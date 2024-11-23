@@ -104,6 +104,84 @@ class News_model extends CI_Model {
                 ->delete('newsdata');
         return ($q) ? TRUE : FALSE;
     }
+    public function getFilterednews($start, $length, $search, $orderColumn, $orderDirection) {
+        if (!empty($search)) {
+            $this->db->like('Author_name', $search);
+            $this->db->or_like('title', $search);
+            $this->db->or_like('category', $search);
+        }
+    
+        // Handle ordering
+        switch ($orderColumn) {
+            case 0:
+                $this->db->order_by('id', $orderDirection); 
+                break;
+            case 1:
+                $this->db->order_by('user_id', $orderDirection);
+                break;
+            case 2:
+                $this->db->order_by('Author_name', $orderDirection);
+                break;
+            case 3:
+                $this->db->order_by('title', $orderDirection);
+                break;
+            case 4:
+                $this->db->order_by('category', $orderDirection);
+                break;
+            case 5:
+                $this->db->order_by('created_at', $orderDirection);
+                break;
+            case 6:
+                $this->db->order_by('updated_at', $orderDirection);
+                break;
+        }
+    
+        $this->db->limit($length, $start);
+        $query = $this->db->get('newsdata');
+        return $query->result();
+    }
+    
+    
+    public function countAllnews() {
+        return $this->db->count_all('newsdata'); 
+    }
+    
+    public function countFilterednews($search) {
+        if (!empty($search)) {
+            $this->db->like('Author_name', $search);
+            $this->db->or_like('title', $search);
+            $this->db->or_like('category', $search);
+        }
+        return $this->db->count_all_results('newsdata'); // Replace 'blogdata' with your actual table name
+    }
 
+
+
+
+
+
+    public function getFilterednewscat($start, $length, $search) {
+        if (!empty($search)) {
+            $this->db->like('categorytitle', $search);
+            $this->db->or_like('seotitle', $search);
+            $this->db->or_like('metakeywords', $search);
+        }
+        $this->db->limit($length, $start);
+        $query = $this->db->get('newscategories'); // Replace 'blogdata' with your actual table name
+        return $query->result();
+    }
+    
+    public function countAllnewscat() {
+        return $this->db->count_all('newscategories'); // Replace 'blogdata' with your actual table name
+    }
+    
+    public function countFilterednewscat($search) {
+        if (!empty($search)) {
+            $this->db->like('categorytitle', $search);
+            $this->db->or_like('seotitle', $search);
+            $this->db->or_like('metakeywords', $search);
+        }
+        return $this->db->count_all_results('newscategories'); // Replace 'blogdata' with your actual table name
+    }
 }
 ?>

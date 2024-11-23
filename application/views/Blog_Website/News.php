@@ -2,7 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <div class="bread">
-  <h3 style="text-self:right;">News Design</h3> <p>Home >> News Design</p>
+  <h3 style="text-self:right;">News Design</h3> <p><a href="<?php echo base_url('Blog_website/NewsArticles')?>">Home</a> >> <a href="#">News Design</a></p>
   </div>
 <main>
   <div class="container my-3">
@@ -249,8 +249,8 @@ a:hover {
 
 .li-container {
   display: flex;
-  align-items: start;  
-  text-align: left;
+  align-items: center;  
+  text-align: center;
   width: 100%;
   border-top: .5px solid #e9e5e5;
   padding-top: 10px;

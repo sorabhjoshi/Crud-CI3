@@ -48,7 +48,7 @@
     /* Wrapper for the entire content */
     .content {
         padding: 20px;
-        background-color: #f4f4f4;
+        background-color: #f1f1f1;
         display: flex;
         flex-direction: column;
         align-items: center;

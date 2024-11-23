@@ -2,13 +2,16 @@
 include 'Components/Header.php';
 ?>
 <div class="bread">
-  <h3 style="text-self:right;">Blog Design</h3> <p>Home >> Blog Design >> <?= htmlspecialchars($blog['category']); ?> >> <?= htmlspecialchars($blog['Title']); ?></p>
-    
-  </div>
+  <h3 style="text-self:right;">Blog Design</h3>
+  <p><a href="<?php echo base_url('Blog_website/Home') ?>">Home</a> >> <a
+      href="<?php echo base_url('Blog_website/Blogs') ?>">Blog Design</a> >> <a href="<?= base_url('Blog_website/Blog/' . $blog['category']); ?>" ><?= htmlspecialchars($blog['category']); ?></a>
+    >> <a href="#"><?= htmlspecialchars($blog['Title']); ?></a></p>
+
+</div>
 <main>
-  
+
   <div class="allcontainer">
-  
+
     <div class="text-center">
       <?php if (!empty($blog['Image'])): ?>
         <img src="<?= base_url('uploads/blog_images/' . $blog['Image']); ?>" class="blog-image mb-4">
@@ -18,44 +21,46 @@ include 'Components/Header.php';
     </div>
     <div class="container my-5">
       <div class="row">
-      <div class="col-md-9">
-        <h1 class="text-left mb-4"><?= htmlspecialchars($blog['Title']); ?></h1>
-        <div class="blog-details">
-          <p><strong>Author:</strong> <?= htmlspecialchars_decode($blog['Author_name']); ?></p>
-          <p><strong>Published on:</strong> <?= date('F j, Y', strtotime($blog['Created_date'])); ?></p>
+        <div class="col-md-9">
+          <h1 class="text-left mb-4"><?= htmlspecialchars($blog['Title']); ?></h1>
+          <div class="blog-details">
+            <p><strong>Author:</strong> <?= htmlspecialchars_decode($blog['Author_name']); ?></p>
+            <p><strong>Published on:</strong> <?= date('F j, Y', strtotime($blog['Created_date'])); ?></p>
+          </div>
+          <div class="blog-content mb-4">
+            <p class="drop-cap"><?= htmlspecialchars_decode($blog['Description']); ?></p>
+          </div>
+          <div class="text-center">
+            <a href="<?php echo base_url('Blog_website/Blogs') ?>" class="btn-back mt-4">Back to Blogs</a>
+          </div>
         </div>
-        <div class="blog-content mb-4">
-          <p class="drop-cap"><?= htmlspecialchars_decode($blog['Description']); ?></p>
-        </div>
-        <div class="text-center">
-          <a href="<?php echo base_url('Blog_website/Blogs') ?>" class="btn-back mt-4">Back to Blogs</a>
+        <div class="col-md-3">
+          <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif"
+            alt="">
+          <div class="socialtags">
+            <h4>Follow Us</h4>
+            <ul class="list-unstyled">
+              <li><a href="#" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a href="#" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a></li>
+              <li><a href="#" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a></li>
+              <li><a href="#" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+              <li><a href="#" aria-label="Follow us on YouTube"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+            <ul class="list">
+              <?php foreach ($blogdata as $blog): ?>
+                <li class="li-container">
+                  <img src="<?= base_url('uploads/blog_images/' . $blog['Image']); ?>" loading="lazy"
+                    class="card-img-top">
+                  <a href="<?= base_url('Blog_website/Blog/View/' . $blog['id']); ?>">
+                    <h5 class="card-title"><?= $blog['Title']; ?></h5>
+                  </a>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
-        <img class="img" src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-custom-web-design.png.avif" alt="">
-        <div class="socialtags">
-          <h4>Follow Us</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="#" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="#" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="#" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
-            <li><a href="#" aria-label="Follow us on YouTube"><i class="fab fa-youtube"></i></a></li>
-          </ul>
-          <ul class="list">
-            <?php foreach ($blogdata as $blog): ?>
-              <li class="li-container">
-                <img src="<?= base_url('uploads/blog_images/' . $blog['Image']); ?>" loading="lazy" class="card-img-top" >
-                <a href="<?= base_url('Blog_website/Blog/View/' . $blog['id']); ?>">
-                <h5 class="card-title"><?= $blog['Title']; ?></h5>
-                </a>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-      </div>
-      </div>
-      
+
     </div>
   </div>
 </main>
@@ -66,7 +71,16 @@ include 'Components/Header.php';
     padding: 0;
     box-sizing: border-box;
   }
+  .bread a {
+  color: black; 
+  text-decoration: none; 
+  font-weight: 600; 
+  transition: color 0.3s ease; 
+}
 
+.bread a:hover {
+  color: #282aa7; 
+}
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f3f4f6;
@@ -180,10 +194,11 @@ include 'Components/Header.php';
   ul li a:hover {
     color: #52adbf;
   }
-  .card-title:hover{
-  color: #52adbf;
-}
-  
+
+  .card-title:hover {
+    color: #52adbf;
+  }
+
 
   ul li a i {
     margin-right: 10px;
@@ -197,11 +212,11 @@ include 'Components/Header.php';
 
   .li-container {
     display: flex;
-    align-items: start;
+    align-items: center;
     text-align: left;
     width: 100%;
     border-top: 0.5px solid #e9e5e5;
-    padding-top: 10px;
+    padding: 10px 0;
   }
 
   .li-container img {
@@ -250,25 +265,26 @@ include 'Components/Header.php';
       padding: 8px 16px;
     }
   }
+
   .bread {
-  width: 100%;
-  background-color: #eeeeee;
-  padding: 15px 120px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-}
+    width: 100%;
+    background-color: #eeeeee;
+    padding: 15px 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
 
-.bread h3 {
-  margin: 0;
-  text-align: left;
-}
+  .bread h3 {
+    margin: 0;
+    text-align: left;
+  }
 
-.bread p {
-  margin: 0;
-  text-align: right;
-}
+  .bread p {
+    margin: 0;
+    text-align: right;
+  }
 </style>
 
 <?php include 'Components/Footer.php'; ?>

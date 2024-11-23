@@ -2,7 +2,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <div class="bread">
 <h3 style="text-self:right;">Blog Design</h3> 
-<p>Home >> Blog Design >> Category >><?= htmlspecialchars($users[0]['category']); ?></p>
+<p><a href="<?php echo base_url('Blog_website/Home') ?>">Home</a> >> <a
+      href="<?php echo base_url('Blog_website/Blogs') ?>">Blog Design</a> >> <a href="#">Category</a> <a href="#"><?= htmlspecialchars($blog['Title']); ?></a>>> <a href="#"><?= htmlspecialchars($users[0]['category']); ?></a></p>
+
   </div>
 
 <main>
@@ -94,7 +96,17 @@
 <?php include 'Components/Footer.php'; ?>
 
 <style>
-    
+    .bread a {
+  color: black; /* Nice blue for links */
+  text-decoration: none; /* Removes underline */
+  font-weight: 600; /* Makes the text slightly bolder */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.bread a:hover {
+  color:#282aa7;/* Adds underline on hover */
+}
+
 
     .list {
   width: 100%;

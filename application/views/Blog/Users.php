@@ -16,26 +16,6 @@
                     <th>Delete</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php if (!empty($users)): ?>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo $id = $id + 1; ?></td>
-                            <td><?php echo htmlspecialchars($user->name); ?></td>
-                            <td><?php echo htmlspecialchars($user->email); ?></td>
-                            <td><?php echo ($user->UserType == 0 ? 'User' : "Admin"); ?></td>
-                            <td><?php echo htmlspecialchars($user->City); ?></td>
-                            <td><?php echo htmlspecialchars($user->Phone_no); ?></td>
-                            <td class="button-cell"><a href="<?= base_url('EditUser/' . $user->id) ?>" class="edit-btn">Edit</a></td>
-                            <td class="button-cell"><a href="<?= base_url('DeleteUser/' . $user->id) ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="8">No users found.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
         </table>
     </div>
 </main>
@@ -46,18 +26,24 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#userTable').DataTable({
-            "paging": true,     
-            "searching": true,    
-            "ordering": true,     
-            "info": true,    
-            "pageLength": 6,        
-            "columnDefs": [
-                { "orderable": false, "targets": [6, 7] } 
-            ]
-        });
-    });
+  $('#userTable').DataTable({
+    "processing": true,
+    "serverSide": true,
+    "ajax": {
+        "url": "<?php echo base_url('Users/getUsersAjax'); ?>",
+        "type": "POST"
+    },
+    "columns": [
+        { "data": "id" },
+        { "data": "name" },
+        { "data": "email" },
+        { "data": "UserType", "render": function(data) { return data == 0 ? 'User' : 'Admin'; } },
+        { "data": "City" },
+        { "data": "Phone_no" },
+        { "data": "edit", "orderable": false, "searchable": false },
+        { "data": "delete", "orderable": false, "searchable": false }
+    ]
+});
 </script>
 
 <style>

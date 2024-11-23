@@ -50,7 +50,7 @@ $usertype = ($user['UserType'] == 1) ? 'ADMIN' : 'USER';
     justify-content: center;
     align-items: flex-start;
     padding: 20px;
-    background-color: #f9f9f9; /* Lighter background */
+    background-color: #f1f1f1; /* Lighter background */
     min-height: 100vh;
 }
 

@@ -16,6 +16,7 @@
                     <th>User ID</th>
                     <th>Author Name</th>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
                     <th>Edit</th>
@@ -23,61 +24,46 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $id = 1; ?>
-                <?php if (!empty($users)): ?>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo $id++; ?></td>
-                            <td><?php echo htmlspecialchars($user->user_id); ?></td>
-                            <td><?php echo htmlspecialchars($user->Author_name); ?></td>
-                            <td><?php echo htmlspecialchars($user->title); ?></td>
-                            <td><?php echo htmlspecialchars($user->created_at); ?></td>
-                            <td><?php echo htmlspecialchars($user->updated_at); ?></td>
-                            <td>
-                                <a href="<?= base_url('EditNews/' . $user->id) ?>" class="edit-btn" title="Edit News">Edit</a>
-                            </td>
-                            <td>
-                                <a href="<?= base_url('DeleteNews/' . $user->id) ?>" class="delete-btn" 
-                                   title="Delete News" onclick="return confirm('Are you sure you want to delete this news item?')">
-                                   Delete
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="8">No news found.</td>
-                    </tr>
-                <?php endif; ?>
+                
             </tbody>
         </table>
     </div>
 </main>
 
 <?php include 'Components/Footer.php'; ?>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-<style>
-</style>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const table = document.querySelector("#newsTable");
-        if (table) {
-            $(table).DataTable({
-                paging: true,
-                searching: true,
-                ordering: true,
-                info: true,
-                pageLength: 6, 
-                lengthChange: false,
-                columnDefs: [
-                    { orderable: false, targets: [6, 7] } 
-                ]
-            });
-        }
+    
+    $(document).ready(function () {
+    $('#newsTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?= base_url('Welcome/getNewsData') ?>",
+            "type": "POST"
+        },
+        "columns": [
+            { "data": 0 },
+            { "data": 1 }, 
+            { "data": 2 }, 
+            { "data": 3 }, 
+            { "data": 4 }, 
+            { "data": 5 }, 
+            { "data": 6 }, 
+            { "data": 7, "orderable": false }, 
+            { "data": 8, "orderable": false }  
+        ],
+        "pageLength": 6,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true
     });
+});
+
 </script>
 <style>
     :root {

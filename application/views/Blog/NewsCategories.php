@@ -22,32 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $id = 1; ?>
-                <?php if (!empty($users)): ?>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo $id++; ?></td>
-                            <td><?php echo htmlspecialchars($user['categorytitle']); ?></td>
-                            <td><?php echo htmlspecialchars($user['seotitle']); ?></td>
-                            <td><?php echo htmlspecialchars($user['metakeywords']); ?></td>
-                            <td><?php echo htmlspecialchars($user['metadesc']); ?></td>
-                            <td class="button-cell">
-                                <a href="<?= base_url('Editnewstags/' . $user['id']) ?>" class="edit-btn" title="Edit Category">Edit</a>
-                            </td>
-                            <td class="button-cell">
-                                <a href="<?= base_url('Deletenewstags/' . $user['id']) ?>" 
-                                   class="delete-btn" title="Delete Category" 
-                                   onclick="return confirm('Are you sure you want to delete this category?')">
-                                   Delete
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="7">No categories found.</td>
-                    </tr>
-                <?php endif; ?>
+                
             </tbody>
         </table>
     </div>
@@ -55,11 +30,38 @@
 
 <?php include 'Components/Footer.php'; ?>
 
-<!-- DataTables CSS and JS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+    $('#categoryTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?= base_url('EditNews/getNewsCat') ?>",
+            "type": "POST"
+        },
+        "columns": [
+            { "data": 0 }, 
+            { "data": 1 }, 
+            { "data": 2 }, 
+            { "data": 3 },
+            { "data": 4 }, 
+            { "data": 5, "orderable": false },
+            { "data": 6, "orderable": false }  
+        ],
+        "pageLength": 6,
+        "lengthChange": false,
+        "searching": true,
+       "ordering": true,
+        "order": [[0, 'asc']],
+        "info": true
+    });
+});
+
+</script>
 <!-- Styles -->
 <style>
     .dataTables_wrapper {
@@ -191,20 +193,4 @@
     }
 </style>
 
-<!-- Scripts -->
-<script>
-    // Initialize DataTables
-    $(document).ready(function() {
-        $('#categoryTable').DataTable({
-            paging: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            pageLength: 5,
-            lengthChange: false,
-            columnDefs: [
-                { orderable: false, targets: [5, 6] } // Make Edit and Delete buttons non-sortable
-            ]
-        });
-    });
-</script>
+

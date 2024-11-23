@@ -129,7 +129,7 @@
 .li-container {
   display: flex;
   
-  align-items: start;  
+  align-items: center;  
   text-align: left;
   width: 100%;
   border-top: .5px solid #e9e5e5;

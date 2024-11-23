@@ -1,7 +1,8 @@
 <?php include 'Components/Header.php'; ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <div class="bread">
-  <h3 style="text-self:right;">Blog Design</h3> <p>Home >> Blog Design </p>
+  <h3 style="text-self:right;">Blog Design</h3> <p><a href="<?php echo base_url('Blog_website/Home')?>">Home</a>>><a href="Blogs">Blog Design</a> </p>
+  
   </div>
 
 <main>
@@ -89,8 +90,8 @@
 
     .list {
   width: 100%;
-  margin: 0; /* Remove left margin */
-  padding: 0; /* Remove left padding */
+  margin: 0; 
+  padding: 0; 
   align-items: start;
 }
 .cats{
@@ -109,7 +110,7 @@ font-size: 20px;
 }
 .li-container {
   display: flex;
-  align-items: start;  
+  align-items: center;  
   text-align: left;
   width: 100%;
   border-top: .5px solid #e9e5e5;

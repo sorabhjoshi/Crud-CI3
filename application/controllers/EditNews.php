@@ -191,8 +191,49 @@ class EditNews extends CI_Controller {
     }
     
     
-    
-    
+    public function getNewsCat() {
+        $start = $_POST['start']; 
+        $length = $_POST['length']; 
+        $order_column = $_POST['order'][0]['column']; 
+        $order_dir = $_POST['order'][0]['dir']; 
+
+        $columns = ['id', 'categorytitle', 'seotitle', 'metakeywords', 'metadesc']; 
+        $order_by = $columns[$order_column]; 
+
+        
+        $total_rows = $this->db->count_all('newscategories');
+
+        $query = $this->db->select('*')
+            ->from('newscategories')
+            ->order_by($order_by, $order_dir) 
+            ->limit($length, $start) 
+            ->get();
+
+       
+        $categories = $query->result();
+
+       
+        $data = [];
+        foreach ($categories as $category) {
+            $data[] = [
+                $category->id,
+                $category->categorytitle,
+                $category->seotitle,
+                $category->metakeywords,
+                $category->metadesc,
+                '<a href="' . base_url('EditNewsCategory/' . $category->id) . '" class="edit-btn">Edit</a>',
+                '<a href="' . base_url('DeleteNewsCategory/' . $category->id) . '" class="delete-btn" onclick="return confirm(\'Are you sure you want to delete this category?\')">Delete</a>'
+            ];
+        }
+
+        
+        echo json_encode([
+            'draw' => $_POST['draw'], 
+            'recordsTotal' => $total_rows,
+            'recordsFiltered' => $total_rows,
+            'data' => $data 
+        ]);
+	}
     
     
 

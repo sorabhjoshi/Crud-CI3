@@ -3,7 +3,7 @@
 
 <div class="bread">
     <h3 style="text-align: right;">News Design</h3>
-    <p>Home >> News Design >> Category >><?= htmlspecialchars($users[0]['category']); ?></p>
+    <p><a href="<?php echo base_url('Blog_website/NewsArticles')?>">Home</a> >> <a href="<?php echo base_url('Blog_website/NewsArticles')?>">News Design</a>>> <a href="#">Category</a> >><a href="#"><?= htmlspecialchars($users[0]['category']); ?></a></p>
 </div>
 
 <main>
@@ -107,12 +107,21 @@
 
 
 <style>
-    
+    .bread a {
+  color: black; 
+  text-decoration: none; 
+  font-weight: 600; 
+  transition: color 0.3s ease; 
+}
+
+.bread a:hover {
+  color:#282aa7;
+}
 
     .list {
   width: 100%;
-  margin: 0; /* Remove left margin */
-  padding: 0; /* Remove left padding */
+  margin: 0; 
+  padding: 0; 
   align-items: start;
 }
 .cats{
@@ -131,12 +140,12 @@ font-size: 20px;
 }
 .li-container {
   display: flex;
-  align-items: start;  
-  text-align: left;
+  align-items: center;  
+  text-align: center;
   width: 100%;
   border-top: .5px solid #e9e5e5;
-  padding-top: 10px;
-  margin-left: 0; /* Remove any left margin */
+  padding: 10px 0 ;
+  margin-left: 0; 
 }
 
 .li-container img {
@@ -153,9 +162,7 @@ font-size: 20px;
   color: #333;
 }
 
-ul li {
-  margin: 10px 0;
-}
+
 
 .socialtags {
   padding: 20px 0 20px;

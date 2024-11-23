@@ -3,7 +3,8 @@ include 'Components/Header.php';
 
 ?>
 <div class="bread">
-  <h3 style="text-self:right;">News Design</h3> <p>Home >> News Design >>  <?= htmlspecialchars($news['category']);?> >>  <?= htmlspecialchars($news['title']);?></p>
+  <h3 style="text-self:right;">News Design</h3> 
+  <p><a href="<?php echo base_url('Blog_website/NewsArticles')?>">Home</a> >> <a href="<?php echo base_url('Blog_website/NewsArticles')?>">News Design</a> >>  <a href="<?= base_url('Blog_website/News/' . $news['category']); ?>"><?= htmlspecialchars($news['category']);?></a> >>  <a href="#"><?= htmlspecialchars($news['title']);?></a></p>
     
   </div>
 <main>
@@ -59,7 +60,16 @@ include 'Components/Header.php';
 </main>
 
 <style>
-  /* Include the same styles as the blog page */
+  .bread a {
+  color: black; 
+  text-decoration: none; 
+  font-weight: 600; 
+  transition: color 0.3s ease; 
+}
+
+.bread a:hover {
+  color:#282aa7;
+}
   ul li a {
     font-size: 1.25rem;
     color: #333;
@@ -76,8 +86,8 @@ include 'Components/Header.php';
   }
   .li-container {
     display: flex;
-    align-items: start;
-    text-align: left;
+    align-items: center;
+    text-align: center;
     width: 100%;
     border-top: 0.5px solid #e9e5e5;
     padding: 10px 0 10px 0;

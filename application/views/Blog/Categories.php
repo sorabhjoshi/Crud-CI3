@@ -22,32 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                $id = 1; 
-                if (!empty($users)): ?>
-                    <?php foreach ($users as $user): ?>
-                        <tr>
-                            <td><?php echo $id++; ?></td>
-                            <td><?php echo htmlspecialchars($user['categorytitle']); ?></td>
-                            <td><?php echo htmlspecialchars($user['seotitle']); ?></td>
-                            <td><?php echo htmlspecialchars($user['metakeywords']); ?></td>
-                            <td><?php echo htmlspecialchars($user['metadesc']); ?></td>
-                            <td class="button-cell">
-                                <a href="<?= base_url('Edittags/' . $user['id']) ?>" class="edit-btn" title="Edit Category">Edit</a>
-                            </td>
-                            <td class="button-cell">
-                                <a href="<?= base_url('Deletetags/' . $user['id']) ?>" class="delete-btn" 
-                                   title="Delete Category" onclick="return confirm('Are you sure you want to delete this category?')">
-                                   Delete
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="7">No Blog Categories found.</td>
-                    </tr>
-                <?php endif; ?>
+               
             </tbody>
         </table>
     </div>
@@ -61,18 +36,31 @@
 
 <script>
     $(document).ready(function () {
-        $('#blogTable').DataTable({
-            "paging": true,        
-            "searching": true,     
-            "ordering": true,      
-            "info": true,          
-            "pageLength": 6,       
-            "lengthChange": false,
-            "columnDefs": [
-                { "orderable": false, "targets": [5, 6] } 
-            ]
-        });
+    $('#blogTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "<?= base_url('Edit/getblogCat') ?>",
+            "type": "POST"
+        },
+        "columns": [
+            { "data": 0 }, 
+            { "data": 1 }, 
+            { "data": 2 }, 
+            { "data": 3 },
+            { "data": 4 }, 
+            { "data": 5, "orderable": false },
+            { "data": 6, "orderable": false }  
+        ],
+        "pageLength": 6,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,   
+        "order": [[0, 'asc']],
+        "info": true
     });
+});
+
 </script>
 
 <style>

@@ -10,6 +10,17 @@
             </div>
         </div>
         <table id="newsTable" class="user-table">
+        <div class="filter-container">
+            <h4>Filter</h4>
+            <div class="filter">
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate">
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate">
+                <button id="filterButton">Filter</button>
+            </div>
+            </div>
+
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
@@ -36,14 +47,17 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-    
-    $(document).ready(function () {
-    $('#newsTable').DataTable({
+     $(document).ready(function () {
+        const table = $('#newsTable').DataTable({
         "processing": true,
         "serverSide": true,
         "ajax": {
             "url": "<?= base_url('Welcome/getNewsData') ?>",
-            "type": "POST"
+            "type": "POST",
+                "data": function (d) {
+                    d.start_date = $('#startDate').val(); 
+                    d.end_date = $('#endDate').val();    
+                }
         },
         "columns": [
             { "data": 0 },
@@ -62,10 +76,77 @@
         "ordering": true,
         "info": true
     });
+    
+    $('#filterButton').on('click', function () {
+            table.ajax.reload();
+        });
 });
+   
 
 </script>
 <style>
+    .dataTables_wrapper .dataTables_filter {
+    float: right;
+    text-align: right;
+}
+.filter-container h4{
+    margin: 0;
+    padding: 0;
+    padding-bottom: 10px;
+}
+.filter{
+    display: flex;
+    gap: 10px;
+}
+    .filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    background-color: #c3c3c3;
+    padding: 20px;
+    border-radius: 7px;
+    gap: 10px;
+    width: 96%;
+    margin-bottom: 10px;
+}
+#newsTable{
+    padding-top: 10px;
+}
+
+.filter-container label {
+    font-size: 16px;
+    color: #333;
+}
+
+.filter-container input[type="date"] {
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    width: auto;
+}
+
+.filter-container input[type="date"]:focus {
+    border-color: var(--primary-color);
+}
+
+.filter-container button {
+    padding: 6px 12px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-container button:hover {
+    background-color: var(--hover-primary);
+}
+
     :root {
         --primary-color: #5ca1e3;
         --hover-primary: #3681ca;
@@ -83,7 +164,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 96.6%;
+        width: 97%;
         background-color: #dddddd;
         padding: 15px;
         margin-bottom: 20px;

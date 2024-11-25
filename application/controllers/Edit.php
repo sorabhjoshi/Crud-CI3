@@ -181,38 +181,36 @@ class Edit extends CI_Controller {
     }
     public function getblogCat() {
         $this->load->model('web/Blog_model');
-        
-        // Get search, pagination, and sorting parameters from the DataTable request
         $search = $this->input->post('search')['value'];
         $start = $this->input->post('start');
         $length = $this->input->post('length');
         $draw = $this->input->post('draw');
         
-        // Sorting parameters from DataTable
-        $orderColumnIndex = $this->input->post('order')[0]['column']; // The index of the column to sort by
-        $orderDirection = $this->input->post('order')[0]['dir']; // Sorting direction (asc or desc)
         
-        // Define your column names for sorting
+        $orderColumnIndex = $this->input->post('order')[0]['column']; 
+        $orderDirection = $this->input->post('order')[0]['dir'];
+        
+       
         $columns = ['id', 'categorytitle', 'seotitle', 'metakeywords', 'metadesc'];
         
-        // Determine the column name to order by
+        
         $orderBy = $columns[$orderColumnIndex];
         
-        // Fetch filtered data with pagination, search, and sorting
+       
         $blogs = $this->Blog_model->getFilteredblogcat($start, $length, $search, $orderBy, $orderDirection);
         
-        // Get the total number of records (without filtering)
+       
         $totalRecords = $this->Blog_model->countAllblogcat();
         
-        // Get the filtered records count (with the applied search filter)
+        
         $filteredRecords = $this->Blog_model->countFilteredblogcat($search);
         
-        $counter = $start + 1;  // Start the counter from the correct number for the current page
+        $counter = $start + 1;  
         $data = [];
         
         foreach ($blogs as $blog) {
             $data[] = [
-                $counter++,  // Increment the counter for each row
+                $counter++,  
                 $blog->categorytitle,
                 $blog->seotitle,
                 $blog->metakeywords,

@@ -12,45 +12,52 @@ class Blog_model extends CI_Model {
         return $query->result_array();  
     }
 
-    public function getFilteredBlogs($start, $length, $search, $order_by, $order_dir) {
-        // Apply search filter if provided
+    public function getFilteredBlogs($start, $length, $search, $order_by, $order_dir,$start_date,$end_date) {
+        
         if (!empty($search)) {
-            $this->db->group_start(); // Start a group for OR conditions
+            $this->db->group_start(); 
             $this->db->like('Author_name', $search);
             $this->db->or_like('Title', $search);
             $this->db->or_like('category', $search);
-            $this->db->group_end(); // End the group
+            $this->db->group_end(); 
         }
-    
-        // Apply sorting if provided
+        if (!empty($start_date) && !empty($end_date)) {
+            $this->db->where('Created_date >=', $start_date);
+            $this->db->where('Created_date <=', $end_date);
+        }
+     
         if (!empty($order_by) && !empty($order_dir)) {
-            $this->db->order_by($order_by, $order_dir); // Apply order by column and direction
+            $this->db->order_by($order_by, $order_dir); 
         } else {
-            $this->db->order_by('id', 'asc'); // Default ordering by 'id' if not specified
+            $this->db->order_by('id', 'asc'); 
         }
     
-        // Apply pagination (limit and offset)
+       
         $this->db->limit($length, $start);
     
-        // Fetch data from the database (replace 'blogdata' with your actual table name)
+        
         $query = $this->db->get('blogdata');
         
-        // Return the result as an array of objects
+       
         return $query->result();
     }
     
     
     public function countAllBlogs() {
-        return $this->db->count_all('blogdata'); // Replace 'blogdata' with your actual table name
+        return $this->db->count_all('blogdata'); 
     }
     
-    public function countFilteredBlogs($search) {
+    public function countFilteredBlogs($search, $start_date = null, $end_date = null) {
         if (!empty($search)) {
             $this->db->like('Author_name', $search);
             $this->db->or_like('Title', $search);
             $this->db->or_like('category', $search);
         }
-        return $this->db->count_all_results('blogdata'); // Replace 'blogdata' with your actual table name
+        if (!empty($start_date) && !empty($end_date)) {
+            $this->db->where('Created_date >=', $start_date);
+            $this->db->where('Created_date <=', $end_date);
+        }
+        return $this->db->count_all_results('blogdata'); 
     }
     
     
@@ -160,26 +167,26 @@ class Blog_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('blogcategories');
         
-        // Apply search filter if provided
         if (!empty($search)) {
             $this->db->like('categorytitle', $search);
             $this->db->or_like('seotitle', $search);
             $this->db->or_like('metakeywords', $search);
             $this->db->or_like('metadesc', $search);
         }
-        
-        // Apply ordering based on the DataTable request
+        if (!empty($start_date) && !empty($end_date)) {
+            $this->db->where('Created_date >=', $start_date);
+            $this->db->where('Created_date <=', $end_date);
+        }
         $this->db->order_by($orderBy, $orderDirection);
         
-        // Apply pagination
         $this->db->limit($length, $start);
         
         $query = $this->db->get();
-        return $query->result(); // Return the result as an array of objects
+        return $query->result(); 
     }
     
     public function countAllblogcat() {
-        return $this->db->count_all('blogcategories'); // Replace 'blogdata' with your actual table name
+        return $this->db->count_all('blogcategories'); 
     }
     
     public function countFilteredblogcat($search) {
@@ -188,7 +195,7 @@ class Blog_model extends CI_Model {
             $this->db->or_like('seotitle', $search);
             $this->db->or_like('metakeywords', $search);
         }
-        return $this->db->count_all_results('blogcategories'); // Replace 'blogdata' with your actual table name
+        return $this->db->count_all_results('blogcategories'); 
     }
 }
 ?>

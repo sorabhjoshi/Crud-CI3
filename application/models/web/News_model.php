@@ -104,14 +104,18 @@ class News_model extends CI_Model {
                 ->delete('newsdata');
         return ($q) ? TRUE : FALSE;
     }
-    public function getFilterednews($start, $length, $search, $orderColumn, $orderDirection) {
+    public function getFilterednews($start, $length, $search, $orderColumn, $orderDirection, $start_date, $end_date) {
         if (!empty($search)) {
             $this->db->like('Author_name', $search);
             $this->db->or_like('title', $search);
             $this->db->or_like('category', $search);
         }
+        if (!empty($start_date) && !empty($end_date)) {
+            $this->db->where('DATE(created_at) >=', $start_date);
+            $this->db->where('DATE(created_at) <=', $end_date);
+        }
     
-        // Handle ordering
+        
         switch ($orderColumn) {
             case 0:
                 $this->db->order_by('id', $orderDirection); 
@@ -146,13 +150,17 @@ class News_model extends CI_Model {
         return $this->db->count_all('newsdata'); 
     }
     
-    public function countFilterednews($search) {
+    public function countFilterednews($search, $start_date, $end_date) {
         if (!empty($search)) {
             $this->db->like('Author_name', $search);
             $this->db->or_like('title', $search);
             $this->db->or_like('category', $search);
         }
-        return $this->db->count_all_results('newsdata'); // Replace 'blogdata' with your actual table name
+        if (!empty($start_date) && !empty($end_date)) {
+            $this->db->where('DATE(created_at) >=', $start_date);
+            $this->db->where('DATE(created_at) <=', $end_date);
+        }
+        return $this->db->count_all_results('newsdata'); 
     }
 
 

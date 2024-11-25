@@ -67,24 +67,25 @@ class Welcome extends CI_Controller {
 	public function getBlogData() {
 		$this->load->model('web/Blog_model');
 		
-		// Fetch parameters sent by DataTables
+		
 		$search = $this->input->post('search')['value'];
 		$start = $this->input->post('start');
 		$length = $this->input->post('length');
 		$draw = $this->input->post('draw');
+		$start_date = $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
 		
-		// Sorting parameters (added this)
-		$order_column = $_POST['order'][0]['column']; // Column index
-		$order_dir = $_POST['order'][0]['dir']; // Sort direction ('asc' or 'desc')
+		$order_column = $_POST['order'][0]['column']; 
+		$order_dir = $_POST['order'][0]['dir']; 
 		
-		// Column names corresponding to the order column index
-		$columns = ['id', 'category', 'title', 'created_date', 'updated_date']; // Adjust according to your table
-		$order_by = $columns[$order_column]; // Get the column name to order by
 		
-		// Fetch data and total counts
-		$blogs = $this->Blog_model->getFilteredBlogs($start, $length, $search, $order_by, $order_dir);
+		$columns = ['id', 'category', 'title', 'created_date', 'updated_date']; 
+		$order_by = $columns[$order_column]; 
+	
+		
+		$blogs = $this->Blog_model->getFilteredBlogs($start, $length, $search, $order_by, $order_dir,$start_date,$end_date);
 		$totalRecords = $this->Blog_model->countAllBlogs();
-		$filteredRecords = $this->Blog_model->countFilteredBlogs($search);
+		$filteredRecords = $this->Blog_model->countFilteredBlogs($search, $start_date, $end_date);
 	
 		$counter = $start + 1;
 		$data = [];
@@ -116,14 +117,15 @@ class Welcome extends CI_Controller {
 		$start = $this->input->post('start');
 		$length = $this->input->post('length');
 		$draw = $this->input->post('draw');
-	
+		$start_date = $this->input->post('start_date');
+		$end_date = $this->input->post('end_date');
 		
 		$orderColumn = $this->input->post('order')[0]['column']; 
 		$orderDirection = $this->input->post('order')[0]['dir']; 
 	
-		$blogs = $this->News_model->getFilterednews($start, $length, $search, $orderColumn, $orderDirection);
+		$blogs = $this->News_model->getFilterednews($start, $length, $search, $orderColumn, $orderDirection,$start_date,$end_date);
 		$totalRecords = $this->News_model->countAllnews();
-		$filteredRecords = $this->News_model->countFilterednews($search);
+		$filteredRecords = $this->News_model->countFilterednews($search, $start_date, $end_date);
 		$counter = $start + 1;
 		$data = [];
 	
@@ -149,7 +151,7 @@ class Welcome extends CI_Controller {
 		];
 		echo json_encode($response);
 	}
-	
+	 
 	
 	
 	

@@ -64,6 +64,33 @@ class Welcome extends CI_Controller {
 		$data['users'] = $this->Blog_model->getAllData();
 		$this->load->view('Blog/Blog', $data);
 	}
+	public function getUsersAjax()
+    {
+        $this->load->model('Users_model');
+
+        $search = $this->input->post('search')['value'];
+        $start = $this->input->post('start');
+        $length = $this->input->post('length');
+        $draw = $this->input->post('draw');
+        $order_column = $this->input->post('order')[0]['column'];
+        $order_dir = $this->input->post('order')[0]['dir'];
+        $columns = ['id', 'name', 'email', 'UserType', 'City', 'Phone_no'];
+
+        $order_by = $columns[$order_column];
+        $users = $this->Users_model->getFilteredUsers($start, $length, $search, $order_by, $order_dir);
+
+        $totalRecords = $this->Users_model->countAllUsers();
+        $filteredRecords = $this->Users_model->countFilteredUsers($search);
+
+        $response = [
+            "draw" => intval($draw),
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $filteredRecords,
+            "data" => $users
+        ];
+
+        echo json_encode($response);
+    }
 	public function getBlogData() {
 		$this->load->model('web/Blog_model');
 		
@@ -177,23 +204,7 @@ class Welcome extends CI_Controller {
 		$data['users'] = $this->Users_model->getAllData();
 		$this->load->view('Blog/Users', $data);
 	}
-	public function getUsersAjax()
-{
-    $this->load->model('web/Users_model');
-    $search = $this->input->post('search')['value'];
-    $start = $this->input->post('start');
-    $length = $this->input->post('length');
-    $users = $this->Users_model->getFilteredUsers($start, $length, $search);
-    $totalRecords = $this->Users_model->countAllUsers();
-    $filteredRecords = $this->Users_model->countFilteredUsers($search);
-    $response = array(
-        "draw" => intval($this->input->post('draw')),
-        "recordsTotal" => $totalRecords,
-        "recordsFiltered" => $filteredRecords,
-        "data" => $users
-    );
-    echo json_encode($response);
-}
+	
 
 	
 }

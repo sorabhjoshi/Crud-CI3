@@ -1,5 +1,6 @@
 <?php include 'Components/Header.php'; ?>
 
+
 <main class="content">
     <div class="tablecontainer">
         <h2>Users List</h2>
@@ -16,25 +17,35 @@
                     <th>Delete</th>
                 </tr>
             </thead>
+            <tbody>
+            </tbody>
         </table>
     </div>
 </main>
 
 <?php include 'Components/Footer.php'; ?>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
 <script>
-  $('#userTable').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-        "url": "<?php echo base_url('Users/getUsersAjax'); ?>",
+  $(document).ready(function() {
+    $('#userTable').DataTable({
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": "<?php echo base_url('Welcome/getUsersAjax'); ?>",
         "type": "POST"
-    },
-    "columns": [
-        { "data": "id" },
+      },
+      "columns": [
+        { 
+          "data": null, 
+          "render": function (data, type, row, meta) {
+            return meta.row + meta.settings._iDisplayStart + 1; 
+          },
+          "orderable": false, 
+          "searchable": false 
+        },
         { "data": "name" },
         { "data": "email" },
         { "data": "UserType", "render": function(data) { return data == 0 ? 'User' : 'Admin'; } },
@@ -42,9 +53,17 @@
         { "data": "Phone_no" },
         { "data": "edit", "orderable": false, "searchable": false },
         { "data": "delete", "orderable": false, "searchable": false }
-    ]
-});
+      ],
+      "pageLength": 6, 
+      "lengthChange": false, 
+      "searching": true, 
+      "ordering": true, 
+      "order": [[1, 'asc']], 
+      "info": true 
+    });
+  });
 </script>
+
 
 <style>
     .tablecontainer {

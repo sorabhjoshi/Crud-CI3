@@ -6,7 +6,15 @@ class Edit extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Web/Blog_model');
+        $this->load->model('Web/Pages_model');
         $this->load->library('form_validation');
+    }
+    public function Editpages($id) {
+        $data = [
+            'blog' => $this->Pages_model->get_pages_data($id),
+            'validation_errors' => ''
+        ];
+        $this->load->view('Blog/Utils/Editpages', $data);
     }
     public function Edittags($id) {
         $data = [
@@ -26,6 +34,14 @@ class Edit extends CI_Controller {
     public function Deletetags($id) {
         if ($this->Blog_model->delete_tags_data($id)) {
             redirect(base_url('Categories'));
+        } else {
+            echo 'Error: Could not delete the blog post.';
+        }
+    }
+    
+    public function Deletepages($id) {
+        if ($this->Pages_model->delete_pages_data($id)) {
+            redirect(base_url('Pages'));
         } else {
             echo 'Error: Could not delete the blog post.';
         }
@@ -90,6 +106,35 @@ class Edit extends CI_Controller {
             redirect(base_url('Categories'));
         } else {
             redirect(base_url('Addcategory'));
+        }
+    }
+    
+    public function UpdatePageData($id) {
+        $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('author_name', 'Author Name', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('content', 'Content', '');
+        
+
+        $data['author'] = $this->input->post('author_name');
+        $data['title'] = $this->input->post('title');
+        $data['slug']=generate_slug( $this->input->post('title'));
+        $data['content'] = $this->input->post('content');
+        $data['Create_Date'] = date('Y-m-d');
+    
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Blog/Utils/Editpages', [
+                'blog' => $this->Pages_model->get_pages_data($id),
+                'validation_errors' => validation_errors()
+            ]);
+            return;
+        }
+        
+        if ($this->Pages_model->updatepages($data, $id)) {
+
+            redirect(base_url('Pages'));
+        } else {
+            redirect(base_url("Editpages/$id"));
         }
     }
     public function UpdateBlog($id) {
@@ -220,7 +265,7 @@ class Edit extends CI_Controller {
             ];
         }
         
-        // Prepare the response in the format required by DataTables
+        
         $response = [
             "draw" => intval($draw),
             "recordsTotal" => $totalRecords,
@@ -228,7 +273,7 @@ class Edit extends CI_Controller {
             "data" => $data
         ];
         
-        // Return the response as a JSON object
+        
         echo json_encode($response);
     }
     

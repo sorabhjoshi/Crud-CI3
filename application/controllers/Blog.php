@@ -10,6 +10,7 @@ class Blog extends CI_Controller {
         $this->load->model('website/Website_model');
     }
     
+    
     public function categoryview($cat) {  
         $data['tags'] = $this->Blog_model->getAlltags();
         $data['users'] = $this->Website_model->showcategory($cat); 

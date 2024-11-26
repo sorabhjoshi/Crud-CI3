@@ -16,38 +16,55 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="#">
-      <a href="<?php echo base_url('Blog_website/Home')?>">
-        <img src="<?= base_url('application/views/Blog_Website/Components/Includes/Joshi.png'); ?>">
-      </a>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url('Blog_website/Home')?>">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url('Blog_website/AboutPage')?>">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url('Blog_website/NewsArticles')?>">News</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url('Blog_website/ContactUS')?>">Contact</a>
-        </li>
-      </ul>
+    <div class="container">
+        <a class="navbar-brand" href="<?php echo base_url('Blog_website/Home')?>">
+            <img src="<?= base_url('application/views/Blog_Website/Components/Includes/Joshi.png'); ?>" alt="Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Blog_website/Home')?>">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Blog_website/AboutPage')?>">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Blog_website/NewsArticles')?>">News</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Blog_website/ContactUS')?>">Contact</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo base_url('Blog_website/Blogs')?>">Blogs</a>
+                </li>
+                <?php if (!empty($pages)): ?>
+                    <?php foreach ($pages as $page): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?php echo base_url('Blog_website/Page/'.$page['slug'])?>">
+                                <?php echo htmlspecialchars($page['title']); ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <span class="nav-link">No pages available</span>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
+
+
+
 
 <style>
   a img {
-    height: 50px; /* Adjust the height as needed */
-    width: auto; /* Maintain aspect ratio */
+    height: 50px;
+    width: auto;
   }
   * {
     font-family: "Teko", sans-serif;

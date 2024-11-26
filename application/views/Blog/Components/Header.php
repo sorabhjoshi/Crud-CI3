@@ -48,7 +48,7 @@
                     <a href="<?php echo base_url('News') ?>">News</a>
                     <a href="<?php echo base_url('NewsCategories') ?>">News-Categories</a>
                 </div>
-
+                <a href="<?php echo base_url('Pages') ?>">Pages</a>
                 <a class="logout" href="<?php echo base_url('Logout') ?>">Logout</a>
             </div>
         </aside>

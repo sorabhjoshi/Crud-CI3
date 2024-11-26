@@ -59,7 +59,7 @@ class Blog_model extends CI_Model {
         }
         return $this->db->count_all_results('blogdata'); 
     }
-    
+
     
     public function get_tags_data($id) {
         $q = $this->db
@@ -90,7 +90,6 @@ class Blog_model extends CI_Model {
                 ->delete('blogdata');
         return ($q) ? TRUE : FALSE;
     }
-    
     
     public function updatetags($data,$id) {
         $data = array(
@@ -161,7 +160,6 @@ class Blog_model extends CI_Model {
             return FALSE;
         }
     }
-    
 
     public function getFilteredblogcat($start, $length, $search, $orderBy, $orderDirection) {
         $this->db->select('*');

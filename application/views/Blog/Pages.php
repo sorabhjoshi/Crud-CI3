@@ -2,10 +2,10 @@
 <main class="content">
     <div class="tablecontainer">
         <div class="addnews">
-            <h2>Blogs List</h2>
+            <h2>Pages</h2>
             <div>
                 <a href="Blog_website/Home"><button>View Site</button></a>
-                <a href="AddBlog"><button>Add Blog</button></a>
+                <a href="AddPage"><button>Add Page</button></a>
             </div>
         </div>
 
@@ -27,9 +27,7 @@
                     <th>User ID</th>
                     <th>Author Name</th>
                     <th>Title</th>
-                    <th>Category</th>
                     <th>Created Date</th>
-                    <th>Updated Date</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -50,7 +48,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "<?= base_url('Welcome/getBlogData') ?>",
+                "url": "<?= base_url('Welcome/getpagesData') ?>",
                 "type": "POST",
                 "data": function (d) {
                     d.start_date = $('#startDate').val(); 
@@ -62,11 +60,9 @@
                 { "data": 1 },
                 { "data": 2 },
                 { "data": 3 },
-                { "data": 4 },
+                { "data": 4, "orderable": false },
                 { "data": 5, "orderable": false },
-                { "data": 6, "orderable": false },
-                { "data": 7, "orderable": false },
-                { "data": 8, "orderable": false }
+                { "data": 6, "orderable": false }
             ],
             "pageLength": 6,
             "lengthChange": false,
@@ -119,7 +115,10 @@
     font-size: 16px;
     color: #333;
 }
-
+table.dataTable tbody td {
+    padding: 15px 10px;
+    text-align: center;
+}
 .filter-container input[type="date"] {
     padding: 5px;
     font-size: 12px;

@@ -57,12 +57,17 @@ $route['About'] = 'Welcome/about';
 $route['Contact'] = 'Welcome/contact';
 $route['News'] = 'Welcome/news';
 $route['Blog'] = 'Welcome/blog';
+$route['AddPage'] = 'Welcome/AddPage';
+$route['AddPageData/(:num)'] = 'Welcome/AddPageData/$1';
+
 $route['Blog/getBlogsAjax'] = 'Welcome/getBlogsAjax';
 
 
+$route['Pages'] = 'Welcome/Pages';
 $route['Categories'] = 'Welcome/Categories';
 $route['NewsCategories'] = 'Welcome/NewsCategories';
 
+$route['Blog_website/Page/(:any)'] = 'Welcome/pageshow/$1';
 $route['Login'] = 'Login/login_user';
 $route['LogoutUser'] = 'Welcome/LogoutUser';
 $route['Logout'] = 'Welcome/logout';
@@ -72,6 +77,8 @@ $route['Users'] = 'Welcome/users';
 $route['EditBlog/(:num)'] = 'Edit/EditBlog/$1';
 $route['Edittags/(:num)'] = 'Edit/Edittags/$1';
 $route['Editnewstags/(:num)'] = 'EditNews/Editnewstags/$1';
+$route['Editpages/(:num)'] = 'Edit/Editpages/$1';
+
 
 $route['UpdateBlog/(:num)'] = 'Edit/UpdateBlog/$1';
 $route['AddSEO/(:num)'] = 'Edit/UpdateSEO/$1';
@@ -79,8 +86,10 @@ $route['AddNewsSeo'] = 'EditNews/AddNewsSeo';
 
 $route['UpdateNewsSeo/(:num)'] = 'EditNews/UpdateNewsSeo/$1';
 $route['Updatecategory/(:num)'] = 'Edit/Updatecategory/$1';
+$route['UpdatePageData/(:num)'] = 'Edit/UpdatePageData/$1';
 
 $route['DeleteBlog/(:num)'] = 'Edit/DeleteBlog/$1';
+$route['Deletepages/(:num)'] = 'Edit/Deletepages/$1';
 
 $route['Deletenewstags/(:num)'] = 'EditNews/Deletenewstags/$1';
 $route['Deletetags/(:num)'] = 'Edit/Deletetags/$1';

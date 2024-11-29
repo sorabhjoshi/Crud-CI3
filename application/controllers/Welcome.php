@@ -9,6 +9,7 @@ class Welcome extends CI_Controller {
 		$this->load->model('web/Blog_model');
 		$this->load->model('web/News_model');
 		$this->load->model('web/Pages_model');
+		$this->load->model('website/Website_model');
 		$this->load->model('web/Dashboard_model');
 		$this->load->library('form_validation');
     }
@@ -73,7 +74,35 @@ class Welcome extends CI_Controller {
 	{ 
 		$this->load->view('Registration');
 	}
+	
+	public function AddCompanyData()
+	{ 
+		$this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('Company_name', 'Company Name', 'required');
+        $this->form_validation->set_rules('Email', 'E-mail', 'required');
+        $this->form_validation->set_rules('Companytype', 'Company type', '');
+        
+        
+        $data['Company_name'] = $this->input->post('Company_name');
+        $data['Email'] = $this->input->post('Email');
+        $data['Companytype'] = $this->input->post('Companytype');
 
+		if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Utils/AddBlog', $data);
+            return;
+        }
+
+        if ($this->Website_model->addcomdata($data)) {
+			redirect(base_url('Company'));
+        } else {
+            $this->load->view('Utils/AddCompany', ['error_message' => 'Failed to add the blog. Please try again.']);
+        }
+    
+	}
+	public function AddCompany()
+	{ 
+		$this->load->view('Blog/Utils/AddCompany');
+	}
 	public function Categories()
 	{ 
 		$data['users'] = $this->Blog_model->getAlltags();
@@ -85,6 +114,11 @@ class Welcome extends CI_Controller {
 		$this->load->view('Blog/NewsCategories',$data);
 	}
 	
+	public function Company()
+	{ 
+		
+		$this->load->view('Blog/Company');
+	}
 	public function Pages()
 	{ 
 		
@@ -277,8 +311,106 @@ class Welcome extends CI_Controller {
 		];
 		echo json_encode($response);
 	}
-	 
+	public function saveCompanyAddress() {
+		$this->load->helper('url');
+		$response = array('status' => 'error', 'message' => 'Unknown error occurred');
+		if (isset($_POST['company_id']) && isset($_POST['Address']) && !empty($_POST['Address'])) {
+			
+			$companyId = $this->input->post('company_id');
+			$addresses = $this->input->post('Address');
+			$latitudes = $this->input->post('Latitude');
+			$longitudes = $this->input->post('Longitude');
+			$mobiles = $this->input->post('Mobile');
 	
+			
+			for ($i = 0; $i < count($addresses); $i++) {
+				
+				if (!empty($addresses[$i]) && !empty($latitudes[$i]) && !empty($longitudes[$i]) && !empty($mobiles[$i])) {
+					
+					$data = array(
+						'companyid' => $companyId,
+						'address' => $addresses[$i],
+						'lat' => $latitudes[$i],
+						'long' => $longitudes[$i],
+						'mobile' => $mobiles[$i]
+					);
+					$this->db->insert('companyaddress', $data);
+				}
+			}
+	
+			$response = array('status' => 'success', 'message' => 'Data saved successfully');
+		} else {
+			$response = array('status' => 'error', 'message' => 'Missing required fields');
+		}
+	
+		echo json_encode($response);
+	}
+	
+
+	public function getAddressData() {
+		$company_id = $this->input->post('company_id');
+		$addressData = $this->Website_model->getAddressByCompanyId($company_id);
+		if ($addressData) {
+			echo json_encode(['status' => 'success', 'data' => $addressData]);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'No address data found']);
+		}
+	}
+	
+	public function getComData() {
+		
+		
+		
+		$search = $this->input->post('search')['value'];
+		$start = $this->input->post('start');
+		$length = $this->input->post('length');
+		$draw = $this->input->post('draw');
+		
+		
+		$order_column = $_POST['order'][0]['column']; 
+		$order_dir = $_POST['order'][0]['dir']; 
+		
+		
+		$columns = ['id', 'name', 'email', 'type']; 
+		$order_by = $columns[$order_column]; 
+	
+		
+		$blogs = $this->Website_model->getFilteredBlogs($start, $length, $search, $order_by, $order_dir);
+		$totalRecords = $this->Website_model->countAllBlogs();
+		$filteredRecords = $this->Website_model->countFilteredBlogs($search);
+	
+		$counter = $start + 1;
+		$data = [];
+		foreach ($blogs as $blog) {
+			$data[] = [
+				$counter++,
+				htmlspecialchars($blog->name),
+				htmlspecialchars($blog->email),
+				htmlspecialchars($blog->type),
+				"<button class='btn btn-primary view-address-btn' data-id='" . $blog->id . "'>View Address</button>", 
+				"<a href='" . base_url('EditCompany/' . $blog->id) . "' class='edit-btn'>Edit</a>",
+				"<a href='" . base_url('DeleteCompany/' . $blog->id) . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this blog?\")'>Delete</a>"
+			];
+		}
+		$response = [
+			"draw" => intval($draw),
+			"recordsTotal" => $totalRecords,
+			"recordsFiltered" => $filteredRecords,
+			"data" => $data
+		];
+		echo json_encode($response);
+	}
+	public function getCompanyAddress()
+    {
+        $company_id = $this->input->post('company_id');
+        $data = $this->Website_model->getCompanyAddress($company_id);
+
+        if ($data) {
+            echo json_encode(['status' => 'success', 'data' => $data]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No data found']);
+        }
+    }
 	
 	
 	public function logout(){
@@ -304,6 +436,6 @@ class Welcome extends CI_Controller {
 		$this->load->view('Blog/Users', $data);
 	}
 	
-
+	
 	
 }

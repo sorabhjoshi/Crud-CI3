@@ -6,7 +6,8 @@ class Edit extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Web/Blog_model');
-        $this->load->model('Web/Pages_model');
+        $this->load->model('website/Website_model');
+        $this->load->model('Web/Blog_model');
         $this->load->library('form_validation');
     }
     public function Editpages($id) {
@@ -22,6 +23,14 @@ class Edit extends CI_Controller {
             'validation_errors' => ''
         ];
         $this->load->view('Blog/Utils/Edittags', $data);
+    }
+    
+    public function EditCompany($id) {
+        $data = [
+            'blog' => $this->Website_model->get_company_data($id),
+            'validation_errors' => ''
+        ];
+        $this->load->view('Blog/Utils/EditCom', $data);
     }
     public function EditBlog($id) {
         $data = [
@@ -42,6 +51,14 @@ class Edit extends CI_Controller {
     public function Deletepages($id) {
         if ($this->Pages_model->delete_pages_data($id)) {
             redirect(base_url('Pages'));
+        } else {
+            echo 'Error: Could not delete the blog post.';
+        }
+    }
+    
+    public function DeleteCompany($id) {
+        if ($this->Website_model->delete_com_data($id)) {
+            redirect(base_url('Company'));
         } else {
             echo 'Error: Could not delete the blog post.';
         }
@@ -166,6 +183,32 @@ class Edit extends CI_Controller {
             redirect(base_url("Edit/EditBlog/$id"));
         }
     }
+    public function Updatecompany($id) {
+        $this->form_validation->set_error_delimiters('<div class="error-message">', '</div>');
+        $this->form_validation->set_rules('Company_name', 'Company Name', 'required');
+        $this->form_validation->set_rules('Email', 'E-mail', 'required');
+        $this->form_validation->set_rules('Companytype', 'Company type', '');
+        
+        $data['Company_name'] = $this->input->post('Company_name');
+        $data['Email'] = $this->input->post('Email');
+        $data['Companytype'] = $this->input->post('Companytype');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('Blog/Utils/EditCom', [
+                'blog' => $this->Website_model->get_company_data($id),
+                'validation_errors' => validation_errors()
+            ]);
+            return;
+        }
+        
+        if ($this->Website_model->updatecompany($data, $id)) {
+
+            redirect(base_url('Company'));
+        } else {
+            redirect(base_url("Edit/EditCom/$id"));
+        }
+    }
+    
     public function AddBlog(){
         $data = [
             'tags' => $this->Blog_model->getAlltags(),

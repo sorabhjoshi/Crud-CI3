@@ -11,34 +11,21 @@
 </script>
 
 <main class="content">
-    <h2>Add Blog</h2>
-    <form action="<?= base_url('AddBlogData/') . $this->session->userdata('id') ?>" method="post" enctype="multipart/form-data">
-        <label for="author_name">Author Name:</label>
-        <input type="text" id="author_name" name="author_name" required>
-        <div class="error-message"><?= form_error('author_name') ?></div>
+    <h2>Add Company</h2>
+    <form action="<?= base_url('AddCompanyData') ?>" method="post" enctype="multipart/form-data">
+        <label for="Company_name">Company Name:</label>
+        <input type="text" id="Company_name" name="Company_name" required>
+        <div class="error-message"><?= form_error('Company_name') ?></div>
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <div class="error-message"><?= form_error('title') ?></div>
+        <label for="Email">E-mail:</label>
+        <input type="text" id="Email" name="Email" required>
+        <div class="error-message"><?= form_error('Email') ?></div>
 
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image" required>
-        <div class="error-message"><?= form_error('image') ?></div>
-
-        <label for="content">Content:</label>
-        <textarea id="description" name="content"></textarea>
-        <div class="error-message"><?= form_error('content') ?></div>
+        <label for="Companytype">Company type:</label>
+        <input type="text" id="Companytype" name="Companytype" required>
+        <div class="error-message"><?= form_error('Companytype') ?></div>
         
-        <label for="category">Category:</label>
-        <select id="Category" name="category" required>
-            <option value="" disabled selected>Select Category</option>
-            <?php foreach ($tags as $tag): ?>
-                <option value="<?= htmlspecialchars($tag['id']) ?>"><?= htmlspecialchars($tag['categorytitle']) ?></option>
-            <?php endforeach; ?>
-        </select>
-        <div class="error-message"><?= form_error('category') ?></div>
-        
-        <button type="submit">Add Blog</button>
+        <button type="submit">Add Comopany</button>
     </form>
 </main>
 

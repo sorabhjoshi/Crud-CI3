@@ -97,6 +97,7 @@ $route['DeleteBlog/(:num)'] = 'Edit/DeleteBlog/$1';
 $route['Deletepages/(:num)'] = 'Edit/Deletepages/$1';
 $route['DeleteCompany/(:num)'] = 'Edit/DeleteCompany/$1';
 
+$route['Welcome/saveCompanyAddress'] = 'Welcome/saveCompanyAddress';
 $route['Deletenewstags/(:num)'] = 'EditNews/Deletenewstags/$1';
 $route['Deletetags/(:num)'] = 'Edit/Deletetags/$1';
 $route['EditNews/(:num)'] = 'EditNews/LoadNewsdata/$1';

@@ -311,40 +311,79 @@ class Welcome extends CI_Controller {
 		];
 		echo json_encode($response);
 	}
-	public function saveCompanyAddress() {
-		$this->load->helper('url');
-		$response = array('status' => 'error', 'message' => 'Unknown error occurred');
-		if (isset($_POST['company_id']) && isset($_POST['Address']) && !empty($_POST['Address'])) {
-			
-			$companyId = $this->input->post('company_id');
-			$addresses = $this->input->post('Address');
-			$latitudes = $this->input->post('Latitude');
-			$longitudes = $this->input->post('Longitude');
-			$mobiles = $this->input->post('Mobile');
-	
-			
-			for ($i = 0; $i < count($addresses); $i++) {
-				
-				if (!empty($addresses[$i]) && !empty($latitudes[$i]) && !empty($longitudes[$i]) && !empty($mobiles[$i])) {
-					
-					$data = array(
-						'companyid' => $companyId,
-						'address' => $addresses[$i],
-						'lat' => $latitudes[$i],
-						'long' => $longitudes[$i],
-						'mobile' => $mobiles[$i]
-					);
-					$this->db->insert('companyaddress', $data);
-				}
-			}
-	
-			$response = array('status' => 'success', 'message' => 'Data saved successfully');
-		} else {
-			$response = array('status' => 'error', 'message' => 'Missing required fields');
-		}
-	
-		echo json_encode($response);
-	}
+	public function saveCompanyAddress()
+{
+    log_message('error', 'POST Data: ' . print_r($this->input->post(), true));
+
+    $companyid = $this->input->post('company_id');
+    $ids = $this->input->post('id');
+    $addresses = $this->input->post('Address');
+    $latitudes = $this->input->post('Latitude');
+    $longitudes = $this->input->post('Longitude');
+    $mobiles = $this->input->post('Mobile');
+
+    $data = [];
+    for ($i = 0; $i < count($addresses); $i++) {
+        $data[] = [
+            'companyid' => $companyid,
+            'id' => $ids[$i], // Use 'id' only for checking
+            'address' => $addresses[$i],
+            'lat' => $latitudes[$i],
+            'long' => $longitudes[$i],
+            'mobile' => $mobiles[$i]
+        ];
+    }
+
+    try {
+        foreach ($data as $row) {
+            // Check if the row exists using 'id'
+            $this->db->where('id', $row['id']);
+            $existing_row = $this->db->get('companyaddress')->row();
+
+            // Remove 'id' from the row before inserting or updating
+            unset($row['id']);
+
+            if ($existing_row) {
+                // Update the existing row
+                $this->db->where('id', $existing_row->id); // Use existing ID
+                $this->db->update('companyaddress', $row);
+            } else {
+                // Insert a new row without 'id'
+                $this->db->insert('companyaddress', $row);
+            }
+        }
+
+        echo json_encode(['status' => 'success', 'message' => 'Data saved successfully']);
+    } catch (Exception $e) {
+        log_message('error', 'Error saving company address: ' . $e->getMessage());
+        echo json_encode(['status' => 'error', 'message' => 'Failed to save data.']);
+    }
+}
+public function deleteCompanyAddress()
+{
+    $address_id = $this->input->post('address_id');
+
+    try {
+        // Delete the address by ID
+        $this->db->where('id', $address_id);
+        $this->db->delete('companyaddress');
+
+        echo json_encode(['status' => 'success', 'message' => 'Address deleted successfully']);
+    } catch (Exception $e) {
+        log_message('error', 'Error deleting company address: ' . $e->getMessage());
+        echo json_encode(['status' => 'error', 'message' => 'Failed to delete address.']);
+    }
+}
+
+
+
+
+
+
+
+
+
+
 	
 
 	public function getAddressData() {
@@ -387,7 +426,7 @@ class Welcome extends CI_Controller {
 				htmlspecialchars($blog->name),
 				htmlspecialchars($blog->email),
 				htmlspecialchars($blog->type),
-				"<button class='btn btn-primary view-address-btn' data-id='" . $blog->id . "'>View Address</button>", 
+				"<button class='btn btn-primary view-address-btn' data-company-id='" . $blog->id . "'>View Address</button>", 
 				"<a href='" . base_url('EditCompany/' . $blog->id) . "' class='edit-btn'>Edit</a>",
 				"<a href='" . base_url('DeleteCompany/' . $blog->id) . "' class='delete-btn' onclick='return confirm(\"Are you sure you want to delete this blog?\")'>Delete</a>"
 			];

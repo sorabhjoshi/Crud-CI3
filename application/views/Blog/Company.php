@@ -27,14 +27,14 @@
         </table>
     </div>
 
-   
     <div id="address-overlay" style="display: none;">
         <div class="form-container">
-            <h3>Enter Address Details</h3>
+            <h3>Address Details</h3>
             <div class="form-fields">
                 <form id="address-form">
                     <input type="hidden" id="company_id" name="company_id">
                     <div class="form-row">
+                        <input type="hidden" id="company_id" name="company_id">
                         <label for="Address">Address:</label>
                         <input type="text" id="Address" name="Address[]" required>
                         <label for="Latitude">Latitude:</label>
@@ -56,13 +56,13 @@
 </main>
 
 <?php include 'Components/Footer.php'; ?>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-   $(document).ready(function () {
-    // DataTable Initialization
+$(document).ready(function () {
     const table = $('#blogTable').DataTable({
         processing: true,
         serverSide: true,
@@ -85,41 +85,38 @@
 
     // Open Address Overlay
     $(document).on('click', '.view-address-btn', function () {
-        const companyId = $(this).data('id');
-        $('#company_id').val(companyId);
-
-        // Show the address overlay
+        var companyid = $(this).data('company-id');
+        $('#save-address').data('company-id', companyid);
         $('#address-overlay').fadeIn();
 
-        // Fetch existing address data and populate the form fields
         $.ajax({
-            url: '<?= base_url("Welcome/getAddressData") ?>',  // Change this URL to your backend endpoint for fetching address data
+            url: '<?= base_url("Welcome/getAddressData") ?>', 
             type: 'POST',
-            data: { company_id: companyId },
+            data: { company_id: companyid },
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'success') {
                     const addressData = response.data;
-                    // Clear the existing form fields
                     $('#address-form').empty();
 
-                    // Loop through the existing address data and add it to the form
                     addressData.forEach(function (address, index) {
                         const newRow = `
-                            <div class="form-row">
+                            <div class="form-row" data-id="${address.id}">
+                                <input type="hidden" name="id[]" value="${address.id}">
                                 <label for="Address">Address:</label>
-                                <input type="text" id="Address" name="Address[]" value="${address.address}" required>
+                                <input type="text" name="Address[]" value="${address.address}" required>
                                 <label for="Latitude">Latitude:</label>
-                                <input type="text" id="Latitude" name="Latitude[]" value="${address.lat}">
+                                <input type="text" name="Latitude[]" value="${address.lat}">
                                 <label for="Longitude">Longitude:</label>
-                                <input type="text" id="Longitude" name="Longitude[]" value="${address.long}" required>
+                                <input type="text" name="Longitude[]" value="${address.long}" required>
                                 <label for="Mobile">Mobile:</label>
-                                <input type="text" id="Mobile" name="Mobile[]" value="${address.mobile}" required>
+                                <input type="text" name="Mobile[]" value="${address.mobile}" required>
+                                <button type="button" class="delete-address-btn">Delete</button>
                             </div>`;
                         $('#address-form').append(newRow);
                     });
                 } else {
-                    alert('Failed to fetch address data');
+                    alert('Address field is empty');
                 }
             },
             error: function () {
@@ -135,28 +132,40 @@
 
     // Add Row
     $('#add-row-btn').on('click', function () {
-        const newRow = ` 
+        const newRow = `
             <div class="form-row">
                 <label for="Address">Address:</label>
-                <input type="text" id="Address" name="Address[]" required>
+                <input type="text" name="Address[]" required>
                 <label for="Latitude">Latitude:</label>
-                <input type="text" id="Latitude" name="Latitude[]">
+                <input type="text" name="Latitude[]">
                 <label for="Longitude">Longitude:</label>
-                <input type="text" id="Longitude" name="Longitude[]" required>
+                <input type="text" name="Longitude[]" required>
                 <label for="Mobile">Mobile:</label>
-                <input type="text" id="Mobile" name="Mobile[]" required>
+                <input type="text" name="Mobile[]" required>
+                <button type="button" class="delete-address-btn">Delete</button>
             </div>`;
         $('#address-form').append(newRow);
     });
 
     // Save Address
     $('#save-address').on('click', function () {
-        const formData = $('#address-form').serialize();
+        var companyid = $(this).data('company-id');
+        var formData = $('#address-form').serializeArray();  
+
+        var data = {};
+        formData.forEach(function (item) {
+            if (!data[item.name]) {
+                data[item.name] = [];
+            }
+            data[item.name].push(item.value);
+        });
+
+        data.company_id = companyid;
 
         $.ajax({
             url: '<?= base_url("Welcome/saveCompanyAddress") ?>',
             type: 'POST',
-            data: formData,
+            data: data,
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'success') {
@@ -172,9 +181,33 @@
             }
         });
     });
-});
 
+    // Delete Address
+    $(document).on('click', '.delete-address-btn', function () {
+        const row = $(this).closest('.form-row');
+        const addressId = row.find('input[name="id[]"]').val();
+
+        $.ajax({
+            url: '<?= base_url("Welcome/deleteCompanyAddress") ?>',
+            type: 'POST',
+            data: { address_id: addressId },
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    alert('Address deleted successfully!');
+                    row.remove();
+                } else {
+                    alert(response.message || 'Failed to delete address');
+                }
+            },
+            error: function () {
+                alert('An error occurred while deleting the address');
+            }
+        });
+    });
+});
 </script>
+
 <style>
    #address-overlay {
     position: fixed;
@@ -219,6 +252,191 @@
     border-radius: 5px;
    
 }
+/* Delete Address Button */
+.delete-address-btn {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #dc3545; /* Red color for danger */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Hover effect for delete button */
+.delete-address-btn:hover {
+    background-color: #c82333; /* Darker red for hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Focus effect to highlight the button */
+.delete-address-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5); /* Subtle red glow */
+}
+
+/* Active state effect */
+.delete-address-btn:active {
+    background-color: #bd2130; /* Even darker red on click */
+    transform: scale(0.98); /* Slight shrink when clicked */
+}
+
+/* Disabled state */
+.delete-address-btn:disabled {
+    background-color: #6c757d; /* Grey background when disabled */
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Style the "View Address" button */
+.view-address-btn {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Text color */
+    padding: 5px; /* Padding inside the button */
+    border: 2px solid #007bff; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 14px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    text-align: center; /* Center align text */
+    display: inline-block; /* Align with other elements */
+}
+
+/* Hover state */
+.view-address-btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    border-color: #0056b3; /* Darker border on hover */
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Focus state */
+.view-address-btn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a subtle shadow */
+}
+
+/* Active state */
+.view-address-btn:active {
+    background-color: #004085; /* Even darker shade when clicked */
+    border-color: #004085; /* Darker border when clicked */
+}
+
+/* Styling for DataTable cells containing the button */
+#blogTable td {
+    text-align: center; /* Center-align the text in the table */
+}
+
+/* Optional: Add a margin between the table and button */
+.addnews a button {
+    margin-right: 8px; /* Space between the buttons */
+}
+/* General overlay styles */
+.overlay {
+    position: fixed; /* Fixed position on the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above other content */
+    visibility: hidden; /* Hide the overlay by default */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0s 0.3s; /* Smooth transition for visibility */
+}
+
+/* When the overlay is active, show it */
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Overlay content box */
+.overlay-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Button styles inside the overlay */
+.overlay button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 10px;
+    width: 120px; /* Fixed width for uniformity */
+}
+
+/* Save button - Primary style */
+.overlay .save-btn {
+    background-color: #28a745; /* Green for success */
+    color: white;
+}
+
+.overlay .save-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.overlay .save-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+/* Cancel button - Secondary style */
+.overlay .cancel-btn {
+    background-color: #dc3545; /* Red for danger */
+    color: white;
+}
+
+.overlay .cancel-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.overlay .cancel-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+/* Delete button - Destructive style */
+.overlay .delete-btn {
+    background-color: #ffc107; /* Yellow for warning */
+    color: black;
+}
+
+.overlay .delete-btn:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+}
+
+.overlay .delete-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+/* Align buttons in the center of the overlay */
+.overlay .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+/* Button spacing in the button container */
+.overlay .button-container button {
+    width: 120px; /* Ensure all buttons are the same width */
+    margin: 0 10px;
+}
 
 .form-row {
     padding: 20px;
@@ -253,7 +471,7 @@
 
 .form-buttons {
     display: flex;
-    justify-content: space-between;
+    gap:20px;
     align-items: center;
     padding-top: 10px;
 }

@@ -104,7 +104,7 @@ class Website_model extends CI_Model {
     }
     public function getAddressByCompanyId($company_id) {
         // Assuming you have a table `company_addresses` where address data is stored
-        $this->db->select('address, lat, long, mobile');
+        $this->db->select('*');
         $this->db->from('companyaddress');
         $this->db->where('companyid', $company_id);
         $query = $this->db->get();

@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Data will be dynamically populated here by DataTable -->
+               
             </tbody>
         </table>
     </div>
@@ -83,7 +83,7 @@ $(document).ready(function () {
         lengthChange: false
     });
 
-    // Open Address Overlay
+   
     $(document).on('click', '.view-address-btn', function () {
         var companyid = $(this).data('company-id');
         $('#save-address').data('company-id', companyid);
@@ -252,12 +252,12 @@ $(document).ready(function () {
     border-radius: 5px;
    
 }
-/* Delete Address Button */
+
 .delete-address-btn {
     padding: 10px;
     font-size: 16px;
     color: white;
-    background-color: #dc3545; /* Red color for danger */
+    background-color: #dc3545; 
     border: none;
     border-radius: 5px;
     cursor: pointer;

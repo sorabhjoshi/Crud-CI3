@@ -88,7 +88,7 @@ $(document).ready(function () {
         var companyid = $(this).data('company-id');
         $('#save-address').data('company-id', companyid);
         $('#address-overlay').fadeIn();
-
+        
         $.ajax({
             url: '<?= base_url("Welcome/getAddressData") ?>', 
             type: 'POST',
@@ -161,7 +161,7 @@ $(document).ready(function () {
         });
 
         data.company_id = companyid;
-
+        console.log(data);
         $.ajax({
             url: '<?= base_url("Welcome/saveCompanyAddress") ?>',
             type: 'POST',
@@ -229,8 +229,8 @@ $(document).ready(function () {
     padding: 20px;
     border-radius: 8px;
     width: 90%;
-    max-width: 600px;
-    max-height: 90%;
+    max-width: 500px;
+    max-height: 70vh;
     display: flex;
     flex-direction: column;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
